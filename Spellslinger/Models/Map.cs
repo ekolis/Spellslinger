@@ -1,4 +1,6 @@
-﻿namespace Spellslinger.Models;
+﻿using Spellslinger.Services;
+
+namespace Spellslinger.Models;
 
 /// <summary>
 /// A map on which the game is played.
@@ -39,5 +41,64 @@ public class Map
 	public Actor? FindActor(Func<Actor, bool> predicate)
 	{
 		return Tiles.Cast<Tile>().Select(q => q.Actor).Where(q => q is not null).FirstOrDefault(predicate);
+	}
+
+	/// <summary>
+	/// Determines the location of an actor.
+	/// </summary>
+	/// <param name="actor"></param>
+	/// <returns></returns>
+	/// <exception cref="InvalidOperationException"></exception>
+	public (int x, int y) LocateActor(Actor actor)
+	{
+		for (var x = 0; x < Width; x++)
+		{
+			for (var y = 0; y < Height; y++)
+			{
+				if (Tiles[x, y].Actor == actor)
+				{
+					return (x, y);
+				}
+			}
+		}
+		throw new InvalidOperationException($"Actor {actor} was not found on this map.");
+	}
+
+	/// <summary>
+	/// Moves an actor.
+	/// </summary>
+	/// <param name="actor"></param>
+	/// <param name="dx"></param>
+	/// <param name="dy"></param>
+	/// <returns>true if a turn was taken, false if not</returns>
+	public bool MoveActor(Actor actor, int dx, int dy)
+	{
+		if (dx == 0 && dy == 0)
+		{
+			// pass a turn, don't attack yourself
+			return true;
+		}
+
+		// verify movement location
+		var (x, y) = LocateActor(actor);
+		var newX = x + dx;
+		var newY = y + dy;
+		if (newX < 0 || newX >= Width || newY < 0 || newY >= Height)
+		{
+			// can't move off the map
+			return false;
+		}
+		if (Tiles[newX, newY].Actor is not null)
+		{
+			// TODO: combat
+			return false;
+		}
+
+		// move the actor
+		Tiles[x, y].Actor = null;
+		Tiles[newX, newY].Actor = actor;
+
+		// yes, we did take a turn
+		return true;
 	}
 }

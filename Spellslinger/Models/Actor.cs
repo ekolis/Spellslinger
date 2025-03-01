@@ -31,6 +31,14 @@ public class Actor(ActorType type, IGame game)
 		{
 			switch (e.Code)
 			{
+				case "ArrowLeft":
+					return game.CurrentMap.MoveActor(this, -1, 0);
+				case "ArrowRight":
+					return game.CurrentMap.MoveActor(this, 1, 0);
+				case "ArrowUp":
+					return game.CurrentMap.MoveActor(this, 0, -1);
+				case "ArrowDown":
+					return game.CurrentMap.MoveActor(this, 0, 1);
 				default:
 					game.Log.Add($"Unknown key pressed: {e.Code}");
 					return false;
