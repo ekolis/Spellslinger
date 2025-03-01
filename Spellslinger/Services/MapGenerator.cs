@@ -14,7 +14,7 @@ public class MapGenerator
 		BuildHorizontalWall(map, height - 1);
 		BuildVerticalWall(map, 0);
 		BuildVerticalWall(map, width - 1);
-		
+
 
 		// use binary space partitioning to split the map into rooms
 		var rng = new Random();
@@ -70,27 +70,14 @@ public class MapGenerator
 
 	private void BuildVerticalWall(Map map, int xWallPos, int yDoorPos)
 	{
+		map.Tiles[xWallPos, yDoorPos].Terrain = Terrain.Door;
 		for (var y = yDoorPos + 1; y < map.Height && map.Tiles[xWallPos, y].Terrain == Terrain.Floor; y++)
 		{
-			if (y == yDoorPos)
-			{
-				map.Tiles[xWallPos, y].Terrain = Terrain.Door;
-			}
-			else
-			{
-				map.Tiles[xWallPos, y].Terrain = Terrain.Wall;
-			}
+			map.Tiles[xWallPos, y].Terrain = Terrain.Wall;
 		}
 		for (var y = yDoorPos - 1; y >= 0 && map.Tiles[xWallPos, y].Terrain == Terrain.Floor; y--)
 		{
-			if (y == yDoorPos)
-			{
-				map.Tiles[xWallPos, y].Terrain = Terrain.Door;
-			}
-			else
-			{
-				map.Tiles[xWallPos, y].Terrain = Terrain.Wall;
-			}
+			map.Tiles[xWallPos, y].Terrain = Terrain.Wall;
 		}
 	}
 
@@ -104,27 +91,14 @@ public class MapGenerator
 
 	private void BuildHorizontalWall(Map map, int yWallPos, int xDoorPos)
 	{
+		map.Tiles[xDoorPos, yWallPos].Terrain = Terrain.Door;
 		for (var x = xDoorPos + 1; x < map.Width && map.Tiles[x, yWallPos].Terrain == Terrain.Floor; x++)
 		{
-			if (x == xDoorPos)
-			{
-				map.Tiles[x, yWallPos].Terrain = Terrain.Door;
-			}
-			else
-			{
-				map.Tiles[x, yWallPos].Terrain = Terrain.Wall;
-			}
+			map.Tiles[x, yWallPos].Terrain = Terrain.Wall;
 		}
 		for (var x = xDoorPos - 1; x < map.Width && map.Tiles[x, yWallPos].Terrain == Terrain.Floor; x--)
 		{
-			if (x == xDoorPos)
-			{
-				map.Tiles[x, yWallPos].Terrain = Terrain.Door;
-			}
-			else
-			{
-				map.Tiles[x, yWallPos].Terrain = Terrain.Wall;
-			}
+			map.Tiles[x, yWallPos].Terrain = Terrain.Wall;
 		}
 	}
 }
