@@ -1,4 +1,4 @@
 @using Spellslinger.Models
 @inherits ModelComponentBase<Tile>
 
-<span class="tile">@Model.Character</span>
+<span class="tile" style="color: @Model.Color.ToRgbaString()">@Model.Character</span>
