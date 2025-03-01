@@ -18,6 +18,7 @@ public class MapGenerator
 
 		// use binary space partitioning to split the map into rooms
 		// TODO: why are we still getting walls going into doors?
+		// maybe just clean up the space around all doors, if three sides of a door are walls, delete the one opposite a floor?
 		var rng = new Random();
 		List<int> verticalWallPositions = [];
 		List<int> horizontalWallPositions = [];
