@@ -16,7 +16,7 @@ public class Map
 			{
 				Tiles[x, y] = new Tile
 				{
-					Character = '.'
+					Terrain = Terrain.Floor
 				};
 			}
 		}
