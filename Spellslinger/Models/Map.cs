@@ -93,6 +93,11 @@ public class Map
 			// TODO: combat
 			return false;
 		}
+		if (!Tiles[newX, newY].Terrain.IsPassable)
+		{
+			// can't walk through walls
+			return false;
+		}
 
 		// move the actor
 		Tiles[x, y].Actor = null;
