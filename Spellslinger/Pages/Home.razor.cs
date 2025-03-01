@@ -9,7 +9,7 @@ public partial class Home
 		Game.CurrentMap = MapGenerator.Generate(Game, 64, 32, 16, 8);
 	}
 
-	protected void KeyPress(KeyboardEventArgs e)
+	protected void KeyDown(KeyboardEventArgs e)
 	{
 		Game.AcceptKeyboardInput(e);
 		StateHasChanged();
