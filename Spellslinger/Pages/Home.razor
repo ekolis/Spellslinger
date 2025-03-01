@@ -1,7 +1,9 @@
 ﻿@page "/"
+@using Spellslinger.Components
+@using Spellslinger.Services
+@inject IGame Game
+@inject IMapGenerator MapGenerator
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<MapView Model="@Game.CurrentMap" />

@@ -1,0 +1,16 @@
+﻿@using Spellslinger.Models
+@inherits ModelComponentBase<Map>
+
+<table class="map">
+@for (var y = 0; y < Model.Height; y++)
+{
+	<tr class="map-row">
+		@for (var x = 0; x < Model.Width; x++)
+		{
+			<td class="map-cell">
+				<TileView Model="@Model.Tiles[x, y]" />
+			</td>
+		}
+	</tr>
+}
+</table>
