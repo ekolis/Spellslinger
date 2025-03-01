@@ -38,6 +38,6 @@ public class Map
 	/// <returns></returns>
 	public Actor? FindActor(Func<Actor, bool> predicate)
 	{
-		return Tiles.Cast<Tile>().Select(q => q.Actor).FirstOrDefault(predicate);
+		return Tiles.Cast<Tile>().Select(q => q.Actor).Where(q => q is not null).FirstOrDefault(predicate);
 	}
 }
