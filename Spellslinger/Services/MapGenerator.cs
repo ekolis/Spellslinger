@@ -5,7 +5,7 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	public Map Generate(int width, int height)
+	public Map Generate(int width, int height, int rooms, int extraDoors)
 	{
 		var map = new Map(width, height);
 
@@ -17,10 +17,11 @@ public class MapGenerator
 
 
 		// use binary space partitioning to split the map into rooms
+		// TODO: why are we still getting walls going into doors?
 		var rng = new Random();
 		List<int> verticalWallPositions = [];
 		List<int> horizontalWallPositions = [];
-		for (var i = 0; i < 10; i++)
+		for (var i = 0; i < rooms - 1; i++)
 		{
 			// decide where to place a door
 			// don't try to place a door in an existing wall, we're going to build a new wall
@@ -55,6 +56,31 @@ public class MapGenerator
 				BuildHorizontalWall(map, y, x);
 				horizontalWallPositions.Add(y);
 			}
+		}
+
+		// place some random doors to better connect the rooms
+		for (var i = 0; i < extraDoors; i++)
+		{
+			var candidates = new List<(int x, int y)>();
+			for (var x = 1; x < width - 1; x++)
+			{
+				for (var y = 1; y < height - 1; y++)
+				{
+					// place a door in a wall with floors on either side
+					if (map.Tiles[x, y].Terrain == Terrain.Wall
+						&& ((map.Tiles[x - 1, y].Terrain == Terrain.Floor && map.Tiles[x + 1, y].Terrain == Terrain.Floor)
+						|| (map.Tiles[x, y - 1].Terrain == Terrain.Floor && map.Tiles[x, y + 1].Terrain == Terrain.Floor)))
+					{
+						candidates.Add((x, y));
+					}
+				}
+			}
+			if (!candidates.Any())
+			{
+				break;
+			}
+			var doorPos = candidates[rng.Next(candidates.Count)];
+			map.Tiles[doorPos.x, doorPos.y].Terrain = Terrain.Door;
 		}
 
 		return map;
