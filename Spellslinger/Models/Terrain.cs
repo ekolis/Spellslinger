@@ -9,7 +9,7 @@ namespace Spellslinger.Models;
 /// <param name="Color">The foreground color used to represent the terrain.</param>
 public record Terrain(char Character, Color Color)
 {
-	public static Terrain Floor { get; } = new Terrain('.', Color.Brown);
+	public static Terrain Floor { get; } = new Terrain('.', Color.Gray);
 
 	public static Terrain Wall { get; } = new Terrain('#', Color.White);
 
