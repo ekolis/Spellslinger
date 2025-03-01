@@ -61,7 +61,7 @@ public class MapGenerator
 		// place some random doors to better connect the rooms
 		for (var i = 0; i < extraDoors; i++)
 		{
-			var candidates = new List<(int x, int y)>();
+			var doorCandidates = new List<(int x, int y)>();
 			for (var x = 1; x < width - 1; x++)
 			{
 				for (var y = 1; y < height - 1; y++)
@@ -71,17 +71,36 @@ public class MapGenerator
 						&& ((map.Tiles[x - 1, y].Terrain == Terrain.Floor && map.Tiles[x + 1, y].Terrain == Terrain.Floor)
 						|| (map.Tiles[x, y - 1].Terrain == Terrain.Floor && map.Tiles[x, y + 1].Terrain == Terrain.Floor)))
 					{
-						candidates.Add((x, y));
+						doorCandidates.Add((x, y));
 					}
 				}
 			}
-			if (!candidates.Any())
+			if (!doorCandidates.Any())
 			{
 				break;
 			}
-			var doorPos = candidates[rng.Next(candidates.Count)];
+			var doorPos = doorCandidates[rng.Next(doorCandidates.Count)];
 			map.Tiles[doorPos.x, doorPos.y].Terrain = Terrain.Door;
 		}
+
+		// place up and down stairs
+		var stairCandidates = new List<(int x, int y)>();
+		for (var x = 1; x < width - 1; x++)
+		{
+			for (var y = 1; y < height - 1; y++)
+			{
+				// place stairs on a floor tile
+				if (map.Tiles[x, y].Terrain == Terrain.Floor)
+				{
+					stairCandidates.Add((x, y));
+				}
+			}
+		}
+		var upStairPos = stairCandidates[rng.Next(stairCandidates.Count)];
+		map.Tiles[upStairPos.x, upStairPos.y].Terrain = Terrain.StairsUp;
+		stairCandidates.Remove(upStairPos);
+		var downStairPos = stairCandidates[rng.Next(stairCandidates.Count)];
+		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 
 		return map;
 	}
