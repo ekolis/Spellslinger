@@ -102,6 +102,9 @@ public class MapGenerator
 		var downStairPos = stairCandidates[rng.Next(stairCandidates.Count)];
 		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 
+		// place the player on the up stairs
+		map.Tiles[upStairPos.x, upStairPos.y].Actor = new Actor(ActorType.Player);
+
 		return map;
 	}
 

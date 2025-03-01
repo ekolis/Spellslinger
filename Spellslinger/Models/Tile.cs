@@ -13,12 +13,17 @@ public class Tile
 	public required Terrain Terrain { get; set; }
 
 	/// <summary>
+	/// The actor on this tile, if any.
+	/// </summary>
+	public Actor? Actor { get; set; }
+
+	/// <summary>
 	/// The character used to represent the tile.
 	/// </summary>
-	public char Character => Terrain.Character;
+	public char Character => Actor?.Character ?? Terrain.Character;
 
 	/// <summary>
 	/// The foreground color used to represent the tile.
 	/// </summary>
-	public Color Color => Terrain.Color;
+	public Color Color => Actor?.Color ?? Terrain.Color;
 }
