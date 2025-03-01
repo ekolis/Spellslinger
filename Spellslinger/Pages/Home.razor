@@ -4,6 +4,20 @@
 @inject IGame Game
 @inject IMapGenerator MapGenerator
 
-<PageTitle>Home</PageTitle>
+<div @onkeypress="KeyPress">
 
-<MapView Model="@Game.CurrentMap" />
+	<PageTitle>Home</PageTitle>
+
+	<MapView Model="@Game.CurrentMap" />
+
+	<div>
+		@for (var i = Game.Log.Count - 5; i < Game.Log.Count; i++)
+		{
+			if (i >= 0)
+			{
+				<p>@Game.Log[i]</p>
+			}
+		}
+	</div>
+
+</div>

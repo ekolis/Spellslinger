@@ -30,4 +30,14 @@ public class Map
 	public int Width { get; }
 
 	public int Height { get; }
+
+	/// <summary>
+	/// Finds the first actor (if any) matching a predicate.
+	/// </summary>
+	/// <param name="predicate"></param>
+	/// <returns></returns>
+	public Actor? FindActor(Func<Actor, bool> predicate)
+	{
+		return Tiles.Cast<Tile>().Select(q => q.Actor).FirstOrDefault(predicate);
+	}
 }

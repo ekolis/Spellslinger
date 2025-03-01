@@ -15,5 +15,5 @@ public interface IMapGenerator
 	/// <param name="rooms"></param>
 	/// <param name="extraDoors"></param>
 	/// <returns></returns>
-	public Map Generate(int width, int height, int rooms, int extraDoors);
+	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors);
 }

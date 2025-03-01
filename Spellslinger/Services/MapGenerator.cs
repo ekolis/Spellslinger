@@ -5,7 +5,7 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	public Map Generate(int width, int height, int rooms, int extraDoors)
+	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors)
 	{
 		var map = new Map(width, height);
 
@@ -103,7 +103,7 @@ public class MapGenerator
 		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 
 		// place the player on the up stairs
-		map.Tiles[upStairPos.x, upStairPos.y].Actor = new Actor(ActorType.Player);
+		map.Tiles[upStairPos.x, upStairPos.y].Actor = new Actor(ActorType.Player, game);
 
 		return map;
 	}
