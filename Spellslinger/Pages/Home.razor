@@ -8,16 +8,18 @@
 
 	<PageTitle>Home</PageTitle>
 
-	<MapView Model="@Game.CurrentMap" />
+	<div style="display: flex; flex-direction: row">
+		<MapView Model="@Game.CurrentMap" />
 
-	<div>
-		@for (var i = Game.Log.Count - 5; i < Game.Log.Count; i++)
-		{
-			if (i >= 0)
+		<div class="log">
+			@for (var i = Game.Log.Count - Game.CurrentMap.Height; i < Game.Log.Count; i++)
 			{
-				<p>@Game.Log[i]</p>
+				if (i >= 0)
+				{
+					<p class="log-entry">@Game.Log[i]</p>
+				}
 			}
-		}
+		</div>
 	</div>
 
 </div>

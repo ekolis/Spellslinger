@@ -123,3 +123,9 @@ code {
 	height: 16px;
     text-align: center;
 }
+
+.log-entry {
+    height: 16px;
+    line-height: 16px;
+    margin: 0px;
+}
