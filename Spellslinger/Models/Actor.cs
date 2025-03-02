@@ -115,8 +115,34 @@ public class Actor
 	/// </summary>
 	public void ActAsEnemy()
 	{
-		// TODO: move and attack player
-		Game.Log.Add($"The {this} says 'boo'!");
+		var myLocation = Game.CurrentMap.LocateActor(this);
+		var playerLocation = Game.CurrentMap.LocateActor(Game.Player);
+		var dx = playerLocation.x - myLocation.x;
+		var dy = playerLocation.y - myLocation.y;
+		if (dx == 1 && dy == 0
+			|| dx == -1 && dy == 0
+			|| dx == 0 && dy == 1
+			|| dx == 0 && dy == -1)
+		{
+			// player is directly adjacent, attack!
+			Attack(Game.Player);
+		}
+		else
+		{
+			// move toward player
+			// TODO: fog of war
+			var verticalChance = (double)Math.Abs(dy) / Math.Abs(dx + dy);
+			var goVertical = Game.Rng.NextDouble() < verticalChance;
+			if (goVertical)
+			{
+				Game.CurrentMap.MoveActor(this, 0, Math.Sign(dy));
+			}
+			else
+			{
+				Game.CurrentMap.MoveActor(this, Math.Sign(dx), 0);
+			}
+		}
+
 		ScheduleNextTurn();
 	}
 
