@@ -13,32 +13,39 @@
 
 		<div>
 			<div>
-				<table>
-					<tr>
-						<td>Strength</td>
-						<td>@Game.Player.Stats.Strength</td>
-						<td>Toughness</td>
-						<td>@Game.Player.Stats.Toughness</td>
-					</tr>
-					<tr>
-						<td>Willpower</td>
-						<td>@Game.Player.Stats.Willpower</td>
-						<td>Memory</td>
-						<td>@Game.Player.Stats.Memory</td>
-					</tr>
-					<tr>
-						<td>Health</td>
-						<td>@Game.Player.Health.Value / @Game.Player.Health.Maximum</td>
-						<td>Stamina</td>
-						<td>@Game.Player.Stamina.Value / @Game.Player.Stamina.Maximum</td>
-					</tr>
-					<tr>
-						<td>Reserves</td>
-						<td>@Game.Player.Reserves.Value / @Game.Player.Reserves.Maximum</td>
-						<td>Mana</td>
-						<td>@Game.Player.Mana.Value / @Game.Player.Mana.Maximum</td>
-					</tr>
-				</table>
+				@if (Game.Player is null)
+				{
+					<span>GAME OVER</span>
+				}
+				else
+				{
+					<table>
+						<tr>
+							<td>Strength</td>
+							<td>@Game.Player.Stats.Strength</td>
+							<td>Toughness</td>
+							<td>@Game.Player.Stats.Toughness</td>
+						</tr>
+						<tr>
+							<td>Willpower</td>
+							<td>@Game.Player.Stats.Willpower</td>
+							<td>Memory</td>
+							<td>@Game.Player.Stats.Memory</td>
+						</tr>
+						<tr>
+							<td>Health</td>
+							<td>@Game.Player.Health.Value / @Game.Player.Health.Maximum</td>
+							<td>Stamina</td>
+							<td>@Game.Player.Stamina.Value / @Game.Player.Stamina.Maximum</td>
+						</tr>
+						<tr>
+							<td>Reserves</td>
+							<td>@Game.Player.Reserves.Value / @Game.Player.Reserves.Maximum</td>
+							<td>Mana</td>
+							<td>@Game.Player.Mana.Value / @Game.Player.Mana.Maximum</td>
+						</tr>
+					</table>
+				}
 			</div>
 			<div class="log">
 				@for (var i = Game.Log.Count - Game.CurrentMap.Height; i < Game.Log.Count; i++)
