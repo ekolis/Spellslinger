@@ -5,7 +5,7 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors)
+	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors, int enemies)
 	{
 		var map = new Map(width, height);
 
@@ -105,6 +105,31 @@ public class MapGenerator
 
 		// place the player on the up stairs
 		map.Tiles[upStairPos.x, upStairPos.y].Actor = new Actor(ActorType.Player, game);
+
+		// place some random enemies
+		for (var i = 0; i < enemies; i++)
+		{
+			// TODO: pick enemies based on the dungeon level and stuff
+			var enemy = new Actor(ActorType.Blob, game);
+			List<(int x, int y)> enemyCandidates = [];
+			for (var x = 1; x < width - 1; x++)
+			{
+				for (var y = 1; y < height - 1; y++)
+				{
+					// place enemies on an unoccupied floor tile
+					if (map.Tiles[x, y].Terrain == Terrain.Floor && map.Tiles[x, y].Actor is null)
+					{
+						enemyCandidates.Add((x, y));
+					}
+				}
+			}
+			if (!enemyCandidates.Any())
+			{
+				break;
+			}
+			var enemyCandidate = enemyCandidates[rng.Next(enemyCandidates.Count)];
+			map.Tiles[enemyCandidate.x, enemyCandidate.y].Actor = enemy;
+		}
 
 		return map;
 	}
