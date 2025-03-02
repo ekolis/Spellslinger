@@ -8,7 +8,7 @@ public class Game
 {
 	public required Map CurrentMap { get; set; }
 
-	public Actor? Player => CurrentMap.FindActor(q => q.IsPlayerControlled);
+	public Actor? Player => CurrentMap.Player;
 
 	public IList<string> Log { get; } = [];
 

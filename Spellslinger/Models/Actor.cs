@@ -15,6 +15,7 @@ public class Actor
 		Game = game;
 		HP = new DualMeter(Stats.Toughness * 5, Stats.Toughness + Stats.Willpower);
 		MP = new DualMeter(Stats.Memory * 5, Stats.Memory + Stats.Willpower);
+		Delay = new Meter(Stats.MaxSpeed);
 	}
 
 	private readonly IGame Game;
@@ -62,32 +63,81 @@ public class Actor
 	public Meter Reserves => MP.Inner;
 
 	/// <summary>
+	/// Meter which counts down to the actor's next turn.
+	/// </summary>
+	public Meter Delay { get; }
+
+	/// <summary>
 	/// Sends keyboard input to this actor.
 	/// </summary>
 	/// <param name="e"></param>
 	/// <returns>true if the input caused the actor to perform an action that consumed its turn, otherwise false.</returns>
 	public bool AcceptKeyboardInput(KeyboardEventArgs e)
 	{
-		if (IsPlayerControlled)
+		if (IsPlayerControlled && Delay.IsEmpty)
 		{
+			var moved = false;
 			switch (e.Code)
 			{
 				case "ArrowLeft":
-					return Game.CurrentMap.MoveActor(this, -1, 0);
+					moved = Game.CurrentMap.MoveActor(this, -1, 0);
+					break;
 				case "ArrowRight":
-					return Game.CurrentMap.MoveActor(this, 1, 0);
+					moved = Game.CurrentMap.MoveActor(this, 1, 0);
+					break;
 				case "ArrowUp":
-					return Game.CurrentMap.MoveActor(this, 0, -1);
+					moved = Game.CurrentMap.MoveActor(this, 0, -1);
+					break;
 				case "ArrowDown":
-					return Game.CurrentMap.MoveActor(this, 0, 1);
+					moved = Game.CurrentMap.MoveActor(this, 0, 1);
+					break;
 				default:
 					Game.Log.Add($"Unknown key pressed: {e.Code}");
-					return false;
+					break;
 			}
+
+			if (moved)
+			{
+				// player moved, allow other actors to move
+				Game.CurrentMap.ProcessNpcTurns();
+			}
+
+			return moved;
 		}
 		else
 		{
 			return false;
 		}
+	}
+
+	/// <summary>
+	/// Acts like an enemy for one turn.
+	/// </summary>
+	public void ActAsEnemy()
+	{
+		// TODO: move and attack player
+		Game.Log.Add($"The {this} says 'boo'!");
+		ScheduleNextTurn();
+	}
+
+	/// <summary>
+	/// Waits one tick for the actor's next turn.
+	/// </summary>
+	public void Wait()
+	{
+		Delay.Deplete(Stats.Speed);
+	}
+
+	/// <summary>
+	/// Schedules the actor's next turn.
+	/// </summary>
+	public void ScheduleNextTurn()
+	{
+		Delay.Restore();
+	}
+
+	public override string ToString()
+	{
+		return Type.Name;
 	}
 }

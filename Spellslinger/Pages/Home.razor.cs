@@ -7,6 +7,7 @@ public partial class Home
 	protected override void OnInitialized()
 	{
 		Game.CurrentMap = MapGenerator.Generate(Game, 64, 32, 16, 8, 16);
+		Game.CurrentMap.ProcessNpcTurns();
 	}
 
 	protected void KeyDown(KeyboardEventArgs e)

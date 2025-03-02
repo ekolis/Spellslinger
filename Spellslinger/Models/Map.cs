@@ -33,6 +33,8 @@ public class Map
 
 	public int Height { get; }
 
+	public Actor? Player => FindActor(q => q.IsPlayerControlled);
+
 	/// <summary>
 	/// Finds the first actor (if any) matching a predicate.
 	/// </summary>
@@ -103,7 +105,42 @@ public class Map
 		Tiles[x, y].Actor = null;
 		Tiles[newX, newY].Actor = actor;
 
+		// schedule next turn
+		actor.ScheduleNextTurn();
+
 		// yes, we did take a turn
 		return true;
+	}
+
+	/// <summary>
+	/// Processes the turns of NPCs until it's the player's turn to move again.
+	/// </summary>
+	public void ProcessNpcTurns()
+	{
+		while (Player is not null && !Player.Delay.IsEmpty)
+		{
+			// find all non-player actors whose turn it is
+			List<Actor> actors = [];
+			foreach (var tile in Tiles)
+			{
+				if (tile.Actor is not null && !tile.Actor.IsPlayerControlled && tile.Actor.Delay.IsEmpty)
+				{
+					// don't let creatures move twice by moving to the next tile in the array!
+					actors.Add(tile.Actor);
+				}
+			}
+
+			// let the actors act
+			foreach (var actor in actors)
+			{
+				actor.ActAsEnemy();
+			}
+
+			// pass some time
+			foreach (var actor in Tiles.Cast<Tile>().Select(q => q.Actor).Where(q => q is not null))
+			{
+				actor.Wait();
+			}
+		}
 	}
 }

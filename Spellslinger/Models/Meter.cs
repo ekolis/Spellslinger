@@ -72,4 +72,8 @@ public class Meter
 	{
 		Value = Maximum;
 	}
+
+	public bool IsEmpty => Value <= 0;
+
+	public bool IsFull => Value >= Maximum;
 }

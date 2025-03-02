@@ -16,7 +16,7 @@ public record ActorType(string Name, char Character, Color Color, Stats Stats)
 		"player",
 		'@',
 		Color.White,
-		new(3, 3, 3, 3))
+		new(3, 3, 3, 3, 3))
 	{
 		IsPlayerControlled = true
 	};
@@ -25,5 +25,5 @@ public record ActorType(string Name, char Character, Color Color, Stats Stats)
 		"blob",
 		'b',
 		Color.Blue,
-		new(1, 1, 1, 2));
+		new(1, 1, 1, 2, 3));
 }
