@@ -19,6 +19,11 @@ public interface IGame
 	public IList<string> Log { get; }
 
 	/// <summary>
+	/// The player character, or null if the player is dead.
+	/// </summary>
+	public Actor Player { get; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>
