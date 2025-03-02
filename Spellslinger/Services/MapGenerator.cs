@@ -7,7 +7,7 @@ public class MapGenerator
 {
 	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors, int enemies)
 	{
-		var map = new Map(width, height);
+		var map = new Map(width, height, null);
 
 		// put a wall around the edge
 		BuildHorizontalWall(map, 0);
@@ -104,7 +104,9 @@ public class MapGenerator
 		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 
 		// place the player on the up stairs
-		map.Tiles[upStairPos.x, upStairPos.y].Actor = new Actor(ActorType.Player, game);
+		var player = new Actor(ActorType.Player, game);
+		map.Player = player;
+		map.Tiles[upStairPos.x, upStairPos.y].Actor = player;
 
 		// place some random enemies
 		for (var i = 0; i < enemies; i++)

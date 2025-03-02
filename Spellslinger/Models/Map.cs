@@ -7,7 +7,7 @@ namespace Spellslinger.Models;
 /// </summary>
 public class Map
 {
-	public Map(int width, int height)
+	public Map(int width, int height, Actor? player)
 	{
 		Width = width;
 		Height = height;
@@ -22,6 +22,7 @@ public class Map
 				};
 			}
 		}
+		Player = player;
 	}
 
 	/// <summary>
@@ -33,7 +34,7 @@ public class Map
 
 	public int Height { get; }
 
-	public Actor? Player => FindActor(q => q.IsPlayerControlled);
+	public Actor? Player { get; set; }
 
 	/// <summary>
 	/// Finds the first actor (if any) matching a predicate.
