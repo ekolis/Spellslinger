@@ -21,7 +21,12 @@ public interface IGame
 	/// <summary>
 	/// The player character, or null if the player is dead.
 	/// </summary>
-	public Actor Player { get; }
+	public Actor Player { get; set; }
+
+	/// <summary>
+	/// A random number generator.
+	/// </summary>
+	public Random Rng { get; }
 
 	/// <summary>
 	/// Sends keyboard input to the game.

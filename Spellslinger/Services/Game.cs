@@ -8,9 +8,15 @@ public class Game
 {
 	public required Map CurrentMap { get; set; }
 
-	public Actor? Player => CurrentMap.Player;
+	public Actor? Player
+	{
+		get => CurrentMap.Player;
+		set => CurrentMap.Player = value;
+	}
 
 	public IList<string> Log { get; } = [];
+
+	public Random Rng { get; } = new Random();
 
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{

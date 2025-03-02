@@ -19,7 +19,6 @@ public class MapGenerator
 		// use binary space partitioning to split the map into rooms
 		// TODO: why are we still getting walls going into doors?
 		// maybe just clean up the space around all doors, if three sides of a door are walls, delete the one opposite a floor?
-		var rng = new Random();
 		List<int> verticalWallPositions = [];
 		List<int> horizontalWallPositions = [];
 		for (var i = 0; i < rooms - 1; i++)
@@ -34,8 +33,8 @@ public class MapGenerator
 			int tries = 0;
 			do
 			{
-				x = rng.Next(2, width - 2);
-				y = rng.Next(2, height - 2);
+				x = game.Rng.Next(2, width - 2);
+				y = game.Rng.Next(2, height - 2);
 				tries++;
 			} while (
 				(map.Tiles[x, y].Terrain == Terrain.Wall
@@ -80,7 +79,7 @@ public class MapGenerator
 			{
 				break;
 			}
-			var doorPos = doorCandidates[rng.Next(doorCandidates.Count)];
+			var doorPos = doorCandidates[game.Rng.Next(doorCandidates.Count)];
 			map.Tiles[doorPos.x, doorPos.y].Terrain = Terrain.Door;
 		}
 
@@ -97,10 +96,10 @@ public class MapGenerator
 				}
 			}
 		}
-		var upStairPos = stairCandidates[rng.Next(stairCandidates.Count)];
+		var upStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 		map.Tiles[upStairPos.x, upStairPos.y].Terrain = Terrain.StairsUp;
 		stairCandidates.Remove(upStairPos);
-		var downStairPos = stairCandidates[rng.Next(stairCandidates.Count)];
+		var downStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 
 		// place the player on the up stairs
@@ -129,7 +128,7 @@ public class MapGenerator
 			{
 				break;
 			}
-			var enemyCandidate = enemyCandidates[rng.Next(enemyCandidates.Count)];
+			var enemyCandidate = enemyCandidates[game.Rng.Next(enemyCandidates.Count)];
 			map.Tiles[enemyCandidate.x, enemyCandidate.y].Actor = enemy;
 		}
 

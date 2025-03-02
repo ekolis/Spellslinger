@@ -93,8 +93,17 @@ public class Map
 		}
 		if (Tiles[newX, newY].Actor is not null)
 		{
-			// TODO: combat
-			return false;
+			// see if who's there is an enemy
+			if (actor.IsPlayerControlled != Tiles[newX, newY].Actor.IsPlayerControlled)
+			{
+				actor.Attack(Tiles[newX, newY].Actor);
+				return true;
+			}
+			else
+			{
+				// can't walk through other actors
+				return false;
+			}
 		}
 		if (!Tiles[newX, newY].Terrain.IsPassable)
 		{
