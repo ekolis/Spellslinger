@@ -107,6 +107,7 @@ public class MapGenerator
 		var player = new Actor(ActorType.Player, game);
 		// TODO: let the player choose their own spells
 		player.MeleeSpells.Add(new ForceFist(game));
+		player.GeneralSpells.Add(new FireWave(game));
 		map.Player = player;
 		map.Tiles[upStairPos.x, upStairPos.y].Actor = player;
 

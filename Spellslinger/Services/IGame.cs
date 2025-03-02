@@ -29,6 +29,21 @@ public interface IGame
 	public Random Rng { get; }
 
 	/// <summary>
+	/// The keys that can be used to cast spells.
+	/// </summary>
+	public string SpellKeys { get; }
+
+	/// <summary>
+	/// The current input mode for the UI.
+	/// </summary>
+	public InputMode InputMode { get; set; }
+
+	/// <summary>
+	/// The spell that has been input, and is pending a direction.
+	/// </summary>
+	public Spell? InputSpell { get; set; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>

@@ -18,6 +18,12 @@ public class Game
 
 	public Random Rng { get; } = new Random();
 
+	public string SpellKeys => "ZXCVBNM";
+
+	public InputMode InputMode { get; set; } = InputMode.Default;
+
+	public Spell InputSpell { get; set; }
+
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (Player != null)

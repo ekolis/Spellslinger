@@ -73,6 +73,11 @@ public class Actor
 	public IList<Spell> MeleeSpells { get; } = [];
 
 	/// <summary>
+	/// Any spells that are available to cast at will.
+	/// </summary>
+	public IList<Spell> GeneralSpells { get; } = [];
+
+	/// <summary>
 	/// Sends keyboard input to this actor.
 	/// </summary>
 	/// <param name="e"></param>
@@ -85,16 +90,37 @@ public class Actor
 			switch (e.Code)
 			{
 				case "ArrowLeft":
-					moved = Game.CurrentMap.MoveActor(this, -1, 0);
+					moved = HandleDirectionalInput(-1, 0);
 					break;
 				case "ArrowRight":
-					moved = Game.CurrentMap.MoveActor(this, 1, 0);
+					moved = HandleDirectionalInput(1, 0);
 					break;
 				case "ArrowUp":
-					moved = Game.CurrentMap.MoveActor(this, 0, -1);
+					moved = HandleDirectionalInput(0, -1);
 					break;
 				case "ArrowDown":
-					moved = Game.CurrentMap.MoveActor(this, 0, 1);
+					moved = HandleDirectionalInput(0, 1);
+					break;
+				case "KeyZ":
+					moved = PrepareCastPlayerSpell(0);
+					break;
+				case "KeyX":
+					moved = PrepareCastPlayerSpell(1);
+					break;
+				case "KeyC":
+					moved = PrepareCastPlayerSpell(2);
+					break;
+				case "KeyV":
+					moved = PrepareCastPlayerSpell(3);
+					break;
+				case "KeyB":
+					moved = PrepareCastPlayerSpell(4);
+					break;
+				case "KeyN":
+					moved = PrepareCastPlayerSpell(5);
+					break;
+				case "KeyM":
+					moved = PrepareCastPlayerSpell(6);
 					break;
 				default:
 					Game.Log.Add($"Unknown key pressed: {e.Code}");
@@ -220,6 +246,46 @@ public class Actor
 				Game.Log.Add("Game over...");
 				Game.Player = null;
 			}
+		}
+	}
+
+	private bool PrepareCastPlayerSpell(int index)
+	{
+		if (GeneralSpells.Count > index)
+		{
+			if (GeneralSpells[index].IsDirectional)
+			{
+				Game.InputMode = InputMode.SpellDirection;
+				Game.InputSpell = GeneralSpells[index];
+				Game.Log.Add($"Select a direction to cast {GeneralSpells[index]}.");
+				return false;
+			}
+			else
+			{
+				return GeneralSpells[0].Cast(this, 0, 0);
+			}
+		}
+		else
+		{
+			Game.Log.Add("You haven't prepared a spell in that slot.");
+			return false;
+		}
+	}
+
+	private bool HandleDirectionalInput(int dx, int dy)
+	{
+		if (Game.InputMode == InputMode.SpellDirection)
+		{
+			// cast the input spell in the desired direction
+			var result = Game.InputSpell.Cast(this, dx, dy);
+			Game.InputMode = InputMode.Default;
+			Game.InputSpell = null;
+			return result;
+		}
+		else
+		{
+			// move the actor
+			return Game.CurrentMap.MoveActor(this, dx, dy);
 		}
 	}
 

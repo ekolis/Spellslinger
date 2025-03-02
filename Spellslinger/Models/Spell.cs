@@ -61,9 +61,15 @@ public abstract class Spell
 			Game.Log.Add($"The {caster} casts {Name}.");
 			caster.MP.Deplete(MPCost);
 			CastImpl(caster, dx, dy);
+			caster.ScheduleNextTurn();
 			return true;
 		}
 	}
 
 	protected abstract void CastImpl(Actor caster, int dx, int dy);
+
+	public override string ToString()
+	{
+		return Name;
+	}
 }

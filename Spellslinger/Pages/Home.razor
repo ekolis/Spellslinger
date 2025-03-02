@@ -58,7 +58,12 @@
 								</ul>
 							</td>
 							<td colspan="2">
-								@*TODO: general spells*@
+								<ul>
+									@foreach (var (i, spell) in Game.Player.GeneralSpells.Index())
+									{
+										<li>@Game.SpellKeys[i]: @spell.Name (@spell.MPCost MP)</li>
+									}
+								</ul>
 							</td>
 						</tr>
 					</table>
