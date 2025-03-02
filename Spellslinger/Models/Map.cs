@@ -153,6 +153,12 @@ public class Map
 			foreach (var actor in allActors)
 			{
 				actor.Wait(ticksToWait);
+				if (actor.Delay.IsEmpty)
+				{
+					// when it's the actor's turn, restore some stamina and mana
+					actor.Stamina.Restore(1);
+					actor.Mana.Restore(1);
+				}
 			}
 		}
 	}
