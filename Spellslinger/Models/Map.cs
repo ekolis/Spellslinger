@@ -137,9 +137,11 @@ public class Map
 			}
 
 			// pass some time
-			foreach (var actor in Tiles.Cast<Tile>().Select(q => q.Actor).Where(q => q is not null))
+			var allActors = Tiles.Cast<Tile>().Select(q => q.Actor).Where(q => q is not null);
+			var ticksToWait = allActors.Min(q => q.TicksToWait);
+			foreach (var actor in allActors)
 			{
-				actor.Wait();
+				actor.Wait(ticksToWait);
 			}
 		}
 	}

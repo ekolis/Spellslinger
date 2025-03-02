@@ -121,11 +121,11 @@ public class Actor
 	}
 
 	/// <summary>
-	/// Waits one tick for the actor's next turn.
+	/// Waits for the actor's next turn.
 	/// </summary>
-	public void Wait()
+	public void Wait(int ticks)
 	{
-		Delay.Deplete(Stats.Speed);
+		Delay.Deplete(Stats.Speed * ticks);
 	}
 
 	/// <summary>
@@ -135,6 +135,11 @@ public class Actor
 	{
 		Delay.Restore();
 	}
+
+	/// <summary>
+	/// The number of ticks the actor must wait before its next turn.
+	/// </summary>
+	public int TicksToWait => (int)Math.Ceiling((double)Delay.Value / Stats.Speed);
 
 	public override string ToString()
 	{
