@@ -44,6 +44,23 @@
 							<td>Mana</td>
 							<td>@Game.Player.Mana.Value / @Game.Player.Mana.Maximum</td>
 						</tr>
+						<tr>
+							<td colspan="2">Melee Spells</td>
+							<td colspan="2">General Spells</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<ul>
+									@foreach (var spell in Game.Player.MeleeSpells)
+									{
+										<li>@spell.Name (@spell.MPCost MP)</li>
+									}
+								</ul>
+							</td>
+							<td colspan="2">
+								@*TODO: general spells*@
+							</td>
+						</tr>
 					</table>
 				}
 			</div>

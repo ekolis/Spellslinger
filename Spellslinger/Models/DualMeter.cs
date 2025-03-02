@@ -22,6 +22,16 @@ public class DualMeter
 	public Meter Outer { get; }
 
 	/// <summary>
+	/// The total value of the two meters.
+	/// </summary>
+	public int Value => Inner.Value + Outer.Value;
+
+	/// <summary>
+	/// The total maximum of the two meters.
+	/// </summary>
+	public int Maximum => Inner.Maximum + Outer.Maximum;
+
+	/// <summary>
 	/// Depletes this meter. The outer meter will be depleted first.
 	/// </summary>
 	/// <param name="amount"></param>

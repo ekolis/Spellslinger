@@ -68,6 +68,11 @@ public class Actor
 	public Meter Delay { get; }
 
 	/// <summary>
+	/// Any spells that are set to cast after this actor makes a melee attack.
+	/// </summary>
+	public IList<Spell> MeleeSpells { get; } = [];
+
+	/// <summary>
 	/// Sends keyboard input to this actor.
 	/// </summary>
 	/// <param name="e"></param>
@@ -168,7 +173,7 @@ public class Actor
 	public int TicksToWait => (int)Math.Ceiling((double)Delay.Value / Stats.Speed);
 
 	/// <summary>
-	/// Performs a melee attack on a target.
+	/// Performs a melee attack on a target, then casts any melee spells that are slotted.
 	/// </summary>
 	/// <remarks>
 	/// This function doesn't check that the target is in melee attack range. You should do that before calling it.
@@ -176,6 +181,7 @@ public class Actor
 	/// <param name="target"></param>
 	public void Attack(Actor target)
 	{
+		// melee attack
 		var damage = Stats.Strength;
 		var critChance = Stats.Willpower;
 		var isCrit = Game.Rng.Next(0, 100) < critChance;
@@ -186,13 +192,30 @@ public class Actor
 			verb = "critcally hits";
 		}
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
-		var leftoverDamage = target.HP.Deplete(damage);
+		target.TakeDamage(damage);
+
+		// cast spells
+		var myPos = Game.CurrentMap.LocateActor(this);
+		var targetPos = Game.CurrentMap.LocateActor(target);
+		foreach (var spell in MeleeSpells)
+		{
+			spell.Cast(this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+		}
+	}
+
+	/// <summary>
+	/// Takes some damage, potentially killing the actor.
+	/// </summary>
+	/// <param name="damage">The amount of damage.</param>
+	public void TakeDamage(int damage)
+	{
+		var leftoverDamage = HP.Deplete(damage);
 		if (leftoverDamage > 0)
 		{
-			Game.Log.Add($"The {target} is killed!");
-			var tile = Game.CurrentMap.LocateActor(target);
+			Game.Log.Add($"The {this} is killed!");
+			var tile = Game.CurrentMap.LocateActor(this);
 			Game.CurrentMap.Tiles[tile.x, tile.y].Actor = null;
-			if (target.IsPlayerControlled)
+			if (IsPlayerControlled)
 			{
 				Game.Log.Add("Game over...");
 				Game.Player = null;
