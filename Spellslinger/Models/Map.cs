@@ -97,6 +97,7 @@ public class Map
 			if (actor.IsPlayerControlled != Tiles[newX, newY].Actor.IsPlayerControlled)
 			{
 				actor.Attack(Tiles[newX, newY].Actor);
+				actor.ScheduleNextTurn();
 				return true;
 			}
 			else
