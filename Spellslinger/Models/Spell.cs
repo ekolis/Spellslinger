@@ -5,12 +5,12 @@ namespace Spellslinger.Models;
 /// <summary>
 /// A magic spell.
 /// </summary>
-public abstract class Spell
+public abstract record Spell()
 {
 	/// <summary>
 	/// Basic stats of the spell. Can be affected by modifiers.
 	/// </summary>
-	public SpellStats Stats { get; set; }
+	public SpellStats Stats { get; init; }
 
 	/// <summary>
 	/// The name of the spell.
@@ -40,7 +40,7 @@ public abstract class Spell
 	/// <summary>
 	/// Any modifiers that have been applied to this spell.
 	/// </summary>
-	public IEnumerable<SpellModifier> Modifiers { get; private set; } = [];
+	public IEnumerable<SpellModifier> Modifiers { get; init; } = [];
 
 	/// <summary>
 	/// Casts the spell.
@@ -68,14 +68,16 @@ public abstract class Spell
 
 	protected abstract void CastImpl(IGame game, Actor caster, int dx, int dy);
 
-	public void ApplyModifier(SpellModifier modifier)
+	public Spell ApplyModifier(SpellModifier modifier)
 	{
-		// add the modifier to the list of modifiers on the spell
-		Modifiers = [..Modifiers, modifier];
+		return this with
+		{
+			// add the modifier to the list of modifiers on the spell
+			Modifiers = [.. Modifiers, modifier],
 
-		// apply the modifier to the spell's stats
-		Stats = modifier.Apply(Stats);
-
+			// apply the modifier to the spell's stats
+			Stats = modifier.Apply(Stats)
+		};
 	}
 
 	public override string ToString()

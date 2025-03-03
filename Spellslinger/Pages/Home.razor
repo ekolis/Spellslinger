@@ -9,7 +9,14 @@
 	<PageTitle>Home</PageTitle>
 
 	<div style="display: flex; flex-direction: row">
-		<MapView Model="@Game.CurrentMap" />
+		@if (Game.InputMode == Models.InputMode.Spellcrafting)
+		{
+			<SpellcraftingView />
+		}
+		else
+		{
+			<MapView Model="@Game.CurrentMap" />
+		}
 
 		<div>
 			<div>
@@ -51,7 +58,7 @@
 						<tr>
 							<td colspan="2">
 								<ul>
-									@foreach (var spell in Game.Player.MeleeSpells)
+									@foreach (var spell in Game.Player.Knowledge.MeleeSpells)
 									{
 										<li>@spell.Name (@spell.MPCost MP)</li>
 									}
@@ -59,7 +66,7 @@
 							</td>
 							<td colspan="2">
 								<ul>
-									@foreach (var (i, spell) in Game.Player.GeneralSpells.Index())
+									@foreach (var (i, spell) in Game.Player.Knowledge.GeneralSpells.Index())
 									{
 										<li>@Game.SpellKeys[i]: @spell.Name (@spell.MPCost MP)</li>
 									}
@@ -70,7 +77,7 @@
 				}
 			</div>
 			<div class="log">
-				@for (var i = Game.Log.Count - Game.CurrentMap.Height; i < Game.Log.Count; i++)
+				@for (var i = Game.Log.Count - 30; i < Game.Log.Count; i++)
 				{
 					if (i >= 0)
 					{

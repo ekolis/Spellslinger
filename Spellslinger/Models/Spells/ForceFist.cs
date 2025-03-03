@@ -2,7 +2,7 @@
 
 namespace Spellslinger.Models.Spells;
 
-public class ForceFist
+public record ForceFist
 	: Spell
 {
 	public ForceFist()

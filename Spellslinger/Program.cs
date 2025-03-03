@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Spellslinger;
+using Spellslinger.Models;
 using Spellslinger.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

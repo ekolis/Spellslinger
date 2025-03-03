@@ -34,6 +34,7 @@ public class Map
 
 	public int Height { get; }
 
+	[Obsolete("Use Game.Player instead.")]
 	public Actor? Player { get; set; }
 
 	/// <summary>

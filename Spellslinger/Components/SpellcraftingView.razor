@@ -1,0 +1,154 @@
+﻿@using Spellslinger.Services
+@inject IGame Game
+
+<div>
+	<h3>Spellcrafting</h3>
+
+	<h4>Prepared Spells</h4>
+	<table>
+		<tr>
+			<th>Slot</th>
+			<th>Name</th>
+			<th>MP Cost</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</tr>
+		@foreach (var (i, spell) in Game.Player.Knowledge.MeleeSpells.Index())
+		{
+			<tr>
+				<td>Melee @(i + 1)</td>
+				<td>@spell.Name</td>
+				<td>@spell.MPCost</td>
+				<td>@spell.Description</td>
+				<td>
+					<button @onclick="() => Game.Player.Knowledge.MeleeSpells.Remove(spell)">Drop</button>
+				</td>
+			</tr>
+		}
+		@foreach (var (i, spell) in Game.Player.Knowledge.GeneralSpells.Index())
+		{
+			<tr>
+				<td>@Game.SpellKeys[i]</td>
+				<td>@spell.Name</td>
+				<td>@spell.MPCost</td>
+				<td>@spell.Description</td>
+				<td>
+					<button @onclick="() => Game.Player.Knowledge.GeneralSpells.Remove(spell)">Drop</button>
+				</td>
+			</tr>
+		}
+	</table>
+
+	<h4>Known Spells</h4>
+	<table>
+		<tr>
+			<th>Spell</th>
+			<th>MP Cost</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</tr>
+		@foreach (var spell in Game.Player.Knowledge.Spells)
+		{
+			<tr>
+				<td>@spell.Name</td>
+				<td>@spell.MPCost</td>
+				<td>@spell.Description</td>
+				<td>
+					@if (!Game.Player.Knowledge.MeleeSpells.Contains(spell) && Game.Player.MaxMeleeSpells > Game.Player.Knowledge.MeleeSpells.Count)
+					{
+						<button @onclick="() => Game.Player.Knowledge.MeleeSpells.Add(spell)">Melee</button>
+					}
+					@if (!Game.Player.Knowledge.GeneralSpells.Contains(spell) && Game.Player.MaxGeneralSpells > Game.Player.Knowledge.GeneralSpells.Count)
+					{
+						<button @onclick="() => Game.Player.Knowledge.GeneralSpells.Add(spell)">Prepare</button>
+					}
+				</td>
+			</tr>
+		}
+	</table>
+
+	<h4>Known Runes</h4>
+	<table>
+		<tr>
+			<th>Rune</th>
+			<th>Core Spell</th>
+			<th>Modifier</th>
+			<th>Actions</th>
+		</tr>
+		@foreach (var rune in Game.Player.Knowledge.Runes)
+		{
+			<tr>
+				<td>@rune.Name</td>
+				<td>@(rune.Spell?.Name ?? "(none)")</td>
+				<td>@(rune.Modifier?.Description ?? "(none)")</td>
+				<td>
+					@if (!CraftingRunes.Contains(rune) && Game.Player.MaxRunesPerSpell > CraftingRunes.Count
+															&& (!CraftingRunes.Any() && rune.Spell is not null || CraftingRunes.Any() && rune.Modifier is not null))
+					{
+						<button @onclick="() => AddRune(rune)">Add to Spell</button>
+					}
+				</td>
+			</tr>
+		}
+	</table>
+
+	@if (CraftingSpell is not null)
+	{
+		<h4>Crafting Spell: @CraftingSpell.Name</h4>
+		<table>
+			<tr>
+				<th>Description</th>
+				<td>@CraftingSpell.Description</td>
+			</tr>
+			<tr>
+				<th>Details</th>
+				<td>@CraftingSpell.Details</td>
+			</tr>
+			<tr>
+				<th>MP Cost</th>
+				<td>@CraftingSpell.MPCost</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<th>Rune</th>
+				<th>Description</th>
+				<th>MP Cost</th>
+				<th>Actions</th>
+			</tr>
+			@foreach (var (i, rune) in CraftingRunes.Index())
+			{
+				<tr>
+					<td>@rune.Name</td>
+					@if (i == 0)
+					{
+						@* core rune *@
+						<td>@rune.Spell.Description</td>
+						<td>@rune.Spell.MPCost</td>
+					}
+					else
+					{
+						@* modifier rune *@
+						<td>@rune.Modifier.Description</td>
+						<td>@rune.Modifier.MPCost</td>
+					}
+					<td>
+						<button @onclick="() => RemoveRune(rune)">Remove</button>
+					</td>					
+				</tr>
+			}
+		</table>
+
+		<button @onclick="() => LearnCraftedSpell()">Learn Spell</button>
+	}
+
+	<h3>Explore</h3>
+	@if (Game.Player.Knowledge.MeleeSpells.Any() || Game.Player.Knowledge.GeneralSpells.Any())
+	{
+		<button @onclick="() => EnterDungeon()">Enter Dungeon</button>
+	}
+	else
+	{
+		<span>You'd best prepare some spells before you enter the dungeon...</span>
+	}
+</div>

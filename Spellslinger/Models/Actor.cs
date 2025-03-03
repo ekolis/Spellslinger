@@ -68,14 +68,30 @@ public class Actor
 	public Meter Delay { get; }
 
 	/// <summary>
-	/// Any spells that are set to cast after this actor makes a melee attack.
+	/// What this actor knows.
 	/// </summary>
-	public IList<Spell> MeleeSpells { get; } = [];
+	public Knowledge Knowledge { get; } = new Knowledge();
+
+	[Obsolete("Use Knowledge.MeleeSpells.")]
+	private IList<Spell> MeleeSpells => Knowledge.MeleeSpells;
+
+	[Obsolete("Use Knowledge.GeneralSpells.")]
+	private IList<Spell> GeneralSpells => Knowledge.GeneralSpells;
 
 	/// <summary>
-	/// Any spells that are available to cast at will.
+	/// The maximum number of melee spells that this actor can have prepared at a time.
 	/// </summary>
-	public IList<Spell> GeneralSpells { get; } = [];
+	public int MaxMeleeSpells => 1 + Stats.Strength / 5;
+
+	/// <summary>
+	/// The maximum number of general spells that this actor can have prepared at a time.
+	/// </summary>
+	public int MaxGeneralSpells => 1 + Stats.Memory / 5;
+
+	/// <summary>
+	/// The maximum number of runes that this actor can use in a single spell.
+	/// </summary>
+	public int MaxRunesPerSpell => 1 + Stats.Willpower / 3;
 
 	/// <summary>
 	/// Sends keyboard input to this actor.
@@ -278,7 +294,7 @@ public class Actor
 		{
 			// cast the input spell in the desired direction
 			var result = Game.InputSpell.Cast(Game, this, dx, dy);
-			Game.InputMode = InputMode.Default;
+			Game.InputMode = InputMode.Exploration;
 			Game.InputSpell = null;
 			return result;
 		}

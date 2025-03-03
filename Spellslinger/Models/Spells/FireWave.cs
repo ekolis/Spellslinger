@@ -2,7 +2,7 @@
 
 namespace Spellslinger.Models.Spells;
 
-public class FireWave
+public record FireWave
 	: Spell
 {
 	public FireWave()
