@@ -25,5 +25,5 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		"blob",
 		'b',
 		Color.Blue,
-		new(1, 1, 1, 2, 3));
+		new(2, 1, 1, 2, 3));
 }
