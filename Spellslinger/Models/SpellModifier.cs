@@ -3,20 +3,36 @@
 /// <summary>
 /// A modifier for a spell.
 /// </summary>
-public abstract class SpellModifier
+/// <param name="Description">A brief description of the modifier's effects.</param>
+/// <param name="Details">Additional details on the modifier's effects, such as formulas and stats used.</param>
+/// <param name="Element">The element to change the spell to, or null to not affect its element.</param>
+/// <param name="MPCost">The number of additional MP required to cast a spell with this modifier.</param>
+/// <param name="Power">Modifier for the spell power. This is typically used for damage, healing, defense, etc.</param>
+public record SpellModifier(string Description, string Details, Element? Element, int MPCost, Func<ActorStats, int> Power)
 {
-	/// <summary>
-	/// A brief description of the modifier's effects.
-	/// </summary>
-	public abstract string Description { get; }
+	public SpellStats Apply(SpellStats stats)
+	{
+		return stats with
+		{
+			Element = Element ?? stats.Element,
+			MPCost = stats.MPCost + MPCost,
+			Power = (actorStats) => stats.Power(actorStats) + Power(actorStats)
+		};
+	}
 
-	/// <summary>
-	/// Additional details on the modifier's effects, such as formulas and stats used.
-	/// </summary>
-	public abstract string Details { get; }
+	public static SpellModifier Force { get; } = new(
+		Description: "Increases the power of a spell.",
+		Details: "Power increase scales with strength.",
+		Element: null,
+		MPCost: 4,
+		Power: x => x.Strength
+	);
 
-	/// <summary>
-	/// The number of additional MP required to cast a spell with this modifier.
-	/// </summary>
-	public abstract int MPCost { get; }
+	public static SpellModifier Fire { get; } = new(
+		Description: "Changes the element of a spell to fire and slightly increases power.",
+		Details: "Power increase scales with willpower.",
+		Element: Element.Fire,
+		MPCost: 3,
+		Power: x => x.Willpower / 2
+	);
 }

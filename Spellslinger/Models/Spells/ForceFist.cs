@@ -12,7 +12,8 @@ public class ForceFist
 			Description: x => $"Projects a short ranged ethereal fist made of pure {x.Element.Description}.",
 			Details: x => "Damage scales with strength and willpower.",
 			MPCost: 3,
-			Element: Element.Force);
+			Element: Element.Force,
+			Power: x => x.Strength + x.Willpower);
 	}
 
 	public override bool IsDirectional => true;
@@ -28,7 +29,7 @@ public class ForceFist
 		}
 		else
 		{
-			var damage = caster.Stats.Strength + caster.Stats.Willpower;
+			var damage = Stats.Power(caster.Stats);
 			game.Log.Add($"The fist hits the {targetTile.Actor} ({damage} damage).");
 			targetTile.Actor.TakeDamage(damage);
 		}

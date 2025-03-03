@@ -106,8 +106,12 @@ public class MapGenerator
 		// place the player on the up stairs
 		var player = new Actor(ActorType.Player, game);
 		// TODO: let the player choose their own spells
-		player.MeleeSpells.Add(new ForceFist());
-		player.GeneralSpells.Add(new FireWave());
+		ForceFist forceFist = new();
+		forceFist.ApplyModifier(SpellModifier.Fire);
+		player.MeleeSpells.Add(forceFist);
+		FireWave fireWave = new();
+		fireWave.ApplyModifier(SpellModifier.Force);
+		player.GeneralSpells.Add(fireWave);
 		map.Player = player;
 		map.Tiles[upStairPos.x, upStairPos.y].Actor = player;
 

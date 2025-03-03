@@ -40,7 +40,7 @@ public abstract class Spell
 	/// <summary>
 	/// Any modifiers that have been applied to this spell.
 	/// </summary>
-	public IList<SpellModifier> Modifiers { get; } = [];
+	public IEnumerable<SpellModifier> Modifiers { get; private set; } = [];
 
 	/// <summary>
 	/// Casts the spell.
@@ -67,6 +67,16 @@ public abstract class Spell
 	}
 
 	protected abstract void CastImpl(IGame game, Actor caster, int dx, int dy);
+
+	public void ApplyModifier(SpellModifier modifier)
+	{
+		// add the modifier to the list of modifiers on the spell
+		Modifiers = [..Modifiers, modifier];
+
+		// apply the modifier to the spell's stats
+		Stats = modifier.Apply(Stats);
+
+	}
 
 	public override string ToString()
 	{

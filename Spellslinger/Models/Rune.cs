@@ -1,32 +1,15 @@
-﻿using Spellslinger.Models.SpellModifiers;
-using Spellslinger.Models.Spells;
+﻿using Spellslinger.Models.Spells;
 
 namespace Spellslinger.Models;
 
 /// <summary>
 /// A rune that can be used to craft spells.
 /// </summary>
-public class Rune
+/// <param name="Name">The name of this rune.</param>
+/// <param name="Spell">The core spell that this rune can be used to cast, or null if it has no core spell.</param>
+/// <param name="Modifier">Modifier that is applied to spells containing this rune as a modifier rune.</param>
+public record Rune(string Name, Spell? Spell, SpellModifier Modifier)
 {
-	/// <summary>
-	/// The name of this rune.
-	/// </summary>
-	public string Name { get; set; }
-
-	/// <summary>
-	/// The core spell that this rune can be used to cast, or null if it has no core spell.
-	/// </summary>
-	public Spell? Spell { get; set; }
-
-	/// <summary>
-	/// Modifier that is applied to spells containing this rune as a modifier rune.
-	/// </summary>
-	public SpellModifier Modifier { get; set; }
-
-	public static Rune Force { get; } = new Rune()
-	{
-		Name = "Force",
-		Spell = new ForceFist(),
-		Modifier = new Force(),
-	};
+	public static Rune Force { get; } = new("Force", new ForceFist(), SpellModifier.Force);
+	public static Rune Fire { get; } = new("Fire", new FireWave(), SpellModifier.Fire);
 }

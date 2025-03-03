@@ -8,4 +8,5 @@
 /// <param name="Description">A brief description of the spell's effects.</param>
 /// <param name="Details">Additional details on the spell's effects, such as formulas and stats used.</param>
 /// <param name="MPCost">The number of MP required to cast the spell.</param>
-public record SpellStats(Func<SpellStats, string> Name, Element Element, Func<SpellStats, string> Description, Func<SpellStats, string> Details, int MPCost);
+/// <param name="Power">The power of the spell. This typically corresponds to something like damage, healing, defense...</param>
+public record SpellStats(Func<SpellStats, string> Name, Element Element, Func<SpellStats, string> Description, Func<SpellStats, string> Details, int MPCost, Func<ActorStats, int> Power);

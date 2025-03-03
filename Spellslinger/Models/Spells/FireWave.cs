@@ -12,7 +12,8 @@ public class FireWave
 			Description: x => $"Blasts nearby enemies in one direction with {x.Element.Description}.",
 			Details: x => "Damage scales with willpower, range with memory.",
 			MPCost: 8,
-			Element: Element.Fire);
+			Element: Element.Fire,
+			Power: x => x.Willpower * 2);
 	}
 
 	public override bool IsDirectional => true;
@@ -43,7 +44,7 @@ public class FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
+					HitTile(game, Stats.Power(caster.Stats), rayXPosition, rayYPosition);
 
 					// TODO: display the ray in the UI
 
@@ -75,7 +76,7 @@ public class FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
+					HitTile(game, Stats.Power(caster.Stats), rayXPosition, rayYPosition);
 
 					// TODO: display the ray in the UI
 
