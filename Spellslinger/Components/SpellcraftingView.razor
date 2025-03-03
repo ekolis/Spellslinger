@@ -71,19 +71,33 @@
 	<table>
 		<tr>
 			<th>Rune</th>
-			<th>Core Spell</th>
-			<th>Modifier</th>
+			@if (!CraftingRunes.Any())
+			{
+				<th>Core Spell</th>
+				<th>Description</th>
+			}
+			else
+			{
+				<th>Modifier</th>
+			}
 			<th>Actions</th>
 		</tr>
 		@foreach (var rune in Game.Player.Knowledge.Runes)
 		{
 			<tr>
 				<td>@rune.Name</td>
-				<td>@(rune.Spell?.Name ?? "(none)")</td>
-				<td>@(rune.Modifier?.Description ?? "(none)")</td>
+				@if (!CraftingRunes.Any())
+				{
+					<td>@(rune.Spell?.Name ?? "(none)")</td>
+					<td>@(rune.Spell?.Description ?? "(none)")</td>
+				}
+				else
+				{
+					<td>@(rune.Modifier?.Description ?? "(none)")</td>
+				}
 				<td>
 					@if (!CraftingRunes.Contains(rune) && Game.Player.MaxRunesPerSpell > CraftingRunes.Count
-															&& (!CraftingRunes.Any() && rune.Spell is not null || CraftingRunes.Any() && rune.Modifier is not null))
+										&& (!CraftingRunes.Any() && rune.Spell is not null || CraftingRunes.Any() && rune.Modifier is not null))
 					{
 						<button @onclick="() => AddRune(rune)">Add to Spell</button>
 					}
@@ -134,7 +148,7 @@
 					}
 					<td>
 						<button @onclick="() => RemoveRune(rune)">Remove</button>
-					</td>					
+					</td>
 				</tr>
 			}
 		</table>
