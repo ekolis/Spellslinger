@@ -5,30 +5,31 @@ namespace Spellslinger.Models.Spells;
 public class ForceFist
 	: Spell
 {
-	public ForceFist(IGame game)
-		: base(game)
+	public ForceFist()
 	{
+		Stats = new SpellStats(
+			Name: x => $"{x.Element} Fist",
+			Description: x => $"Projects a short ranged ethereal fist made of pure {x.Element.Description}.",
+			Details: x => "Damage scales with strength and willpower.",
+			MPCost: 3,
+			Element: Element.Force);
 	}
 
-	public override string Name => "Force Fist";
-	public override string Description => "Projects a short ranged ethereal fist made of pure kinetic energy.";
-	public override string Details => "Damage scales with strength and willpower.";
 	public override bool IsDirectional => true;
-	public override int MPCost => 3;
 
-	protected override void CastImpl(Actor caster, int dx, int dy)
+	protected override void CastImpl(IGame game, Actor caster, int dx, int dy)
 	{
-		var casterPos = Game.CurrentMap.LocateActor(caster);
+		var casterPos = game.CurrentMap.LocateActor(caster);
 		// TODO: deal with array index out of bounds if we try punching too far
-		var targetTile = Game.CurrentMap.Tiles[casterPos.x + dx, casterPos.y + dy];
+		var targetTile = game.CurrentMap.Tiles[casterPos.x + dx, casterPos.y + dy];
 		if (targetTile.Actor is null)
 		{
-			Game.Log.Add($"The fist hits only the {targetTile.Terrain.Name}.");
+			game.Log.Add($"The fist hits only the {targetTile.Terrain.Name}.");
 		}
 		else
 		{
 			var damage = caster.Stats.Strength + caster.Stats.Willpower;
-			Game.Log.Add($"The fist hits the {targetTile.Actor} ({damage} damage).");
+			game.Log.Add($"The fist hits the {targetTile.Actor} ({damage} damage).");
 			targetTile.Actor.TakeDamage(damage);
 		}
 	}

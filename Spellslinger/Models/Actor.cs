@@ -15,7 +15,7 @@ public class Actor
 		Game = game;
 		HP = new DualMeter(Stats.Toughness * 5, Stats.Toughness + Stats.Willpower);
 		MP = new DualMeter(Stats.Memory * 5, Stats.Memory + Stats.Willpower);
-		Delay = new Meter(Stats.MaxSpeed);
+		Delay = new Meter(ActorStats.MaxSpeed);
 	}
 
 	private readonly IGame Game;
@@ -30,7 +30,7 @@ public class Actor
 	public Color Color => Type.Color;
 
 	public bool IsPlayerControlled => Type.IsPlayerControlled;
-	public Stats Stats => Type.Stats; // TODO: modifiable stats for actors
+	public ActorStats Stats => Type.Stats; // TODO: modifiable stats for actors
 
 	/// <summary>
 	/// The actor's HP meters.
@@ -225,7 +225,7 @@ public class Actor
 		var targetPos = Game.CurrentMap.LocateActor(target);
 		foreach (var spell in MeleeSpells)
 		{
-			spell.Cast(this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+			spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
 		}
 	}
 
@@ -262,7 +262,7 @@ public class Actor
 			}
 			else
 			{
-				return GeneralSpells[0].Cast(this, 0, 0);
+				return GeneralSpells[0].Cast(Game, this, 0, 0);
 			}
 		}
 		else
@@ -277,7 +277,7 @@ public class Actor
 		if (Game.InputMode == InputMode.SpellDirection)
 		{
 			// cast the input spell in the desired direction
-			var result = Game.InputSpell.Cast(this, dx, dy);
+			var result = Game.InputSpell.Cast(Game, this, dx, dy);
 			Game.InputMode = InputMode.Default;
 			Game.InputSpell = null;
 			return result;

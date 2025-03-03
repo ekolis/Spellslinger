@@ -1,6 +1,6 @@
 ﻿namespace Spellslinger.Models;
 
-public record Stats(int Strength, int Willpower, int Memory, int Toughness, int Speed)
+public record ActorStats(int Strength, int Willpower, int Memory, int Toughness, int Speed)
 {
 	/// <summary>
 	/// The maximum speed that any actor can be in the game.

@@ -5,23 +5,24 @@ namespace Spellslinger.Models.Spells;
 public class FireWave
 	: Spell
 {
-	public FireWave(IGame game)
-		: base(game)
+	public FireWave()
 	{
+		Stats = new SpellStats(
+			Name: x => $"{x.Element} Wave",
+			Description: x => $"Blasts nearby enemies in one direction with {x.Element.Description}.",
+			Details: x => "Damage scales with willpower, range with memory.",
+			MPCost: 8,
+			Element: Element.Fire);
 	}
 
-	public override string Name => "Fire Wave";
-	public override string Description => "Blasts nearby enemies in one direction with searing flames.";
-	public override string Details => "Damage scales with willpower, range with memory.";
 	public override bool IsDirectional => true;
-	public override int MPCost => 8;
 
-	protected override void CastImpl(Actor caster, int dx, int dy)
+	protected override void CastImpl(IGame game, Actor caster, int dx, int dy)
 	{
-		var casterPos = Game.CurrentMap.LocateActor(caster);
+		var casterPos = game.CurrentMap.LocateActor(caster);
 		if (dx == 0 && dy == 0)
 		{
-			Game.Log.Add($"But the {caster} wisely aborts the spell to avoid casting it at themselves.");
+			game.Log.Add($"But the {caster} wisely aborts the spell to avoid casting it at themselves.");
 		}
 		if (dx == 0)
 		{
@@ -35,18 +36,18 @@ public class FireWave
 				var rayYPosition = casterPos.y + rayLength * Math.Sign(dy);
 				foreach (var rayXPosition in rayXPositions)
 				{
-					if (rayXPosition < 0 || rayXPosition >= Game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= Game.CurrentMap.Height)
+					if (rayXPosition < 0 || rayXPosition >= game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= game.CurrentMap.Height)
 					{
 						// ray is off the map
 						rayXPositions.Remove(rayXPosition);
 					}
 
 					// let the ray inflict damage
-					HitTile(caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
+					HitTile(game, caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
 
 					// TODO: display the ray in the UI
 
-					if (!Game.CurrentMap.Tiles[rayXPosition, rayYPosition].Terrain.IsPassable)
+					if (!game.CurrentMap.Tiles[rayXPosition, rayYPosition].Terrain.IsPassable)
 					{
 						// ray hit a wall
 						rayXPositions.Remove(rayXPosition);
@@ -67,18 +68,18 @@ public class FireWave
 				var rayXPosition = casterPos.x + rayLength * Math.Sign(dx);
 				foreach (var rayYPosition in rayYPositions)
 				{
-					if (rayXPosition < 0 || rayXPosition >= Game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= Game.CurrentMap.Height)
+					if (rayXPosition < 0 || rayXPosition >= game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= game.CurrentMap.Height)
 					{
 						// ray is off the map
 						rayYPositions.Remove(rayYPosition);
 					}
 
 					// let the ray inflict damage
-					HitTile(caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
+					HitTile(game, caster.Stats.Willpower * 2, rayXPosition, rayYPosition);
 
 					// TODO: display the ray in the UI
 
-					if (!Game.CurrentMap.Tiles[rayXPosition, rayYPosition].Terrain.IsPassable)
+					if (!game.CurrentMap.Tiles[rayXPosition, rayYPosition].Terrain.IsPassable)
 					{
 						// ray hit a wall
 						rayYPositions.Remove(rayYPosition);
@@ -89,16 +90,16 @@ public class FireWave
 		}
 		else
 		{
-			Game.Log.Add($"But {Name} can't be cast diagonally.");
+			game.Log.Add($"But {Name} can't be cast diagonally.");
 		}
 	}
 
-	private void HitTile(int damage, int rayXPosition, int rayYPosition)
+	private void HitTile(IGame game, int damage, int rayXPosition, int rayYPosition)
 	{
-		var targetTile = Game.CurrentMap.Tiles[rayXPosition, rayYPosition];
+		var targetTile = game.CurrentMap.Tiles[rayXPosition, rayYPosition];
 		if (targetTile.Actor is not null)
 		{
-			Game.Log.Add($"The flames burn the {targetTile.Actor} ({damage} damage).");
+			game.Log.Add($"The flames burn the {targetTile.Actor} ({damage} damage).");
 			targetTile.Actor.TakeDamage(damage);
 		}
 	}

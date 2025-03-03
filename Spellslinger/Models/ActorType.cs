@@ -5,7 +5,7 @@ namespace Spellslinger.Models;
 /// <summary>
 /// A type of actor.
 /// </summary>
-public record ActorType(string Name, char Character, Color Color, Stats Stats)
+public record ActorType(string Name, char Character, Color Color, ActorStats Stats)
 {
 	/// <summary>
 	/// Is this actor type controlled by the player?

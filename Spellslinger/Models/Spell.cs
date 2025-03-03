@@ -7,30 +7,30 @@ namespace Spellslinger.Models;
 /// </summary>
 public abstract class Spell
 {
-	public Spell(IGame game)
-	{
-		Game = game;
-	}
-
 	/// <summary>
-	/// The current game.
+	/// Basic stats of the spell. Can be affected by modifiers.
 	/// </summary>
-	public IGame Game { get; }
+	public SpellStats Stats { get; set; }
 
 	/// <summary>
 	/// The name of the spell.
 	/// </summary>
-	public abstract string Name { get; }
+	public string Name => Stats.Name(Stats);
 
 	/// <summary>
 	/// A brief description of the spell's effects.
 	/// </summary>
-	public abstract string Description { get; }
+	public string Description => Stats.Description(Stats);
 
 	/// <summary>
-	/// Additional details on the spells effects, such as formulas and stats used.
+	/// Additional details on the spell's effects, such as formulas and stats used.
 	/// </summary>
-	public abstract string Details { get; }
+	public string Details => Stats.Details(Stats);
+
+	/// <summary>
+	/// The number of MP required to cast the spell.
+	/// </summary>
+	public int MPCost => Stats.MPCost;
 
 	/// <summary>
 	/// Is this spell cast in a particular direction?
@@ -38,9 +38,9 @@ public abstract class Spell
 	public abstract bool IsDirectional { get; }
 
 	/// <summary>
-	/// The number of MP required to cast the spell.
+	/// Any modifiers that have been applied to this spell.
 	/// </summary>
-	public abstract int MPCost { get; }
+	public IList<SpellModifier> Modifiers { get; } = [];
 
 	/// <summary>
 	/// Casts the spell.
@@ -49,24 +49,24 @@ public abstract class Spell
 	/// <param name="dx">The x-component of the direction vector (ignored if non-directional).</param>
 	/// <param name="dy">The y-component of the direction vector (ignored if non-directional).</param>
 	/// <returns>true if a turn was spent casting the spell, false if the spell couldn't be cast (e.g lack of MP).</returns>
-	public bool Cast(Actor caster, int dx, int dy)
+	public bool Cast(IGame game, Actor caster, int dx, int dy)
 	{
 		if (caster.MP.Value < MPCost)
 		{
-			Game.Log.Add($"The {caster} tries to cast {Name}, but lacks the required MP.");
+			game.Log.Add($"The {caster} tries to cast {Name}, but lacks the required MP.");
 			return false;
 		}
 		else
 		{
-			Game.Log.Add($"The {caster} casts {Name}.");
+			game.Log.Add($"The {caster} casts {Name}.");
 			caster.MP.Deplete(MPCost);
-			CastImpl(caster, dx, dy);
+			CastImpl(game, caster, dx, dy);
 			caster.ScheduleNextTurn();
 			return true;
 		}
 	}
 
-	protected abstract void CastImpl(Actor caster, int dx, int dy);
+	protected abstract void CastImpl(IGame game, Actor caster, int dx, int dy);
 
 	public override string ToString()
 	{
