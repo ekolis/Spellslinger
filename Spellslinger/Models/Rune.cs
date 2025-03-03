@@ -12,4 +12,8 @@ public record Rune(string Name, Spell? Spell, SpellModifier Modifier)
 {
 	public static Rune Force { get; } = new("Force", new ForceFist(), SpellModifier.Force);
 	public static Rune Fire { get; } = new("Fire", new FireWave(), SpellModifier.Fire);
+	
+	public static Rune Ice { get; } = new("Ice", new IceStorm(), SpellModifier.Ice);
+	public static Rune Air { get; } = new("Air", new AirVortex(), SpellModifier.Air);
+	public static Rune Earth { get; } = new("Earth", new EarthGuard(), SpellModifier.Earth);
 }

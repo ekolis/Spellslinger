@@ -16,6 +16,9 @@ public class Game
 		// TODO: random or player selected runes?
 		Player.Knowledge.Runes.Add(Rune.Force);
 		Player.Knowledge.Runes.Add(Rune.Fire);
+		Player.Knowledge.Runes.Add(Rune.Ice);
+		Player.Knowledge.Runes.Add(Rune.Air);
+		Player.Knowledge.Runes.Add(Rune.Earth);
 
 		// set up some default spells for the player
 		// TODO: base the spells on the selected runes

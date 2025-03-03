@@ -13,7 +13,9 @@ public record FireWave
 			Details: x => "Damage scales with willpower, range with memory.",
 			MPCost: 8,
 			Element: Element.Fire,
-			Power: x => x.Willpower * 2);
+			Power: x => x.Willpower * 2,
+			Knockback: x => 0,
+			Range: x => x.Memory);
 	}
 
 	public override bool IsDirectional => true;
@@ -29,10 +31,9 @@ public record FireWave
 		{
 			// casting spell vertically
 			// cast three parallel rays centered on the caster
-			// up to a length equal to the caster's memory stat
 			List<int> rayXPositions = [casterPos.x - 1, casterPos.x, casterPos.x + 1];
 			int rayLength = 1;
-			while (rayXPositions.Any() && rayLength <= caster.Stats.Memory)
+			while (rayXPositions.Any() && rayLength <= Stats.Range(caster.Stats))
 			{
 				var rayYPosition = casterPos.y + rayLength * Math.Sign(dy);
 				foreach (var rayXPosition in rayXPositions)
@@ -44,7 +45,7 @@ public record FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, Stats.Power(caster.Stats), rayXPosition, rayYPosition);
+					HitTile(game, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), rayXPosition, rayYPosition, dx, dy);
 
 					// TODO: display the ray in the UI
 
@@ -61,10 +62,9 @@ public record FireWave
 		{
 			// casting spell horizontally
 			// cast three parallel rays centered on the caster
-			// up to a length equal to the caster's memory stat
 			List<int> rayYPositions = [casterPos.y - 1, casterPos.y, casterPos.y + 1];
 			int rayLength = 1;
-			while (rayYPositions.Any() && rayLength <= caster.Stats.Memory)
+			while (rayYPositions.Any() && rayLength <= Stats.Range(caster.Stats))
 			{
 				var rayXPosition = casterPos.x + rayLength * Math.Sign(dx);
 				foreach (var rayYPosition in rayYPositions)
@@ -76,7 +76,7 @@ public record FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, Stats.Power(caster.Stats), rayXPosition, rayYPosition);
+					HitTile(game, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), rayXPosition, rayYPosition, dx, dy);
 
 					// TODO: display the ray in the UI
 
@@ -95,13 +95,4 @@ public record FireWave
 		}
 	}
 
-	private void HitTile(IGame game, int damage, int rayXPosition, int rayYPosition)
-	{
-		var targetTile = game.CurrentMap.Tiles[rayXPosition, rayYPosition];
-		if (targetTile.Actor is not null)
-		{
-			game.Log.Add($"The flames burn the {targetTile.Actor} ({damage} damage).");
-			targetTile.Actor.TakeDamage(damage);
-		}
-	}
 }

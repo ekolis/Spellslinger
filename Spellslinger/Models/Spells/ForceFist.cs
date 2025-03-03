@@ -13,7 +13,9 @@ public record ForceFist
 			Details: x => "Damage scales with strength and willpower.",
 			MPCost: 3,
 			Element: Element.Force,
-			Power: x => x.Strength + x.Willpower);
+			Power: x => x.Strength + x.Willpower,
+			Knockback: x => 0,
+			Range: x => 1);
 	}
 
 	public override bool IsDirectional => true;
@@ -22,6 +24,7 @@ public record ForceFist
 	{
 		var casterPos = game.CurrentMap.LocateActor(caster);
 		// TODO: deal with array index out of bounds if we try punching too far
+		// TODO: allow range to be extended by modifiers (see Air Vortex spell for bolt code)
 		var targetTile = game.CurrentMap.Tiles[casterPos.x + dx, casterPos.y + dy];
 		if (targetTile.Actor is null)
 		{

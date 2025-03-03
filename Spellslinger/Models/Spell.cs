@@ -84,4 +84,31 @@ public abstract record Spell()
 	{
 		return Name;
 	}
+
+	protected void HitTile(IGame game, int damage, int knockback, int xpos, int ypos, int dx, int dy)
+	{
+		// apply damage
+		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
+		if (targetTile.Actor is not null)
+		{
+			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({damage} damage).");
+			// TODO: elemental damage
+			targetTile.Actor.TakeDamage(damage);
+		}
+
+		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness)) 
+		{
+			// apply knockback
+			// TODO: keep track of which tiles are also being hit so actors can play musical chairs
+			var knockbackXpos = xpos + Math.Sign(dx);
+			var knockbackYpos = ypos + Math.Sign(dy);
+			if (knockbackXpos >= 0 && knockbackXpos < game.CurrentMap.Width
+				&& knockbackYpos >= 0 && knockbackYpos < game.CurrentMap.Height
+				&& game.CurrentMap.Tiles[knockbackXpos, knockbackYpos].Actor is null)
+			{
+				game.CurrentMap.Tiles[xpos, knockbackYpos].Actor = game.CurrentMap.Tiles[xpos, ypos].Actor;
+				game.CurrentMap.Tiles[xpos, ypos].Actor = null;
+			}
+		}
+	}
 }
