@@ -122,7 +122,7 @@ public class MapGenerator
 		for (var i = 0; i < enemies; i++)
 		{
 			// pick a random enemy, weighted toward enemies that are near in depth to the current dungeon level
-			var enemyType = ActorType.Enemies.PickWeighted(q => 1.0 / Math.Pow(Math.Abs(q.Depth - depth) + 1, 2), game.Rng);
+			var enemyType = ActorType.Enemies.PickWeighted(q => 1.0 / Math.Pow(Math.Abs(q.Depth - depth) + 1, 3), game.Rng);
 			var enemy = new Actor(enemyType, game);
 			List<(int x, int y)> enemyCandidates = [];
 			for (var x = 1; x < width - 1; x++)
