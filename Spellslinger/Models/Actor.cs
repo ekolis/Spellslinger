@@ -13,6 +13,7 @@ public class Actor
 	public Actor(ActorType type, IGame game)
 	{
 		Type = type;
+		Stats = Type.Stats;
 		Game = game;
 		HP = new DualMeter(Stats.Toughness * 5, Stats.Toughness + Stats.Willpower);
 		MP = new DualMeter(Stats.Memory * 5, Stats.Memory + Stats.Willpower);
@@ -57,7 +58,8 @@ public class Actor
 	public Color Color => Type.Color;
 
 	public bool IsPlayerControlled { get; set; }
-	public ActorStats Stats => Type.Stats; // TODO: modifiable stats for actors
+
+	public ActorStats Stats { get; set; }
 
 	/// <summary>
 	/// The actor's HP meters.
@@ -331,7 +333,7 @@ public class Actor
 		{
 			// cast the input spell in the desired direction
 			var result = Game.InputSpell.Cast(Game, this, dx, dy);
-			Game.InputMode = InputMode.Exploration;
+			Game.InputMode = InputMode.Dungeon;
 			Game.InputSpell = null;
 			return result;
 		}

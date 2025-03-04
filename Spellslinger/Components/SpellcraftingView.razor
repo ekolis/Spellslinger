@@ -156,13 +156,7 @@
 		<button @onclick="() => LearnCraftedSpell()">Learn Spell</button>
 	}
 
-	<h3>Explore</h3>
-	@if (Game.Player.Knowledge.MeleeSpells.Any() || Game.Player.Knowledge.GeneralSpells.Any())
-	{
-		<button @onclick="() => EnterDungeon()">Enter Dungeon</button>
-	}
-	else
-	{
-		<span>You'd best prepare some spells before you enter the dungeon...</span>
-	}
+	<div>
+		<button @onclick="() => ReturnToTown()">Return to Town</button>
+	</div>
 </div>

@@ -73,8 +73,8 @@ public partial class SpellcraftingView
 		}
 	}
 
-	private void EnterDungeon()
+	private void ReturnToTown()
 	{
-		Game.InputMode = InputMode.Exploration;
+		Game.InputMode = InputMode.Town;
 	}
 }

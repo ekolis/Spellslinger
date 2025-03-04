@@ -1,0 +1,60 @@
+﻿@using Spellslinger.Services
+@inject IGame Game
+
+<div>
+	<h3>Training</h3>
+
+	<p>You're in a rather seedy part of town. Various trainers offer to improve your abilities, if you put in the effort.</p>
+
+	<table>
+		<tr>
+			<th>Stat</th>
+			<th>XP Cost</th>
+			<th>Actions</th>
+		</tr>
+		<tr>
+			<td>Strength</td>
+			<td>@StrengthCost</td>
+			<td>
+				@if(Game.Player.Experience >= StrengthCost)
+				{
+					<button @onclick="TrainStrength">Train</button>
+				}
+			</td>
+		</tr
+		<tr>
+			<td>Willpower</td>
+			<td>@WillpowerCost</td>
+			<td>
+				@if(Game.Player.Experience >= WillpowerCost)
+				{
+					<button @onclick="TrainWillpower">Train</button>
+				}
+			</td>
+		</tr>
+		<tr>
+			<td>Memory</td>
+			<td>@MemoryCost</td>
+			<td>
+				@if(Game.Player.Experience >= MemoryCost)
+				{
+					<button @onclick="TrainMemory">Train</button>
+				}
+			</td>
+		</tr>
+		<tr>
+			<td>Toughness</td>
+			<td>@ToughnessCost</td>
+			<td>
+				@if(Game.Player.Gold >= ToughnessCost)
+				{
+					<button @onclick="TrainToughness">Train</button>
+				}
+			</td>
+		</tr>
+	</table>
+
+	<div>
+		<button @onclick="() => ReturnToTown()">Return to Town</button>
+	</div>
+</div>

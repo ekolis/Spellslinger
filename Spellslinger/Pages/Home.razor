@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Spellslinger.Components
+@using Spellslinger.Models
 @using Spellslinger.Services
 @inject IGame Game
 @inject IMapGenerator MapGenerator
@@ -9,15 +10,27 @@
 	<PageTitle>Home</PageTitle>
 
 	<div style="display: flex; flex-direction: row">
-		@if (Game.InputMode == Models.InputMode.CharacterSelection)
+		@if (Game.InputMode == InputMode.CharacterSelection)
 		{
 			<CharacterSelectionView />
 		}
-		else if (Game.InputMode == Models.InputMode.Spellcrafting)
+		else if (Game.InputMode == InputMode.Town)
+		{
+			<TownView />
+		}
+		else if (Game.InputMode == InputMode.Training)
+		{
+			<TrainingView />
+		}
+		else if (Game.InputMode == InputMode.Shopping)
+		{
+			<ShopView />
+		}
+		else if (Game.InputMode == InputMode.Spellcrafting)
 		{
 			<SpellcraftingView />
 		}
-		else
+		else if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 		{
 			<MapView Model="@Game.CurrentMap" />
 		}
@@ -26,7 +39,7 @@
 			<div>
 				@if (Game.Player is null)
 				{
-					@if (Game.InputMode != Models.InputMode.CharacterSelection)
+					@if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 					{
 						<span>GAME OVER</span>
 					}

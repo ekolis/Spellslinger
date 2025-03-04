@@ -7,6 +7,11 @@ namespace Spellslinger.Services;
 public class Game
 	: IGame
 {
+	public Game()
+	{
+		Shop = new Shop(this);
+	}
+
 	public required Map CurrentMap { get; set; }
 
 	public Actor? Player { get; set; }
@@ -30,6 +35,8 @@ public class Game
 	}
 
 	public Spell? InputSpell { get; set; }
+
+	public Shop Shop { get; }
 
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{

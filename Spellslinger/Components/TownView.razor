@@ -1,0 +1,12 @@
+﻿@using Spellslinger.Services
+@inject IGame Game
+
+<div>
+	<h3>Town</h3>
+
+	<p>You are in the town. It is pleasant here, but you know you must soon enter the dungeon to face the evil that lurks there.</p>
+
+	<button @onclick="() => Train()">Training</button>
+	<button @onclick="() => Shop()">Shop</button>
+	<button @onclick="() => EnterDungeon()">Enter Dungeon</button>
+</div>

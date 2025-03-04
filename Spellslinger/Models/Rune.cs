@@ -8,12 +8,14 @@ namespace Spellslinger.Models;
 /// <param name="Name">The name of this rune.</param>
 /// <param name="Spell">The core spell that this rune can be used to cast, or null if it has no core spell.</param>
 /// <param name="Modifier">Modifier that is applied to spells containing this rune as a modifier rune.</param>
-public record Rune(string Name, Spell? Spell, SpellModifier Modifier)
+/// <param name="Cost">The gold cost to buy this rune.</param>
+public record Rune(string Name, Spell? Spell, SpellModifier Modifier, int Cost)
 {
-	public static Rune Force { get; } = new("Force", new ForceFist(), SpellModifier.Force);
-	public static Rune Fire { get; } = new("Fire", new FireWave(), SpellModifier.Fire);
-	
-	public static Rune Ice { get; } = new("Ice", new IceStorm(), SpellModifier.Ice);
-	public static Rune Air { get; } = new("Air", new AirVortex(), SpellModifier.Air);
-	public static Rune Earth { get; } = new("Earth", new EarthGuard(), SpellModifier.Earth);
+	public static Rune Force { get; } = new("Force", new ForceFist(), SpellModifier.Force, 50);
+	public static Rune Fire { get; } = new("Fire", new FireWave(), SpellModifier.Fire, 50);
+	public static Rune Ice { get; } = new("Ice", new IceStorm(), SpellModifier.Ice, 50);
+	public static Rune Air { get; } = new("Air", new AirVortex(), SpellModifier.Air, 50);
+	public static Rune Earth { get; } = new("Earth", new EarthGuard(), SpellModifier.Earth, 50);
+
+	public static IEnumerable<Rune> All { get; } = [Force, Fire, Ice, Air, Earth];
 }

@@ -9,6 +9,6 @@ public partial class CharacterSelectionView
 	{
 		Game.Player = new Actor(actorType, Game);
 		Game.Player.IsPlayerControlled = true;
-		Game.InputMode = InputMode.Spellcrafting;
+		Game.InputMode = InputMode.Town;
 	}
 }

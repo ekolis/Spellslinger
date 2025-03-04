@@ -50,6 +50,11 @@ public interface IGame
 	public Spell? InputSpell { get; set; }
 
 	/// <summary>
+	/// A shop that the player can visit in the town.
+	/// </summary>
+	public Shop Shop { get; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>

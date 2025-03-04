@@ -1,0 +1,44 @@
+﻿@using Spellslinger.Services
+@inject IGame Game
+
+<div>
+	<h3>Shop</h3>
+
+	<p>You're in the market district. Various vendors hawk their wares. You're only interested in magical runes, though.</p>
+
+	<table>
+		<tr>
+			<th>Rune</th>
+			<th>Core Spell</th>
+			<th>Description</th>
+			<th>Modifier</th>
+			<th>Gold Cost</th>
+			<th>Actions</th>
+		</tr>
+		@foreach (var rune in Game.Shop.Runes)
+		{
+			<tr>
+				<td>@rune.Name</td>
+				<td>@(rune.Spell?.Name ?? "(none)")</td>
+				<td>@(rune.Spell?.Description ?? "(none)")</td>
+				<td>@(rune.Modifier?.Description ?? "(none)")</td>
+				<td>@rune.Cost</td>
+				<td>
+					@if (Game.Player.Gold >= rune.Cost)
+					{
+						<button @onclick="() => BuyRune(rune)">Buy</button>
+					}
+				</td>
+			</tr>
+		}
+	</table>
+
+	<div>
+		@if (Game.Player.Gold >= Game.Shop.SearchCost)
+		{
+			<button @onclick="() => Game.Shop.Search()">Search for More Items</button>
+			<span>(costs @Game.Shop.SearchCost gold)</span>
+		}
+		<button @onclick="() => ReturnToTown()">Return to Town</button>
+	</div>
+</div>
