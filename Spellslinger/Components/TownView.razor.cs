@@ -15,6 +15,11 @@ public partial class TownView
 		Game.InputMode = InputMode.Shopping;
 	}
 
+	private void CraftSpells()
+	{
+		Game.InputMode = InputMode.Spellcrafting;
+	}
+
 	private void EnterDungeon()
 	{
 		Game.InputMode = InputMode.Dungeon;
