@@ -298,7 +298,7 @@ public class Actor
 			{
 				Game.InputMode = InputMode.SpellDirection;
 				Game.InputSpell = GeneralSpells[index];
-				Game.Log.Add($"Select a direction to cast {GeneralSpells[index]}.");
+				Game.Log.Add($"Select a direction to cast {GeneralSpells[index].Name}.");
 				return false;
 			}
 			else
