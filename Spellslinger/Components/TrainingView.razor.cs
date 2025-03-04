@@ -14,6 +14,8 @@ public partial class TrainingView
 
 	public int ToughnessCost => (int)Math.Pow(Game.Player.Stats.Toughness + 1, 2) * 10;
 
+	public int SpeedCost => (int)Math.Pow(Game.Player.Stats.Speed + 1, 2) * 10;
+
 	public void TrainStrength()
 	{
 		if (Game.Player.Experience >= StrengthCost)
@@ -47,6 +49,15 @@ public partial class TrainingView
 		{
 			Game.Player.Experience -= ToughnessCost;
 			Game.Player.Stats = Game.Player.Stats with { Toughness = Game.Player.Stats.Toughness + 1 };
+		}
+	}
+
+	public void TrainSpeed()
+	{
+		if (Game.Player.Experience >= SpeedCost)
+		{
+			Game.Player.Experience -= SpeedCost;
+			Game.Player.Stats = Game.Player.Stats with { Speed = Game.Player.Stats.Speed + 1 };
 		}
 	}
 

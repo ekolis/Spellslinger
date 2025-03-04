@@ -52,6 +52,16 @@
 				}
 			</td>
 		</tr>
+		<tr>
+			<td>Speed</td>
+			<td>@SpeedCost</td>
+			<td>
+				@if(Game.Player.Gold >= SpeedCost)
+				{
+					<button @onclick="TrainSpeed">Train</button>
+				}
+			</td>
+		</tr>
 	</table>
 
 	<div>
