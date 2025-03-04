@@ -5,7 +5,7 @@ namespace Spellslinger.Models;
 /// <summary>
 /// A type of actor.
 /// </summary>
-public record ActorType(string Name, char Character, Color Color, ActorStats Stats, IEnumerable<Rune> Runes, int Depth, int Experience)
+public record ActorType(string Name, char Character, Color Color, ActorStats Stats, IEnumerable<Rune> Runes, int Depth, int Experience, int Gold)
 {
 	public static ActorType Pyro { get; } = new(
 		"pyro mage",
@@ -14,7 +14,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Fire],
 		3,
-		9);
+		9,
+		20);
 
 	public static ActorType Cryo { get; } = new(
 		"cryo mage",
@@ -23,7 +24,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Ice],
 		3,
-		9);
+		9,
+		20);
 
 	public static ActorType Aero { get; } = new(
 		"aero mage",
@@ -32,7 +34,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Air],
 		3,
-		9);
+		9,
+		20);
 
 	public static ActorType Geo { get; } = new(
 		"geo mage",
@@ -41,7 +44,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Earth],
 		3,
-		9);
+		9,
+		20);
 
 	public static ActorType Vis { get; } = new(
 		"vis mage",
@@ -50,7 +54,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(5, 3, 3, 3, 3),
 		[Rune.Force],
 		3,
-		9);
+		9,
+		20);
 
 	public static ActorType Magus { get; } = new(
 		"magus",
@@ -59,7 +64,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(1, 3, 3, 3, 3),
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		3,
-		9);
+		9,
+		20);
 
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
 		[Pyro, Cryo, Aero, Vis, Magus];
@@ -71,6 +77,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(2, 1, 1, 2, 3),
 		[],
 		1,
+		1,
 		1);
 
 	public static ActorType Hedgehog { get; } = new(
@@ -79,6 +86,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Color.Orange,
 		new(2, 1, 1, 1, 5),
 		[],
+		1,
 		1,
 		1);
 
@@ -89,7 +97,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 2, 2, 2, 4),
 		[Rune.Fire],
 		2,
-		4);
+		4,
+		5);
 
 	public static ActorType Slug { get; } = new(
 		"slug",
@@ -98,7 +107,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(2, 2, 2, 5, 2),
 		[],
 		2,
-		4);
+		4,
+		3);
 
 	public static IEnumerable<ActorType> Enemies { get; } =
 		[Blob, Hedgehog, Imp, Slug];

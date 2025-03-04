@@ -41,6 +41,8 @@ public class Actor
 				remainingRunes.Remove(rune);
 			}
 		}
+		Experience = type.Experience;
+		Gold = type.Gold;
 	}
 
 	private readonly IGame Game;
@@ -96,6 +98,16 @@ public class Actor
 	/// What this actor knows.
 	/// </summary>
 	public Knowledge Knowledge { get; } = new Knowledge();
+
+	/// <summary>
+	/// Unspent experience points.
+	/// </summary>
+	public int Experience { get; set; }
+
+	/// <summary>
+	/// Unspent gold pieces.
+	/// </summary>
+	public int Gold { get; set; }
 
 	[Obsolete("Use Knowledge.MeleeSpells.")]
 	private IList<Spell> MeleeSpells => Knowledge.MeleeSpells;
