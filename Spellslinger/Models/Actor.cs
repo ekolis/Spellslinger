@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Microsoft.AspNetCore.Components.Web;
+using Spellslinger.Models.Spells;
 using Spellslinger.Services;
 
 namespace Spellslinger.Models;
@@ -16,6 +17,30 @@ public class Actor
 		HP = new DualMeter(Stats.Toughness * 5, Stats.Toughness + Stats.Willpower);
 		MP = new DualMeter(Stats.Memory * 5, Stats.Memory + Stats.Willpower);
 		Delay = new Meter(ActorStats.MaxSpeed);
+		foreach (var rune in type.Runes)
+		{
+			Knowledge.Runes.Add(rune);
+		}
+		if (Knowledge.Runes.Contains(Rune.Force))
+		{
+			// slot the force spell as a default
+			var spell = Rune.Force.Spell;
+			Knowledge.Spells.Add(spell);
+			Knowledge.MeleeSpells.Add(spell);
+		}
+		var remainingRunes = Knowledge.Runes.Except(new[] { Rune.Force }).ToList();
+		for (var i = 0; i < MaxGeneralSpells; i++)
+		{
+			// slot a general spell
+			if (remainingRunes.Any(q => q.Spell != null))
+			{
+				var rune = remainingRunes.First(q => q.Spell != null);
+				var spell = rune.Spell;
+				Knowledge.Spells.Add(spell);
+				Knowledge.GeneralSpells.Add(spell);
+				remainingRunes.Remove(rune);
+			}
+		}
 	}
 
 	private readonly IGame Game;
@@ -29,7 +54,7 @@ public class Actor
 
 	public Color Color => Type.Color;
 
-	public bool IsPlayerControlled => Type.IsPlayerControlled;
+	public bool IsPlayerControlled { get; set; }
 	public ActorStats Stats => Type.Stats; // TODO: modifiable stats for actors
 
 	/// <summary>

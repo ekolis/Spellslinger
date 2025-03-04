@@ -9,7 +9,11 @@
 	<PageTitle>Home</PageTitle>
 
 	<div style="display: flex; flex-direction: row">
-		@if (Game.InputMode == Models.InputMode.Spellcrafting)
+		@if (Game.InputMode == Models.InputMode.CharacterSelection)
+		{
+			<CharacterSelectionView />
+		}
+		else if (Game.InputMode == Models.InputMode.Spellcrafting)
 		{
 			<SpellcraftingView />
 		}
@@ -22,7 +26,10 @@
 			<div>
 				@if (Game.Player is null)
 				{
-					<span>GAME OVER</span>
+					@if (Game.InputMode != Models.InputMode.CharacterSelection)
+					{
+						<span>GAME OVER</span>
+					}
 				}
 				else
 				{

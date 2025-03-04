@@ -6,6 +6,14 @@
 public enum InputMode
 {
 	/// <summary>
+	/// The player is selecting a character.
+	/// </summary>
+	CharacterSelection,
+	/// <summary>
+	/// The player is crafting spells.
+	/// </summary>
+	Spellcrafting,
+	/// <summary>
 	/// The player is exploring the dungeon.
 	/// </summary>
 	Exploration,
@@ -13,8 +21,4 @@ public enum InputMode
 	/// The player is selecting a direction to cast a spell.
 	/// </summary>
 	SpellDirection,
-	/// <summary>
-	/// The player is crafting spells.
-	/// </summary>
-	Spellcrafting,
 }

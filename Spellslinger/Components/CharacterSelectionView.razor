@@ -1,0 +1,14 @@
+﻿@using Spellslinger.Models
+@using Spellslinger.Services
+@inject IGame Game
+
+<h3>Select a character</h3>
+
+<ul>
+	<li><button @onclick="() => StartGame(ActorType.Pyro)">Pyro</button> - Force and Fire runes</li>
+	<li><button @onclick="() => StartGame(ActorType.Cryo)">Cryo</button> - Force and Ice runes</li>
+	<li><button @onclick="() => StartGame(ActorType.Aero)">Aero</button> - Force and Air runes</li>
+	<li><button @onclick="() => StartGame(ActorType.Geo)">Geo</button> - Force and Earth runes</li>
+	<li><button @onclick="() => StartGame(ActorType.Vis)">Vis</button> - Force rune only, high Strength</li>
+	<li><button @onclick="() => StartGame(ActorType.Magus)">Magus</button> - all elemental runes, low Strength</li>
+</ul>
