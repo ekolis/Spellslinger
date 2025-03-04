@@ -96,7 +96,7 @@
 					<td>@(rune.Modifier?.Description ?? "(none)")</td>
 				}
 				<td>
-					@if (!CraftingRunes.Contains(rune) && Game.Player.MaxRunesPerSpell > CraftingRunes.Count
+					@if (CraftingRunes.Count(q => q == rune) < Game.Player.Knowledge.Runes.Count(q => q == rune) && Game.Player.MaxRunesPerSpell > CraftingRunes.Count
 										&& (!CraftingRunes.Any() && rune.Spell is not null || CraftingRunes.Any() && rune.Modifier is not null))
 					{
 						<button @onclick="() => AddRune(rune)">Add to Spell</button>
