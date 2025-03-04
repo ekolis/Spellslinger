@@ -61,10 +61,10 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		"magus",
 		'@',
 		Color.Gray,
-		new(1, 3, 3, 3, 3),
+		new(1, 3, 4, 3, 3),
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		3,
-		30,
+		10,
 		20);
 
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
