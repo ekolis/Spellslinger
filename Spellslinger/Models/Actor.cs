@@ -299,6 +299,15 @@ public class Actor
 			Game.Log.Add($"The {attacker} gains the {this}'s {Experience} experience and {Gold} gold.");
 			attacker.Gold += Gold;
 			attacker.Experience += Experience;
+			foreach (var rune in Knowledge.Runes)
+			{
+				// percentage chance based on memory stat to learn a rune from a defeated foe
+				if (Game.Rng.Next(0, 100) < attacker.Stats.Memory)
+				{
+					Game.Log.Add($"The {attacker} learns the {rune} rune!");
+					attacker.Knowledge.Runes.Add(rune);
+				}
+			}
 			var tile = Game.CurrentMap.LocateActor(this);
 			Game.CurrentMap.Tiles[tile.x, tile.y].Actor = null;
 			if (IsPlayerControlled)
