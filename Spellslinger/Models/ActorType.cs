@@ -5,7 +5,7 @@ namespace Spellslinger.Models;
 /// <summary>
 /// A type of actor.
 /// </summary>
-public record ActorType(string Name, char Character, Color Color, ActorStats Stats, IEnumerable<Rune> Runes, int Depth, int Experience, int Gold)
+public record ActorType(string Name, char Character, Color Color, ActorStats Stats, IEnumerable<Rune> Runes, int Depth, int Experience, int Gold, IEnumerable<Element> Resistances, IEnumerable<Element> Vulnerabilities)
 {
 	public static ActorType Pyro { get; } = new(
 		"pyro mage",
@@ -15,7 +15,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Fire],
 		3,
 		10,
-		20);
+		20,
+		[Element.Fire],
+		[Element.Ice]);
 
 	public static ActorType Cryo { get; } = new(
 		"cryo mage",
@@ -25,7 +27,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Ice, Rune.Ice],
 		3,
 		10,
-		20);
+		20,
+		[Element.Ice],
+		[Element.Fire]);
 
 	public static ActorType Aero { get; } = new(
 		"aero mage",
@@ -35,7 +39,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Air, Rune.Air],
 		3,
 		10,
-		20);
+		20,
+		[Element.Air],
+		[Element.Earth]);
 
 	public static ActorType Geo { get; } = new(
 		"geo mage",
@@ -45,7 +51,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Earth, Rune.Earth],
 		3,
 		10,
-		20);
+		20,
+		[Element.Earth],
+		[Element.Air]);
 
 	public static ActorType Vis { get; } = new(
 		"vis mage",
@@ -55,7 +63,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force],
 		3,
 		10,
-		20);
+		20,
+		[],
+		[]);
 
 	public static ActorType Magus { get; } = new(
 		"magus",
@@ -65,7 +75,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		3,
 		10,
-		20);
+		20,
+		[],
+		[]);
 
 	public static ActorType Vegan { get; } = new(
 		"vegan mage",
@@ -75,10 +87,12 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Vegan, Rune.Earth],
 		3,
 		10,
-		20);
+		20,
+		[],
+		[]);
 
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
-		[Pyro, Cryo, Aero, Vis, Magus];
+		[Pyro, Cryo, Aero, Vis, Magus, Vegan];
 
 	public static ActorType Blob { get; } = new(
 		"blob",
@@ -88,7 +102,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		1,
 		1,
-		1);
+		1,
+		[],
+		[]);
 
 	public static ActorType Hedgehog { get; } = new(
 		"hedgehog",
@@ -98,7 +114,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		1,
 		1,
-		1);
+		1,
+		[],
+		[]);
 
 	public static ActorType Imp { get; } = new(
 		"imp",
@@ -108,7 +126,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Fire],
 		2,
 		4,
-		5);
+		5,
+		[Element.Fire],
+		[]);
 
 	public static ActorType Slug { get; } = new(
 		"slug",
@@ -118,7 +138,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		2,
 		4,
-		3);
+		3,
+		[Element.Earth],
+		[Element.Ice]);
 
 	public static ActorType IceGolem { get; } = new(
 		"ice golem",
@@ -128,7 +150,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Ice],
 		3,
 		10,
-		10);
+		10,
+		[Element.Ice],
+		[Element.Fire]);
 
 	public static ActorType EarthGolem { get; } = new(
 		"earth golem",
@@ -138,7 +162,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Earth],
 		3,
 		8,
-		12);
+		12,
+		[Element.Earth],
+		[Element.Ice]);
 
 	public static ActorType AeolianVortex { get; } = new(
 		"Aeolian vortex",
@@ -148,7 +174,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Ice],
 		4,
 		15,
-		12);
+		12,
+		[Element.Air],
+		[]);
 
 	public static ActorType Ninja { get; } = new(
 		"ninja",
@@ -158,7 +186,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force],
 		4,
 		12,
-		20);
+		20,
+		[],
+		[]);
 
 	public static ActorType DoomFungus { get; } = new(
 		"doom fungus",
@@ -168,7 +198,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Earth, Rune.Ice],
 		5,
 		20,
-		15);
+		15,
+		[Element.Fire],
+		[Element.Ice]);
 
 	public static ActorType Xenosphere { get; } = new(
 		"xenosphere",
@@ -178,7 +210,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Air],
 		5,
 		25,
-		10);
+		10,
+		[Element.Ice],
+		[Element.Earth]);
 
 	public static ActorType MadSorcerer { get; } = new(
 		"mad sorcerer",
@@ -188,7 +222,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		6,
 		50,
-		5);
+		5,
+		[],
+		[]);
 
 	public static ActorType Butcher { get; } = new(
 		"butcher",
@@ -198,7 +234,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		6,
 		20,
-		40);
+		40,
+		[],
+		[]);
 
 	public static ActorType Deathbot { get; } = new(
 		"deathbot",
@@ -208,7 +246,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		7,
 		30,
-		50);
+		50,
+		[Element.Fire, Element.Ice, Element.Air],
+		[]);
 
 	public static ActorType ReaperDrone { get; } = new(
 		"reaper drone",
@@ -218,7 +258,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire],
 		7,
 		40,
-		40);
+		40,
+		[Element.Fire, Element.Earth],
+		[Element.Ice, Element.Air]);
 
 	public static ActorType ChaosMinion { get; } = new(
 		"chaos minion",
@@ -228,7 +270,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		8,
 		60,
-		30);
+		30,
+		[],
+		[]);
 
 	public static ActorType SoulCollector { get; } = new(
 		"soul collector",
@@ -238,7 +282,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		8,
 		80,
-		10);
+		10,
+		[],
+		[]);
 
 	public static IEnumerable<ActorType> Enemies { get; } =
 		[Blob, Hedgehog, Imp, Slug, IceGolem, EarthGolem, AeolianVortex, Ninja,

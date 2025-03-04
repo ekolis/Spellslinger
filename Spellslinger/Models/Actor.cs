@@ -132,6 +132,10 @@ public class Actor
 	/// </summary>
 	public int MaxRunesPerSpell => 1 + Stats.Willpower / 3;
 
+	public IEnumerable<Element> Resistances => Type.Resistances; // TODO: temporary resistances
+
+	public IEnumerable<Element> Vulnerabilities => Type.Vulnerabilities; // TODO: temporary resistances
+
 	/// <summary>
 	/// Sends keyboard input to this actor.
 	/// </summary>
@@ -287,7 +291,7 @@ public class Actor
 			verb = "critcally hits";
 		}
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
-		target.TakeDamage(damage, this, SpellTags.None); // TODO: spell tags for melee attacks?
+		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
 
 		// cast spells
 		var myPos = Game.CurrentMap.LocateActor(this);
@@ -304,8 +308,24 @@ public class Actor
 	/// <param name="damage">The amount of damage.</param>
 	/// <param name="attacker">Who's inflicting the damage?</param>
 	/// <param name="tags">Any spell tags to apply to the damage.</param>
-	public void TakeDamage(int damage, Actor attacker, SpellTags tags)
+	/// <param name="element">The element of the attack.</param>
+	public void TakeDamage(int damage, Actor attacker, SpellTags tags, Element? element)
 	{
+		if (element is not null)
+		{
+			if (Resistances.Contains(element) && !Vulnerabilities.Contains(element))
+			{
+				Game.Log.Add($"The {this} resists the {element.Description}.");
+				damage /= 2;
+			}
+			if (Vulnerabilities.Contains(element) && !Resistances.Contains(element))
+			{
+				Game.Log.Add($"The {this} is vulnerable to the {element.Description}!");
+				damage *= 3;
+				damage /= 2;
+			}
+		}
+
 		int leftoverDamage;
 		if (tags.HasFlag(SpellTags.StaminaOnly))
 		{

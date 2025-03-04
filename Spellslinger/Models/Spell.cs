@@ -1,4 +1,5 @@
-﻿using Spellslinger.Services;
+﻿using System.Xml.Linq;
+using Spellslinger.Services;
 
 namespace Spellslinger.Models;
 
@@ -99,12 +100,22 @@ public abstract record Spell()
 		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
 		if (targetTile.Actor is not null)
 		{
-			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({damage} damage).");
-			// TODO: elemental damage
-			targetTile.Actor.TakeDamage(damage, caster, tags);
+			// TODO: refactor calculating resists twice
+			var modifiedDamage = damage;
+			if (targetTile.Actor.Resistances.Contains(Stats.Element) && !targetTile.Actor.Vulnerabilities.Contains(Stats.Element))
+			{
+				modifiedDamage /= 2;
+			}
+			if (targetTile.Actor.Vulnerabilities.Contains(Stats.Element) && !targetTile.Actor.Resistances.Contains(Stats.Element))
+			{
+				modifiedDamage *= 3;
+				modifiedDamage /= 2;
+			}
+			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({modifiedDamage} damage.");
+			targetTile.Actor.TakeDamage(damage, caster, tags, Stats.Element);
 		}
 
-		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness)) 
+		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness))
 		{
 			// apply knockback
 			// TODO: keep track of which tiles are also being hit so actors can play musical chairs
