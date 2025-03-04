@@ -208,7 +208,18 @@ public class Actor
 		var playerLocation = Game.CurrentMap.LocateActor(Game.Player);
 		var dx = playerLocation.x - myLocation.x;
 		var dy = playerLocation.y - myLocation.y;
-		if (dx == 1 && dy == 0
+
+		// randomly cast spells when player is nearby with a chance depending on Willpower and Memory
+		// TODO: check range of particular spell
+		// TODO: fog of war
+		var spells = Knowledge.GeneralSpells.Where(q => q.MPCost <= MP.Value);
+		if ((dx == 0 || dy == 0) && dx <= 3 && dy <= 3 && spells.Any() && Game.Rng.Next(0, 100) < Stats.Willpower + Stats.Memory)
+		{
+			// try to cast a random available spell
+			var spell = spells.PickWeighted(q => 1, Game.Rng);
+			spell.Cast(Game, this, Math.Sign(dx), Math.Sign(dy));
+		}
+		else if (dx == 1 && dy == 0
 			|| dx == -1 && dy == 0
 			|| dx == 0 && dy == 1
 			|| dx == 0 && dy == -1)
