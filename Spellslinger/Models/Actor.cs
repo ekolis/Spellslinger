@@ -177,6 +177,9 @@ public class Actor
 				case "KeyM":
 					moved = PrepareCastPlayerSpell(6);
 					break;
+				case "Space":
+					moved = InteractWithTerrain();
+					break;
 				default:
 					Game.Log.Add($"Unknown key pressed: {e.Code}");
 					break;
@@ -351,10 +354,87 @@ public class Actor
 			Game.InputSpell = null;
 			return result;
 		}
-		else
+		else if (Game.InputMode == InputMode.Dungeon)
 		{
 			// move the actor
 			return Game.CurrentMap.MoveActor(this, dx, dy);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public bool InteractWithTerrain()
+	{
+		if (Game.InputMode == InputMode.Dungeon)
+		{
+			// find the terrain
+			var (x, y) = Game.CurrentMap.LocateActor(this);
+			var terrain = Game.CurrentMap.Tiles[x, y].Terrain;
+			if (terrain == Terrain.StairsUp)
+			{
+				if (IsPlayerControlled)
+				{
+					// go to the previous dungeon level (or town if on level 1)
+					if (Game.CurrentMap.Depth == 1)
+					{
+						Game.Log.Add("You return to the safety of the town.");
+						Game.CurrentMap = null;
+						Game.InputMode = InputMode.Town;
+					}
+					else
+					{
+						Game.Log.Add("You return to the previous level. It seems different somehow...");
+						Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1);
+					}
+					return true;
+				}
+				else
+				{
+					if (Game.CurrentMap.Depth > 1)
+					{
+						// enemy runs away
+						Game.CurrentMap.Tiles[x, y].Actor = null;
+						Game.Log.Add($"The {this} flees up the stairs.");
+						return true;
+					}
+					else
+					{
+						Game.Log.Add($"The {this} tries to flee up the stairs, but is blocked by a protective ward guarding the town.");
+						return false;
+					}
+				}
+			}
+			else if (terrain == Terrain.StairsDown)
+			{
+				if (IsPlayerControlled)
+				{
+					// go to the next dungeon level
+					Game.Log.Add("You proceed to the next level.");
+					Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1);
+					return true;
+				}
+				else
+				{
+					// enemy runs away
+					Game.CurrentMap.Tiles[x, y].Actor = null;
+					Game.Log.Add($"The {this} flees down the stairs.");
+					return true;
+				}
+			}
+			else
+			{
+				if (IsPlayerControlled)
+				{
+					Game.Log.Add("There's nothing here to interact with.");
+				}
+				return false;
+			}
+		}
+		else
+		{
+			return false;
 		}
 	}
 

@@ -12,6 +12,7 @@ public class Game
 		Shop = new Shop(this);
 	}
 
+	public IMapGenerator MapGenerator { get; } = new MapGenerator();
 	public required Map CurrentMap { get; set; }
 
 	public Actor? Player { get; set; }

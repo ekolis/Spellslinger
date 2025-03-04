@@ -6,9 +6,18 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	public Map Generate(IGame game, int depth, int width, int height, int rooms, int extraDoors, int enemies)
+	public Map Generate(IGame game, int depth)
 	{
-		var map = new Map(width, height, null);
+		// calculate map stats based on depth
+		// TODO: make shallower levels smaller and deeper levels bigger, once that can be handled nicely in the UI
+		int width = 60;
+		int height = 30;
+		int rooms = 16 - depth;
+		int extraDoors = 30 - depth * 3;
+		int enemies = 8 + depth;
+		bool includeDownStairs = depth < 8;
+
+		var map = new Map(depth, width, height, game.Player);
 
 		// put a wall around the edge
 		BuildHorizontalWall(map, 0);
@@ -100,11 +109,13 @@ public class MapGenerator
 		var upStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 		map.Tiles[upStairPos.x, upStairPos.y].Terrain = Terrain.StairsUp;
 		stairCandidates.Remove(upStairPos);
-		var downStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
-		map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
+		if (includeDownStairs)
+		{
+			var downStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
+			map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
+		}
 
 		// place the player on the up stairs
-		map.Player = game.Player;
 		map.Tiles[upStairPos.x, upStairPos.y].Actor = map.Player;
 
 		// place some random enemies

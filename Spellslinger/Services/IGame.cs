@@ -10,6 +10,11 @@ namespace Spellslinger.Services;
 public interface IGame
 {
 	/// <summary>
+	/// The map generator for the game.
+	/// </summary>
+	public IMapGenerator MapGenerator { get; }
+
+	/// <summary>
 	/// The map on which the player is curerntly located.
 	/// </summary>
 	public Map? CurrentMap { get; set; }

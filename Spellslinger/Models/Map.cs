@@ -7,8 +7,9 @@ namespace Spellslinger.Models;
 /// </summary>
 public class Map
 {
-	public Map(int width, int height, Actor? player)
+	public Map(int depth, int width, int height, Actor? player)
 	{
+		Depth = depth;
 		Width = width;
 		Height = height;
 		Tiles = new Tile[width, height];
@@ -29,6 +30,11 @@ public class Map
 	/// The tiles on the map.
 	/// </summary>
 	public Tile[,] Tiles { get; }
+
+	/// <summary>
+	/// How deep is this map in the dungeon?
+	/// </summary>
+	public int Depth { get; }
 
 	public int Width { get; }
 
