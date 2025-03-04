@@ -93,7 +93,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 	public static ActorType Imp { get; } = new(
 		"imp",
 		'i',
-		Color.Red,
+		Element.Fire.Color,
 		new(3, 2, 2, 2, 4),
 		[Rune.Fire],
 		2,
@@ -110,6 +110,127 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		4,
 		3);
 
+	public static ActorType IceGolem { get; } = new(
+		"ice golem",
+		'G',
+		Element.Ice.Color,
+		new(3, 3, 1, 6, 2),
+		[Rune.Ice],
+		3,
+		10,
+		10);
+
+	public static ActorType EarthGolem { get; } = new(
+		"earth golem",
+		'G',
+		Element.Earth.Color,
+		new(4, 3, 1, 10, 1),
+		[Rune.Earth],
+		3,
+		8,
+		12);
+
+	public static ActorType AeolianVortex { get; } = new(
+		"Aeolian vortex",
+		'v',
+		Element.Air.Color,
+		new(4, 6, 6, 2, 5),
+		[Rune.Ice],
+		4,
+		15,
+		12);
+
+	public static ActorType Ninja { get; } = new(
+		"ninja",
+		'N',
+		Color.Gray,
+		new(4, 4, 2, 3, 4),
+		[Rune.Force],
+		4,
+		12,
+		20);
+
+	public static ActorType DoomFungus { get; } = new(
+		"doom fungus",
+		'f',
+		Color.Purple,
+		new(2, 10, 5, 8, 1),
+		[Rune.Force, Rune.Earth, Rune.Ice],
+		5,
+		20,
+		15);
+
+	public static ActorType Xenosphere { get; } = new(
+		"xenosphere",
+		'x',
+		Color.Purple,
+		new(3, 8, 10, 8, 2),
+		[Rune.Force, Rune.Fire, Rune.Air],
+		5,
+		25,
+		10);
+
+	public static ActorType MadSorcerer { get; } = new(
+		"mad sorcerer",
+		'S',
+		Color.Pink,
+		new(3, 10, 10, 5, 3),
+		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
+		6,
+		50,
+		5);
+
+	public static ActorType Butcher { get; } = new(
+		"butcher",
+		'B',
+		Color.Red,
+		new(12, 6, 1, 12, 4),
+		[],
+		6,
+		20,
+		40);
+
+	public static ActorType Deathbot { get; } = new(
+		"deathbot",
+		'R',
+		Color.Gray,
+		new(16, 2, 5, 16, 5),
+		[],
+		7,
+		30,
+		50);
+
+	public static ActorType ReaperDrone { get; } = new(
+		"reaper drone",
+		'R',
+		Color.White,
+		new(10, 2, 3, 12, 8),
+		[Rune.Force, Rune.Fire],
+		7,
+		40,
+		40);
+
+	public static ActorType ChaosMinion { get; } = new(
+		"chaos minion",
+		'X',
+		Color.Purple,
+		new(12, 12, 1, 8, 10),
+		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
+		8,
+		60,
+		30);
+
+	public static ActorType SoulCollector { get; } = new(
+		"soul collector",
+		'X',
+		Color.White,
+		new(5, 15, 12, 12, 5),
+		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
+		8,
+		80,
+		10);
+
 	public static IEnumerable<ActorType> Enemies { get; } =
-		[Blob, Hedgehog, Imp, Slug];
+		[Blob, Hedgehog, Imp, Slug, IceGolem, EarthGolem, AeolianVortex, Ninja,
+		DoomFungus, Xenosphere, MadSorcerer, Butcher, Deathbot, ReaperDrone, ChaosMinion, SoulCollector];
 }
