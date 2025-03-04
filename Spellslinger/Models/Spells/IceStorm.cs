@@ -33,7 +33,7 @@ public record IceStorm
 				var distance = Math.Abs(x - casterPos.x) + Math.Abs(y - casterPos.y);
 				if (distance > 0 && distance <= range)
 				{
-					HitTile(game, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), x, y, dx, dy);
+					HitTile(game, caster, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), x, y, dx, dy);
 				}
 			}
 		}

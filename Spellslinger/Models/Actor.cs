@@ -273,7 +273,7 @@ public class Actor
 			verb = "critcally hits";
 		}
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
-		target.TakeDamage(damage);
+		target.TakeDamage(damage, this);
 
 		// cast spells
 		var myPos = Game.CurrentMap.LocateActor(this);
@@ -288,12 +288,17 @@ public class Actor
 	/// Takes some damage, potentially killing the actor.
 	/// </summary>
 	/// <param name="damage">The amount of damage.</param>
-	public void TakeDamage(int damage)
+	/// <param name="attacker">Who's inflicting the damage?</param>
+	public void TakeDamage(int damage, Actor attacker)
 	{
 		var leftoverDamage = HP.Deplete(damage);
 		if (leftoverDamage > 0)
 		{
 			Game.Log.Add($"The {this} is killed!");
+			// TODO: maybe leave gold on the floor for other actors to steal?
+			Game.Log.Add($"The {attacker} gains the {this}'s {Experience} experience and {Gold} gold.");
+			attacker.Gold += Gold;
+			attacker.Experience += Experience;
 			var tile = Game.CurrentMap.LocateActor(this);
 			Game.CurrentMap.Tiles[tile.x, tile.y].Actor = null;
 			if (IsPlayerControlled)

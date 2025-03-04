@@ -85,7 +85,7 @@ public abstract record Spell()
 		return Name;
 	}
 
-	protected void HitTile(IGame game, int damage, int knockback, int xpos, int ypos, int dx, int dy)
+	protected void HitTile(IGame game, Actor caster, int damage, int knockback, int xpos, int ypos, int dx, int dy)
 	{
 		// apply damage
 		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
@@ -93,7 +93,7 @@ public abstract record Spell()
 		{
 			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({damage} damage).");
 			// TODO: elemental damage
-			targetTile.Actor.TakeDamage(damage);
+			targetTile.Actor.TakeDamage(damage, caster);
 		}
 
 		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness)) 

@@ -34,7 +34,7 @@ public record ForceFist
 		{
 			var damage = Stats.Power(caster.Stats);
 			game.Log.Add($"The fist hits the {targetTile.Actor} ({damage} damage).");
-			targetTile.Actor.TakeDamage(damage);
+			targetTile.Actor.TakeDamage(damage, caster);
 		}
 	}
 }
