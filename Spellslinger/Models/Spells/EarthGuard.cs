@@ -11,7 +11,7 @@ public record EarthGuard
 			Name: x => $"{x.Element} Guard",
 			Description: x => $"Heals the caster and blasts adjacent enemies with {x.Element.Description} that knock them back.",
 			Details: x => "Healing, damage, and knockback scale with toughness.",
-			MPCost: 8,
+			MPCost: 6,
 			Element: Element.Earth,
 			Power: x => x.Toughness,
 			Knockback: x => x.Toughness / 2,

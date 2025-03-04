@@ -11,7 +11,7 @@ public record IceStorm
 			Name: x => $"{x.Element} Storm",
 			Description: x => $"Blasts nearby enemies in all directions with {x.Element.Description}. Penetrates walls.",
 			Details: x => "Damage scales with willpower, range with toughness.",
-			MPCost: 8,
+			MPCost: 6,
 			Element: Element.Ice,
 			Power: x => x.Willpower * 2,
 			Knockback: x => 0,

@@ -11,7 +11,7 @@ public record FireWave
 			Name: x => $"{x.Element} Wave",
 			Description: x => $"Blasts nearby enemies in one direction with {x.Element.Description}.",
 			Details: x => "Damage scales with willpower, range with memory.",
-			MPCost: 8,
+			MPCost: 6,
 			Element: Element.Fire,
 			Power: x => x.Willpower * 2,
 			Knockback: x => 0,

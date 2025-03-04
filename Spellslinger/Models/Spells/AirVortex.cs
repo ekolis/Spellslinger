@@ -12,7 +12,7 @@ public record AirVortex
 			Name: x => $"{x.Element} Vortex",
 			Description: x => $"Blasts a nearby enemy with {x.Element.Description} and tries to knock them back.",
 			Details: x => "Damage and knockback chance scale with willpower, range with memory.",
-			MPCost: 8,
+			MPCost: 6,
 			Element: Element.Air,
 			Power: x => x.Willpower,
 			Knockback:  x => x.Willpower / 2,

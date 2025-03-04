@@ -26,7 +26,7 @@ public record SpellModifier(string Description, string Details, Element? Element
 		Description: "Increases the power of a spell.",
 		Details: "Power increase scales with strength.",
 		Element: null,
-		MPCost: 4,
+		MPCost: 3,
 		Power: x => x.Strength,
 		Knockback: x => 0,
 		Range : x => 0
@@ -36,7 +36,7 @@ public record SpellModifier(string Description, string Details, Element? Element
 		Description: "Changes the element of a spell to fire and slightly increases power.",
 		Details: "Power increase scales with willpower.",
 		Element: Element.Fire,
-		MPCost: 3,
+		MPCost: 2,
 		Power: x => x.Willpower / 2,
 		Knockback: x => 0,
 		Range: x => 0
@@ -46,7 +46,7 @@ public record SpellModifier(string Description, string Details, Element? Element
 		Description: "Changes the element of a spell to ice and slightly increases power.",
 		Details: "Power increase scales with toughness.",
 		Element: Element.Ice,
-		MPCost: 3,
+		MPCost: 2,
 		Power: x => x.Toughness / 2,
 		Knockback: x => 0,
 		Range: x => 0
@@ -56,7 +56,7 @@ public record SpellModifier(string Description, string Details, Element? Element
 		Description: "Changes the element of a spell to air and adds knockback.",
 		Details: "Knockback scales with willpower.",
 		Element: Element.Air,
-		MPCost: 3,
+		MPCost: 2,
 		Power: x => 0,
 		Knockback: x => 1 + x.Willpower / 5,
 		Range: x => 0
@@ -66,7 +66,7 @@ public record SpellModifier(string Description, string Details, Element? Element
 		Description: "Changes the element of a spell to earth and adds knockback.",
 		Details: "Knockback scales with toughness.",
 		Element: Element.Earth,
-		MPCost: 3,
+		MPCost: 2,
 		Power: x => 0,
 		Knockback: x => 1 + x.Toughness / 5,
 		Range: x => 0
