@@ -20,7 +20,7 @@ public partial class Home
 		else if (mode == InputMode.Exploration && Game.CurrentMap is null)
 		{
 			// player has entered the dungeon, create a new map
-			Game.CurrentMap = MapGenerator.Generate(Game, 64, 32, 16, 8, 16);
+			Game.CurrentMap = MapGenerator.Generate(Game, 1, 64, 32, 16, 8, 16);
 			Game.CurrentMap.ProcessNpcTurns();
 		}
 

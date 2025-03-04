@@ -6,7 +6,7 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	public Map Generate(IGame game, int width, int height, int rooms, int extraDoors, int enemies)
+	public Map Generate(IGame game, int depth, int width, int height, int rooms, int extraDoors, int enemies)
 	{
 		var map = new Map(width, height, null);
 
@@ -110,8 +110,9 @@ public class MapGenerator
 		// place some random enemies
 		for (var i = 0; i < enemies; i++)
 		{
-			// TODO: pick enemies based on the dungeon level and stuff
-			var enemy = new Actor(ActorType.Blob, game);
+			// pick a random enemy, weighted toward enemies that are near in depth to the current dungeon level
+			var enemyType = ActorType.Enemies.PickWeighted(q => 1.0 / Math.Pow(Math.Abs(q.Depth - depth) + 1, 2), game.Rng);
+			var enemy = new Actor(enemyType, game);
 			List<(int x, int y)> enemyCandidates = [];
 			for (var x = 1; x < width - 1; x++)
 			{
