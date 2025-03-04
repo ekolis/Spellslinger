@@ -382,6 +382,8 @@ public class Actor
 						Game.Log.Add("You return to the safety of the town.");
 						Game.CurrentMap = null;
 						Game.InputMode = InputMode.Town;
+						HP.Restore();
+						MP.Restore();
 					}
 					else
 					{
