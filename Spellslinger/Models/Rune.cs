@@ -16,8 +16,9 @@ public record Rune(string Name, Spell? Spell, SpellModifier Modifier, int Cost)
 	public static Rune Ice { get; } = new("Ice", new IceStorm(), SpellModifier.Ice, 50);
 	public static Rune Air { get; } = new("Air", new AirVortex(), SpellModifier.Air, 50);
 	public static Rune Earth { get; } = new("Earth", new EarthGuard(), SpellModifier.Earth, 50);
+	public static Rune Vegan { get; } = new("Vegan", null, SpellModifier.Kale, 25);
 
-	public static IEnumerable<Rune> All { get; } = [Force, Fire, Ice, Air, Earth];
+	public static IEnumerable<Rune> All { get; } = [Force, Fire, Ice, Air, Earth, Vegan];
 
 	public override string ToString()
 	{

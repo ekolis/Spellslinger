@@ -47,7 +47,7 @@ public record AirVortex
 				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
 				{
 					// the bolt hit an actor
-					HitTile(game, caster, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
 				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
@@ -79,7 +79,7 @@ public record AirVortex
 				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
 				{
 					// the bolt hit an actor
-					HitTile(game, caster, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
 				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)

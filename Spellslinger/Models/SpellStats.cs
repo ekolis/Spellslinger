@@ -11,4 +11,5 @@
 /// <param name="Knockback">Tries to knock the enemy back (chance rolled against target toughness).</param>
 /// <param name="Power">The power of the spell. This typically corresponds to something like damage, healing, defense...</param>
 /// <param name="Range">The range of the spell.</param>
-public record SpellStats(Func<SpellStats, string> Name, Element Element, Func<SpellStats, string> Description, Func<SpellStats, string> Details, int MPCost, Func<ActorStats, int> Power, Func<ActorStats, int> Knockback, Func<ActorStats, int> Range);
+/// <param name="Tags">Special tags to apply to the spell.</param>
+public record SpellStats(Func<SpellStats, string> Name, Element Element, Func<SpellStats, string> Description, Func<SpellStats, string> Details, int MPCost, Func<ActorStats, int> Power, Func<ActorStats, int> Knockback, Func<ActorStats, int> Range, SpellTags Tags = SpellTags.None);

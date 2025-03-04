@@ -67,6 +67,16 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		10,
 		20);
 
+	public static ActorType Vegan { get; } = new(
+		"vegan mage",
+		'@',
+		Color.Green,
+		new(3, 4, 4, 2, 3),
+		[Rune.Vegan, Rune.Earth],
+		3,
+		10,
+		20);
+
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
 		[Pyro, Cryo, Aero, Vis, Magus];
 

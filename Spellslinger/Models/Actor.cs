@@ -287,7 +287,7 @@ public class Actor
 			verb = "critcally hits";
 		}
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
-		target.TakeDamage(damage, this);
+		target.TakeDamage(damage, this, SpellTags.None); // TODO: spell tags for melee attacks?
 
 		// cast spells
 		var myPos = Game.CurrentMap.LocateActor(this);
@@ -303,10 +303,29 @@ public class Actor
 	/// </summary>
 	/// <param name="damage">The amount of damage.</param>
 	/// <param name="attacker">Who's inflicting the damage?</param>
-	public void TakeDamage(int damage, Actor attacker)
+	/// <param name="tags">Any spell tags to apply to the damage.</param>
+	public void TakeDamage(int damage, Actor attacker, SpellTags tags)
 	{
-		var leftoverDamage = HP.Deplete(damage);
-		if (leftoverDamage > 0)
+		int leftoverDamage;
+		if (tags.HasFlag(SpellTags.StaminaOnly))
+		{
+			leftoverDamage = Stamina.Deplete(damage);
+		}
+		else
+		{
+			leftoverDamage = HP.Deplete(damage);
+		}
+
+		if (Stamina.Value <= 0)
+		{
+			Game.Log.Add($"The {this} is exhausted.");
+			if (tags.HasFlag(SpellTags.StaminaOnly))
+			{
+				Game.Log.Add($"{leftoverDamage} damage was not applied to the {this}'s health because this spell affects only stamina.");
+			}
+		}
+
+		if (HP.Value <= 0)
 		{
 			Game.Log.Add($"The {this} is killed!");
 			// TODO: maybe leave gold on the floor for other actors to steal?

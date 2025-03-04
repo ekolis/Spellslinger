@@ -60,6 +60,14 @@ public abstract record Spell()
 		{
 			game.Log.Add($"The {caster} casts {Name}.");
 			caster.MP.Deplete(MPCost);
+			if (caster.Mana.Value <= 0)
+			{
+				game.Log.Add($"The {caster}'s mana is depleted.");
+			}
+			if (caster.Reserves.Value <= 0)
+			{
+				game.Log.Add($"The {caster}'s reserves are depleted.");
+			}
 			CastImpl(game, caster, dx, dy);
 			caster.ScheduleNextTurn();
 			return true;
@@ -85,7 +93,7 @@ public abstract record Spell()
 		return Name;
 	}
 
-	protected void HitTile(IGame game, Actor caster, int damage, int knockback, int xpos, int ypos, int dx, int dy)
+	protected void HitTile(IGame game, Actor caster, SpellTags tags, int damage, int knockback, int xpos, int ypos, int dx, int dy)
 	{
 		// apply damage
 		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
@@ -93,7 +101,7 @@ public abstract record Spell()
 		{
 			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({damage} damage).");
 			// TODO: elemental damage
-			targetTile.Actor.TakeDamage(damage, caster);
+			targetTile.Actor.TakeDamage(damage, caster, tags);
 		}
 
 		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness)) 
