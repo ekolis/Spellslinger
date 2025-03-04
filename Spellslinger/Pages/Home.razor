@@ -33,54 +33,7 @@
 				}
 				else
 				{
-					<table>
-						<tr>
-							<td>Strength</td>
-							<td>@Game.Player.Stats.Strength</td>
-							<td>Toughness</td>
-							<td>@Game.Player.Stats.Toughness</td>
-						</tr>
-						<tr>
-							<td>Willpower</td>
-							<td>@Game.Player.Stats.Willpower</td>
-							<td>Memory</td>
-							<td>@Game.Player.Stats.Memory</td>
-						</tr>
-						<tr>
-							<td>Health</td>
-							<td>@Game.Player.Health.Value / @Game.Player.Health.Maximum</td>
-							<td>Stamina</td>
-							<td>@Game.Player.Stamina.Value / @Game.Player.Stamina.Maximum</td>
-						</tr>
-						<tr>
-							<td>Reserves</td>
-							<td>@Game.Player.Reserves.Value / @Game.Player.Reserves.Maximum</td>
-							<td>Mana</td>
-							<td>@Game.Player.Mana.Value / @Game.Player.Mana.Maximum</td>
-						</tr>
-						<tr>
-							<td colspan="2">Melee Spells</td>
-							<td colspan="2">General Spells</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<ul>
-									@foreach (var spell in Game.Player.Knowledge.MeleeSpells)
-									{
-										<li>@spell.Name (@spell.MPCost MP)</li>
-									}
-								</ul>
-							</td>
-							<td colspan="2">
-								<ul>
-									@foreach (var (i, spell) in Game.Player.Knowledge.GeneralSpells.Index())
-									{
-										<li>@Game.SpellKeys[i]: @spell.Name (@spell.MPCost MP)</li>
-									}
-								</ul>
-							</td>
-						</tr>
-					</table>
+					<StatsView />
 				}
 			</div>
 			<div class="log">
