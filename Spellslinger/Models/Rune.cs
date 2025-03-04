@@ -18,4 +18,9 @@ public record Rune(string Name, Spell? Spell, SpellModifier Modifier, int Cost)
 	public static Rune Earth { get; } = new("Earth", new EarthGuard(), SpellModifier.Earth, 50);
 
 	public static IEnumerable<Rune> All { get; } = [Force, Fire, Ice, Air, Earth];
+
+	public override string ToString()
+	{
+		return Name;
+	}
 }
