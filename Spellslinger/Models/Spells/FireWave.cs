@@ -36,7 +36,7 @@ public record FireWave
 			while (rayXPositions.Any() && rayLength <= Stats.Range(caster.Stats))
 			{
 				var rayYPosition = casterPos.y + rayLength * Math.Sign(dy);
-				foreach (var rayXPosition in rayXPositions)
+				foreach (var rayXPosition in rayXPositions.ToArray())
 				{
 					if (rayXPosition < 0 || rayXPosition >= game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= game.CurrentMap.Height)
 					{
@@ -67,7 +67,7 @@ public record FireWave
 			while (rayYPositions.Any() && rayLength <= Stats.Range(caster.Stats))
 			{
 				var rayXPosition = casterPos.x + rayLength * Math.Sign(dx);
-				foreach (var rayYPosition in rayYPositions)
+				foreach (var rayYPosition in rayYPositions.ToArray())
 				{
 					if (rayXPosition < 0 || rayXPosition >= game.CurrentMap.Width || rayYPosition < 0 || rayYPosition >= game.CurrentMap.Height)
 					{
