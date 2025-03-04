@@ -29,9 +29,9 @@ public record SpellModifier(Func<string, string> SpellName, string Description, 
 	}
 
 	public static SpellModifier Force { get; } = new(
-		SpellName: x => x,
+		SpellName: x => "Power " + x,
 		Description: "Increases the power of a spell.",
-		Details: "Power increase scales with strength.",
+		Details: "Power scales with strength.",
 		Element: null,
 		MPCost: 3,
 		Power: x => x.Strength,
@@ -42,7 +42,7 @@ public record SpellModifier(Func<string, string> SpellName, string Description, 
 	public static SpellModifier Fire { get; } = new(
 		SpellName: x => x,
 		Description: "Changes the element of a spell to fire and slightly increases power.",
-		Details: "Power increase scales with willpower.",
+		Details: "Power scales with willpower.",
 		Element: Element.Fire,
 		MPCost: 2,
 		Power: x => x.Willpower / 2,
@@ -53,7 +53,7 @@ public record SpellModifier(Func<string, string> SpellName, string Description, 
 	public static SpellModifier Ice { get; } = new(
 		SpellName: x => x,
 		Description: "Changes the element of a spell to ice and slightly increases power.",
-		Details: "Power increase scales with toughness.",
+		Details: "Power scales with toughness.",
 		Element: Element.Ice,
 		MPCost: 2,
 		Power: x => x.Toughness / 2,
@@ -93,5 +93,27 @@ public record SpellModifier(Func<string, string> SpellName, string Description, 
 		Knockback: x => x.Strength / 3,
 		Range: x => 0,
 		Tags: SpellTags.StaminaOnly
+	);
+
+	public static SpellModifier Extend { get; } = new(
+		SpellName: x => "Extended " + x,
+		Description: "Extends the range of a spell.",
+		Details: "Range scales with willpower.",
+		Element: null,
+		MPCost: 2,
+		Power: x => 0,
+		Knockback: x => 0,
+		Range: x => 1 + x.Willpower / 5
+	);
+
+	public static SpellModifier Focus { get; } = new(
+		SpellName: x => "Focused " + x,
+		Description: "Shortens the range of a spell, but greatly increases its power.",
+		Details: "Power scales with willpower and memory.",
+		Element: null,
+		MPCost: 4,
+		Power: x => x.Memory + x.Willpower,
+		Knockback: x => 0,
+		Range: x => -1
 	);
 }
