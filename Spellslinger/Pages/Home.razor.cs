@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
+using Spellslinger.Components;
 using Spellslinger.Models;
 
 namespace Spellslinger.Pages;
 
 public partial class Home
 {
+	private StatsView statsView;
+
 	protected override void OnInitialized()
 	{
 		Game.InputModeChanged += GameInputModeChanged;
@@ -25,11 +28,13 @@ public partial class Home
 		}
 
 		StateHasChanged();
+		statsView.Refresh();
 	}
 
 	protected void KeyDown(KeyboardEventArgs e)
 	{
 		Game.AcceptKeyboardInput(e);
 		StateHasChanged();
+		statsView.Refresh();
 	}
 }
