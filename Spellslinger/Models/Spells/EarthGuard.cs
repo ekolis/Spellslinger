@@ -24,8 +24,11 @@ public record EarthGuard
 	{
 		var casterPos = game.CurrentMap.LocateActor(caster);
 
+		var power = Stats.Power(caster.Stats);
+
 		// heal the caster
-		caster.HP.Restore(Stats.Power(caster.Stats));
+		game.Log.Add($"The {caster} is healed for {power} HP.");
+		caster.HP.Restore(power);
 
 		// find all adjacent tiles and hit them
 		var range = Stats.Range(caster.Stats);
@@ -36,7 +39,7 @@ public record EarthGuard
 				var distance = Math.Abs(x - casterPos.x) + Math.Abs(y - casterPos.y);
 				if (distance > 0 && distance <= range)
 				{
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), x, y, dx, dy);
+					HitTile(game, caster, Stats.Tags, power, Stats.Knockback(caster.Stats), x, y, dx, dy);
 				}
 			}
 		}
