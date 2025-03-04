@@ -12,9 +12,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		'@',
 		Element.Fire.Color,
 		new(3, 3, 3, 3, 3),
-		[Rune.Force, Rune.Fire],
+		[Rune.Force, Rune.Fire, Rune.Fire],
 		3,
-		9,
+		10,
 		20);
 
 	public static ActorType Cryo { get; } = new(
@@ -22,9 +22,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		'@',
 		Element.Ice.Color,
 		new(3, 3, 3, 3, 3),
-		[Rune.Force, Rune.Ice],
+		[Rune.Force, Rune.Ice, Rune.Ice],
 		3,
-		9,
+		10,
 		20);
 
 	public static ActorType Aero { get; } = new(
@@ -32,9 +32,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		'@',
 		Element.Air.Color,
 		new(3, 3, 3, 3, 3),
-		[Rune.Force, Rune.Air],
+		[Rune.Force, Rune.Air, Rune.Air],
 		3,
-		9,
+		10,
 		20);
 
 	public static ActorType Geo { get; } = new(
@@ -42,9 +42,9 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		'@',
 		Element.Earth.Color,
 		new(3, 3, 3, 3, 3),
-		[Rune.Force, Rune.Earth],
+		[Rune.Force, Rune.Earth, Rune.Earth],
 		3,
-		9,
+		10,
 		20);
 
 	public static ActorType Vis { get; } = new(
@@ -54,7 +54,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(5, 3, 3, 3, 3),
 		[Rune.Force],
 		3,
-		9,
+		10,
 		20);
 
 	public static ActorType Magus { get; } = new(
@@ -64,7 +64,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(1, 3, 3, 3, 3),
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		3,
-		9,
+		30,
 		20);
 
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
