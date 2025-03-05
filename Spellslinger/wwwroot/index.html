@@ -31,6 +31,20 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+		//  https://www.appvnext.com/blog/2020/4/20/playing-audio-files-in-a-blazor-application
+        function PlayAudioFile(src) {
+            var audio = document.getElementById('audio');
+            if (audio != null) {
+                var audioSource = document.getElementById('audioSource');
+                if (audioSource != null) {
+                    audioSource.src = src;
+                    audio.load();
+                    audio.play();
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

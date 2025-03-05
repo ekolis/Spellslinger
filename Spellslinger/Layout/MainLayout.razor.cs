@@ -1,14 +1,18 @@
-﻿namespace Spellslinger.Layout;
+﻿using Spellslinger.Components;
+
+namespace Spellslinger.Layout;
 
 public partial class MainLayout
 {
+	private MusicPlayer musicPlayer;
+
 	protected override void OnInitialized()
 	{
 		Game.Music.TrackChanged += TrackChanged;
 	}
 
-	private void TrackChanged(object sender, string trackFilename)
+	private async void TrackChanged(object sender, string trackFilename)
 	{
-		StateHasChanged();
+		await musicPlayer.Refresh();
 	}
 }
