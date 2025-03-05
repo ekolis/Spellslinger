@@ -7,8 +7,9 @@ namespace Spellslinger.Models;
 /// </summary>
 public class Map
 {
-	public Map(int depth, int width, int height, Actor? player)
+	public Map(IGame game, int depth, int width, int height)
 	{
+		Game = game;
 		Depth = depth;
 		Width = width;
 		Height = height;
@@ -23,8 +24,9 @@ public class Map
 				};
 			}
 		}
-		Player = player;
 	}
+
+	private IGame Game { get; }
 
 	/// <summary>
 	/// The tiles on the map.
@@ -39,9 +41,6 @@ public class Map
 	public int Width { get; }
 
 	public int Height { get; }
-
-	[Obsolete("Use Game.Player instead.")]
-	public Actor? Player { get; set; }
 
 	/// <summary>
 	/// Finds the first actor (if any) matching a predicate.
@@ -135,7 +134,7 @@ public class Map
 	/// </summary>
 	public void ProcessNpcTurns()
 	{
-		while (Player is not null && !Player.Delay.IsEmpty)
+		while (Game.Player is not null && !Game.Player.Delay.IsEmpty)
 		{
 			// find all non-player actors whose turn it is
 			List<Actor> actors = [];

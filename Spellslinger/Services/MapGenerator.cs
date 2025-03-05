@@ -17,7 +17,7 @@ public class MapGenerator
 		int enemies = 8 + depth;
 		bool includeDownStairs = depth < 8;
 
-		var map = new Map(depth, width, height, game.Player);
+		var map = new Map(game, depth, width, height);
 
 		// put a wall around the edge
 		BuildHorizontalWall(map, 0);
@@ -150,7 +150,7 @@ public class MapGenerator
 		}
 
 		// place the player on the up stairs
-		map.Tiles[upStairPos.x, upStairPos.y].Actor = map.Player;
+		map.Tiles[upStairPos.x, upStairPos.y].Actor = game.Player;
 
 		// place some random enemies
 		for (var i = 0; i < enemies; i++)
