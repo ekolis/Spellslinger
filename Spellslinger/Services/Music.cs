@@ -14,9 +14,12 @@ public class Music
 
 	public void Play(string track, string format)
 	{
-		CurrentTrack = track;
-		CurrentFormat = format;
-		TrackChanged?.Invoke(this, track);
+		if (track != CurrentTrack || format != CurrentFormat)
+		{
+			CurrentTrack = track;
+			CurrentFormat = format;
+			TrackChanged?.Invoke(this, track);
+		}
 	}
 
 	public event EventHandler<string>? TrackChanged;

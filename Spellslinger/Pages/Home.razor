@@ -12,26 +12,32 @@
 		@if (Game.InputMode == InputMode.CharacterSelection)
 		{
 			<CharacterSelectionView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 		else if (Game.InputMode == InputMode.Town)
 		{
 			<TownView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 		else if (Game.InputMode == InputMode.Training)
 		{
 			<TrainingView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 		else if (Game.InputMode == InputMode.Shopping)
 		{
 			<ShopView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 		else if (Game.InputMode == InputMode.Spellcrafting)
 		{
 			<SpellcraftingView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 		else if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 		{
 			<MapView Model="@Game.CurrentMap" />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 
 		<div>
