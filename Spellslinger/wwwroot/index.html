@@ -32,6 +32,13 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
     <script>
+		// https://stackoverflow.com/questions/50490304/how-to-make-audio-autoplay-on-chrome
+		document.addEventListener('click', musicPlay);
+		function musicPlay() {
+			document.getElementById('audio').play();
+			document.removeEventListener('click', musicPlay);
+		}
+
 		//  https://www.appvnext.com/blog/2020/4/20/playing-audio-files-in-a-blazor-application
         function PlayAudioFile(src) {
             var audio = document.getElementById('audio');
