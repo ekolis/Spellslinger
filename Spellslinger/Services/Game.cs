@@ -39,6 +39,8 @@ public class Game
 
 	public Shop Shop { get; }
 
+	public Music Music { get; } = new Music();
+
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (Player != null)

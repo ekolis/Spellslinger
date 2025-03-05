@@ -60,6 +60,11 @@ public interface IGame
 	public Shop Shop { get; }
 
 	/// <summary>
+	/// Controls the game's music.
+	/// </summary>
+	public Music Music { get; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>

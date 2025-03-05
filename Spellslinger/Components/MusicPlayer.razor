@@ -1,0 +1,9 @@
+﻿@using Spellslinger.Services
+@inject HttpClient HttpClient
+@inject IGame Game
+@if (Game.Music.CurrentTrack is not null)
+{
+    <audio controls autoplay loop>
+        <source src="music/@Game.Music.CurrentTrack" type="@Game.Music.CurrentFormat">
+    </audio>
+}
