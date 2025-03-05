@@ -1,23 +1,38 @@
 @using Spellslinger.Models
 @using Spellslinger.Services
+@using System.Drawing
 @inject IGame Game
 @inherits ModelComponentBase<Tile>
 
 <div class="tile">
-	<span style="color: @Model.Color.ToRgbaString()">@Model.Character</span>
-	@if (Model.Actor is not null && !Model.Actor.IsPlayerControlled)
+	<span style="color: @Model.Color.ToRgbaString();">@Model.Character</span>
+	@if (Model.Actor is not null)
 	{
-		if (Model.Actor.Type.Depth > Game.CurrentMap.Depth)
+		if (Model.Actor.IsPlayerControlled)
 		{
-			<span class="actor-level actor-level-deep">@Model.Actor.Type.Depth</span>
-		}
-		else if (Model.Actor.Type.Depth < Game.CurrentMap.Depth)
-		{
-			<span class="actor-level actor-level-shallow">@Model.Actor.Type.Depth</span>
+			<div style="position: absolute; width: 100%; bottom: 0px">
+				<DualMeterBar InnerValue="@Model.Actor.Reserves.Value" OuterValue="@Model.Actor.Mana.Value" InnerMax="@Model.Actor.Reserves.Maximum" OuterMax="@Model.Actor.Mana.Maximum" Color="@Color.Cyan" />
+				<DualMeterBar InnerValue="@Model.Actor.Health.Value" OuterValue="@Model.Actor.Stamina.Value" InnerMax="@Model.Actor.Health.Maximum" OuterMax="@Model.Actor.Stamina.Maximum" Color="@Color.Lime" />
+			</div>
 		}
 		else
 		{
-			<span class="actor-level">@Model.Actor.Type.Depth</span>
+			if (Model.Actor.Type.Depth > Game.CurrentMap.Depth)
+			{
+				<span class="actor-level actor-level-deep">@Model.Actor.Type.Depth</span>
+			}
+			else if (Model.Actor.Type.Depth < Game.CurrentMap.Depth)
+			{
+				<span class="actor-level actor-level-shallow">@Model.Actor.Type.Depth</span>
+			}
+			else
+			{
+				<span class="actor-level">@Model.Actor.Type.Depth</span>
+			}
+			<div style="position: absolute; width: 100%; bottom: 0px">
+				<DualMeterBar InnerValue="@Model.Actor.Reserves.Value" OuterValue="@Model.Actor.Mana.Value" InnerMax="@Model.Actor.Reserves.Maximum" OuterMax="@Model.Actor.Mana.Maximum" Color="@Color.Cyan" />
+				<DualMeterBar InnerValue="@Model.Actor.Health.Value" OuterValue="@Model.Actor.Stamina.Value" InnerMax="@Model.Actor.Health.Maximum" OuterMax="@Model.Actor.Stamina.Maximum" Color="@Color.Red" />
+			</div>
 		}
 	}
 </div>
