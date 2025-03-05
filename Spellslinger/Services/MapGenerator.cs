@@ -115,6 +115,40 @@ public class MapGenerator
 			map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 		}
 
+		// delete walls that are blocking doors
+		for (var x = 1; x < width - 1; x++)
+		{
+			for (var y = 1; y < height - 1; y++)
+			{
+				if (map.Tiles[x, y].Terrain == Terrain.Door)
+				{
+					if (map.Tiles[x + 1, y].Terrain == Terrain.Wall && map.Tiles[x - 1, y].Terrain == Terrain.Wall)
+					{
+						// walls to east and west, delete any walls to north or south
+						if (map.Tiles[x, y + 1].Terrain == Terrain.Wall)
+						{
+							map.Tiles[x, y + 1].Terrain = Terrain.Floor;
+						}
+						if (map.Tiles[x, y - 1].Terrain == Terrain.Wall)
+						{
+							map.Tiles[x, y - 1].Terrain = Terrain.Floor;
+						}
+					} else if (map.Tiles[x, y + 1].Terrain == Terrain.Wall && map.Tiles[x, y - 1].Terrain == Terrain.Wall)
+					{
+						// walls to north and south, delete any walls to east or west
+						if (map.Tiles[x + 1, y].Terrain == Terrain.Wall)
+						{
+							map.Tiles[x + 1, y].Terrain = Terrain.Floor;
+						}
+						if (map.Tiles[x - 1, y].Terrain == Terrain.Wall)
+						{
+							map.Tiles[x - 1, y].Terrain = Terrain.Floor;
+						}
+					}
+				}
+			}
+		}
+
 		// place the player on the up stairs
 		map.Tiles[upStairPos.x, upStairPos.y].Actor = map.Player;
 
