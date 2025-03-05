@@ -111,7 +111,7 @@ public abstract record Spell()
 				modifiedDamage *= 3;
 				modifiedDamage /= 2;
 			}
-			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({modifiedDamage} damage.");
+			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({modifiedDamage} damage).");
 			targetTile.Actor.TakeDamage(damage, caster, tags, Stats.Element);
 		}
 
