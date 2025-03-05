@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.75vmin;
 }
 
 h1:focus {
@@ -119,13 +120,13 @@ code {
 }
 
 .map-cell {
-	width: 16px;
-	height: 16px;
+	width: 1.75vmin;
+	height: 1.75vmin;
     text-align: center;
 }
 
 .log-entry {
-    height: 16px;
-    line-height: 16px;
+    height: 1vh;
+    line-height: 1vh;
     margin: 0px;
 }
