@@ -28,13 +28,13 @@ public partial class Home
 		}
 
 		StateHasChanged();
-		statsView.Refresh();
+		statsView?.Refresh();
 	}
 
 	protected void KeyDown(KeyboardEventArgs e)
 	{
 		Game.AcceptKeyboardInput(e);
 		StateHasChanged();
-		statsView.Refresh();
+		statsView?.Refresh();
 	}
 }
