@@ -125,7 +125,7 @@ public abstract record Spell()
 				&& knockbackYpos >= 0 && knockbackYpos < game.CurrentMap.Height
 				&& game.CurrentMap.Tiles[knockbackXpos, knockbackYpos].Actor is null)
 			{
-				game.CurrentMap.Tiles[xpos, knockbackYpos].Actor = game.CurrentMap.Tiles[xpos, ypos].Actor;
+				game.CurrentMap.Tiles[knockbackXpos, knockbackYpos].Actor = game.CurrentMap.Tiles[xpos, ypos].Actor;
 				game.CurrentMap.Tiles[xpos, ypos].Actor = null;
 			}
 		}
