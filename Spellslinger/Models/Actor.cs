@@ -293,12 +293,15 @@ public class Actor
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
 		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
 
-		// cast spells
-		var myPos = Game.CurrentMap.LocateActor(this);
-		var targetPos = Game.CurrentMap.LocateActor(target);
-		foreach (var spell in MeleeSpells)
+		// cast spells if the target isn't dead
+		if (target.IsAlive)
 		{
-			spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+			var myPos = Game.CurrentMap.LocateActor(this);
+			var targetPos = Game.CurrentMap.LocateActor(target);
+			foreach (var spell in MeleeSpells)
+			{
+				spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+			}
 		}
 	}
 
@@ -489,6 +492,11 @@ public class Actor
 			return false;
 		}
 	}
+
+	/// <summary>
+	/// Is this actor still alive?
+	/// </summary>
+	public bool IsAlive => HP.Value > 0;
 
 	public override string ToString()
 	{
