@@ -1,4 +1,23 @@
 @using Spellslinger.Models
+@using Spellslinger.Services
+@inject IGame Game
 @inherits ModelComponentBase<Tile>
 
-<span class="tile" style="color: @Model.Color.ToRgbaString()">@Model.Character</span>
+<div class="tile">
+	<span style="color: @Model.Color.ToRgbaString()">@Model.Character</span>
+	@if (Model.Actor is not null && !Model.Actor.IsPlayerControlled)
+	{
+		if (Model.Actor.Type.Depth > Game.CurrentMap.Depth)
+		{
+			<span class="actor-level actor-level-deep">@Model.Actor.Type.Depth</span>
+		}
+		else if (Model.Actor.Type.Depth < Game.CurrentMap.Depth)
+		{
+			<span class="actor-level actor-level-shallow">@Model.Actor.Type.Depth</span>
+		}
+		else
+		{
+			<span class="actor-level">@Model.Actor.Type.Depth</span>
+		}
+	}
+</div>

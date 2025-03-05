@@ -130,3 +130,15 @@ code {
     line-height: 1.75vh;
     margin: 0px;
 }
+
+.actor-level {
+    font-size: 1vmin;
+}
+
+.actor-level-deep {
+    color: red;
+}
+
+.actor-level-shallow {
+    color: green;
+}
