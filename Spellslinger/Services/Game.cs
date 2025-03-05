@@ -46,6 +46,9 @@ public class Game
 		if (Player != null)
 		{
 			Player.AcceptKeyboardInput(e);
+
+			// one last update in case nothing explicitly interesting happened
+			Update();
 		}
 		else
 		{
@@ -53,5 +56,12 @@ public class Game
 		}
 	}
 
+	public void Update()
+	{
+		Updated?.Invoke(this, new EventArgs());
+	}
+
 	public event EventHandler<InputMode> InputModeChanged;
+
+	public event EventHandler Updated;
 }

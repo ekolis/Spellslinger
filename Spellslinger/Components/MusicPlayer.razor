@@ -1,7 +1,7 @@
 ﻿@using Spellslinger.Services
 @inject HttpClient HttpClient
-@inject IGame Game
 @inject IJSRuntime js
+@inherits GameComponentBase
 @if (Game.Music.CurrentTrack is not null)
 {
     <audio id="audio" controls autoplay loop>

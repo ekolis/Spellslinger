@@ -45,11 +45,6 @@ public interface IGame
 	public InputMode InputMode { get; set; }
 
 	/// <summary>
-	/// Event that is raised when the input mode is changed.
-	/// </summary>
-	public event EventHandler<InputMode> InputModeChanged;
-
-	/// <summary>
 	/// The spell that has been input, and is pending a direction.
 	/// </summary>
 	public Spell? InputSpell { get; set; }
@@ -69,4 +64,19 @@ public interface IGame
 	/// </summary>
 	/// <param name="e"></param>
 	public void AcceptKeyboardInput(KeyboardEventArgs e);
+
+	/// <summary>
+	/// Notifies listeners of an update to the game state.
+	/// </summary>
+	public void Update();
+
+	/// <summary>
+	/// Event that is raised when the input mode is changed.
+	/// </summary>
+	public event EventHandler<InputMode> InputModeChanged;
+
+	/// <summary>
+	/// Event that is raised when the game state is updated.
+	/// </summary>
+	public event EventHandler Updated;
 }

@@ -6,7 +6,7 @@ namespace Spellslinger.Components;
 /// A Razor component that has a view model.
 /// </summary>
 public class ModelComponentBase<T>
-	: ComponentBase
+	: GameComponentBase
 {
 	/// <summary>
 	/// The view model.
