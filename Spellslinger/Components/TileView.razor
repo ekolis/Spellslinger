@@ -3,7 +3,7 @@
 @using System.Drawing
 @inherits ModelComponentBase<Tile>
 
-<div class="tile">
+<div class="tile" style="background-color: @Model.BackgroundColor.ToRgbaString()">
 	<span style="color: @Model.Color.ToRgbaString();">@Model.Character</span>
 	@if (Model.Actor is not null)
 	{

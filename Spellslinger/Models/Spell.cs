@@ -44,13 +44,18 @@ public abstract record Spell()
 	public IEnumerable<SpellModifier> Modifiers { get; init; } = [];
 
 	/// <summary>
+	/// The effect to apply to affected tiles.
+	/// </summary>
+	public virtual Effect Effect => new Effect { Color = Stats.Element.Color };
+
+	/// <summary>
 	/// Casts the spell.
 	/// </summary>
 	/// <param name="caster">The actor who is casting the spell.</param>
 	/// <param name="dx">The x-component of the direction vector (ignored if non-directional).</param>
 	/// <param name="dy">The y-component of the direction vector (ignored if non-directional).</param>
 	/// <returns>true if a turn was spent casting the spell, false if the spell couldn't be cast (e.g lack of MP).</returns>
-	public bool Cast(IGame game, Actor caster, int dx, int dy)
+	public async Task<bool> Cast(IGame game, Actor caster, int dx, int dy)
 	{
 		if (caster.MP.Value < MPCost)
 		{
@@ -71,6 +76,17 @@ public abstract record Spell()
 			}
 			CastImpl(game, caster, dx, dy);
 			caster.ScheduleNextTurn();
+
+			// show effect
+			game.Update();
+			await Task.Delay(50);
+
+			// remove effect
+			foreach (var tile in game.CurrentMap.Tiles)
+			{
+				tile.Effect = null;
+			}
+
 			return true;
 		}
 	}
@@ -96,8 +112,13 @@ public abstract record Spell()
 
 	protected void HitTile(IGame game, Actor caster, SpellTags tags, int damage, int knockback, int xpos, int ypos, int dx, int dy)
 	{
-		// apply damage
+		// find target tile
 		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
+
+		// apply effect
+		targetTile.Effect = Effect;
+
+		// apply damage
 		if (targetTile.Actor is not null)
 		{
 			// TODO: refactor calculating resists twice

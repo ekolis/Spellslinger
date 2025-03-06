@@ -141,7 +141,7 @@ public class Actor
 	/// </summary>
 	/// <param name="e"></param>
 	/// <returns>true if the input caused the actor to perform an action that consumed its turn, otherwise false.</returns>
-	public bool AcceptKeyboardInput(KeyboardEventArgs e)
+	public async Task<bool> AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (IsPlayerControlled && Delay.IsEmpty)
 		{
@@ -149,37 +149,37 @@ public class Actor
 			switch (e.Code)
 			{
 				case "ArrowLeft":
-					moved = HandleDirectionalInput(-1, 0);
+					moved = await HandleDirectionalInput(-1, 0);
 					break;
 				case "ArrowRight":
-					moved = HandleDirectionalInput(1, 0);
+					moved = await HandleDirectionalInput(1, 0);
 					break;
 				case "ArrowUp":
-					moved = HandleDirectionalInput(0, -1);
+					moved = await HandleDirectionalInput(0, -1);
 					break;
 				case "ArrowDown":
-					moved = HandleDirectionalInput(0, 1);
+					moved = await HandleDirectionalInput(0, 1);
 					break;
 				case "KeyZ":
-					moved = PrepareCastPlayerSpell(0);
+					moved = await PrepareCastPlayerSpell(0);
 					break;
 				case "KeyX":
-					moved = PrepareCastPlayerSpell(1);
+					moved = await PrepareCastPlayerSpell(1);
 					break;
 				case "KeyC":
-					moved = PrepareCastPlayerSpell(2);
+					moved = await PrepareCastPlayerSpell(2);
 					break;
 				case "KeyV":
-					moved = PrepareCastPlayerSpell(3);
+					moved = await PrepareCastPlayerSpell(3);
 					break;
 				case "KeyB":
-					moved = PrepareCastPlayerSpell(4);
+					moved = await PrepareCastPlayerSpell(4);
 					break;
 				case "KeyN":
-					moved = PrepareCastPlayerSpell(5);
+					moved = await PrepareCastPlayerSpell(5);
 					break;
 				case "KeyM":
-					moved = PrepareCastPlayerSpell(6);
+					moved = await PrepareCastPlayerSpell(6);
 					break;
 				case "Space":
 					moved = InteractWithTerrain();
@@ -206,7 +206,7 @@ public class Actor
 	/// <summary>
 	/// Acts like an enemy for one turn.
 	/// </summary>
-	public void ActAsEnemy()
+	public async Task ActAsEnemy()
 	{
 		// can't act while hibernating
 		if (IsHibernating)
@@ -228,7 +228,7 @@ public class Actor
 		{
 			// try to cast a random available spell
 			var spell = spells.PickWeighted(q => 1, Game.Rng);
-			spell.Cast(Game, this, Math.Sign(dx), Math.Sign(dy));
+			await spell.Cast(Game, this, Math.Sign(dx), Math.Sign(dy));
 		}
 		else if (dx == 1 && dy == 0
 			|| dx == -1 && dy == 0
@@ -288,12 +288,12 @@ public class Actor
 	/// This function doesn't check that the target is in melee attack range. You should do that before calling it.
 	/// </remarks>
 	/// <param name="target"></param>
-	public void Attack(Actor target)
+	public async void Attack(Actor target)
 	{
 		// melee attack
 		var damage = Stats.Strength;
 		var critChance = Stats.Willpower;
-		var isCrit = Game.Rng.Next(0, 100) < critChance;
+		var	 isCrit = Game.Rng.Next(0, 100) < critChance;
 		var verb = "hits";
 		if (isCrit)
 		{
@@ -310,7 +310,7 @@ public class Actor
 			var targetPos = Game.CurrentMap.LocateActor(target);
 			foreach (var spell in MeleeSpells)
 			{
-				spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+				await spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
 			}
 		}
 	}
@@ -386,7 +386,7 @@ public class Actor
 		}
 	}
 
-	private bool PrepareCastPlayerSpell(int index)
+	private async Task<bool> PrepareCastPlayerSpell(int index)
 	{
 		if (GeneralSpells.Count > index)
 		{
@@ -399,7 +399,7 @@ public class Actor
 			}
 			else
 			{
-				return GeneralSpells[0].Cast(Game, this, 0, 0);
+				return await GeneralSpells[0].Cast(Game, this, 0, 0);
 			}
 		}
 		else
@@ -409,12 +409,12 @@ public class Actor
 		}
 	}
 
-	private bool HandleDirectionalInput(int dx, int dy)
+	private async Task<bool> HandleDirectionalInput(int dx, int dy)
 	{
 		if (Game.InputMode == InputMode.SpellDirection)
 		{
 			// cast the input spell in the desired direction
-			var result = Game.InputSpell.Cast(Game, this, dx, dy);
+			var result = await Game.InputSpell.Cast(Game, this, dx, dy);
 			Game.InputMode = InputMode.Dungeon;
 			Game.InputSpell = null;
 			return result;

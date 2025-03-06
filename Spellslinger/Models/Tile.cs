@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 
 namespace Spellslinger.Models;
 
@@ -23,10 +24,16 @@ public class Tile
 	public Actor? Actor { get; set; }
 
 	/// <summary>
+	/// The effect on this tile, if any.
+	/// </summary>
+	public Effect? Effect { get; set; }
+
+	/// <summary>
 	/// The character used to represent the tile.
 	/// </summary>
 	public char Character =>
-		Actor?.Character
+		Effect?.Character
+		?? Actor?.Character
 		?? Treasures.OrderBy(q => q.Priority).FirstOrDefault()?.Character
 		?? Terrain.Character;
 
@@ -34,7 +41,16 @@ public class Tile
 	/// The foreground color used to represent the tile.
 	/// </summary>
 	public Color Color =>
-		Actor?.Color
+		Effect?.Color
+		?? Actor?.Color
 		?? Treasures.OrderBy(q => q.Priority).FirstOrDefault()?.Color
 		?? Terrain.Color;
+
+	/// <summary>
+	/// The background color used to represent this tile.
+	/// </summary>
+	public Color BackgroundColor =>
+		Effect?.BackgroundColor
+		//?? Terrain.BackgroundColor
+		?? Color.Black;
 }
