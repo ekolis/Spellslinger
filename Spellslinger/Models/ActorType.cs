@@ -289,4 +289,79 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 	public static IEnumerable<ActorType> Enemies { get; } =
 		[Blob, Hedgehog, Imp, Slug, IceGolem, EarthGolem, AeolianVortex, Ninja,
 		DoomFungus, Xenosphere, MadSorcerer, Butcher, Deathbot, ReaperDrone, ChaosMinion, SoulCollector];
+
+	public static ActorType IncineratorOfSouls { get; } = new(
+		"Incinerator of Souls",
+		'Ω',
+		Element.Fire.Color,
+		new(5, 5, 5, 5, 5),
+		[Rune.Force, Rune.Fire, Rune.Air],
+		1,
+		100,
+		0,
+		[Element.Fire, Element.Air],
+		[Element.Ice]);
+
+	public static ActorType FrigidPrince { get; } = new(
+		"Frigid Prince",
+		'Ω',
+		Element.Ice.Color,
+		new(5, 5, 5, 5, 5),
+		[Rune.Force, Rune.Ice, Rune.Earth],
+		1,
+		100,
+		0,
+		[Element.Ice, Element.Earth],
+		[Element.Fire]);
+
+	public static ActorType LordOfTheGales { get; } = new(
+		"Lord of the Gales",
+		'Ω',
+		Element.Air.Color,
+		new(5, 5, 5, 5, 5),
+		[Rune.Force, Rune.Air, Rune.Ice],
+		1,
+		100,
+		0,
+		[Element.Air, Element.Ice],
+		[Element.Earth]);
+
+	public static ActorType TerraCrusher { get; } = new(
+		"Terra Crusher",
+		'Ω',
+		Element.Earth.Color,
+		new(5, 5, 5, 5, 5),
+		[Rune.Force, Rune.Earth, Rune.Fire],
+		1,
+		100,
+		0,
+		[Element.Earth, Element.Fire],
+		[Element.Air]);
+
+	public static ActorType MasterOfTheFist { get; } = new(
+		"Master of the Fist",
+		'Ω',
+		Element.Force.Color,
+		new(5, 5, 5, 5, 5),
+		[Rune.Force, Rune.Force],
+		1,
+		100,
+		0,
+		[Element.Force],
+		[]);
+
+	public static ActorType MageOfAllHues { get; } = new(
+		"Mage of All Hues",
+		'Ω',
+		Color.Gold,
+		new(5, 5, 5, 5, 5),
+		[Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
+		1,
+		100,
+		0,
+		[Element.Fire, Element.Ice, Element.Air, Element.Earth],
+		[Element.Force]);
+
+	public static IEnumerable<ActorType> Bosses { get; } = 
+		[IncineratorOfSouls, FrigidPrince, LordOfTheGales, TerraCrusher, MasterOfTheFist, MageOfAllHues];
 }

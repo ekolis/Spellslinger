@@ -32,12 +32,35 @@ public class Artifact
 			// display a message
 			Game.Log.Add($"You collect the {this}! Now escape from the dungeon to seal away the evil once and for all!");
 
-			// TODO: awaken the hibernating boss
+			// awaken the boss
+			Game.Boss.Awaken();
 		}
 	}
 
 	public override void OnSpawn(Map map, int x, int y)
 	{
-		// TODO: spawn a hibernating boss enemy
+		// spawn the boss nearby
+		var found = false;
+		var distance = 1;
+		while (!found && distance <= map.Width + map.Height - 2)
+		{
+			var candidates = new List<(int x, int y)>();
+			for (var cx = 0; cx < map.Width; cx++)
+			{
+				for (var cy = 0; cy < map.Height; cy++)
+				{
+					if (Math.Abs(cx - x) + Math.Abs(cy - y) == distance && map.Tiles[x, y].Actor is null)
+					{
+						candidates.Add((cx, cy));
+					}
+				}
+			}
+			if (candidates.Any())
+			{
+				var candidate = candidates.PickWeighted(q => 1, Game.Rng);
+				map.Tiles[candidate.x, candidate.y].Actor = Game.Boss;
+				found = true;
+			}
+		}
 	}
 }

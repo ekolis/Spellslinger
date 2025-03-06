@@ -65,6 +65,11 @@ public interface IGame
 	public bool IsArtifactCollected { get; set; }
 
 	/// <summary>
+	/// The final boss of the game.
+	/// </summary>
+	public Actor? Boss { get; set; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>

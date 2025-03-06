@@ -10,6 +10,8 @@ public class Game
 	public Game()
 	{
 		Shop = new Shop(this);
+		Boss = new Actor(ActorType.Bosses.PickWeighted(q => 1, Rng), this);
+		Boss.IsHibernating = true;
 	}
 
 	public IMapGenerator MapGenerator { get; } = new MapGenerator();
@@ -42,6 +44,8 @@ public class Game
 	public Music Music { get; } = new Music();
 
 	public bool IsArtifactCollected { get; set; } = false;
+
+	public Actor? Boss { get; set; }
 
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{

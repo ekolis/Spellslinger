@@ -208,6 +208,13 @@ public class Actor
 	/// </summary>
 	public void ActAsEnemy()
 	{
+		// can't act while hibernating
+		if (IsHibernating)
+		{
+			ScheduleNextTurn();
+			return;
+		}
+
 		var myLocation = Game.CurrentMap.LocateActor(this);
 		var playerLocation = Game.CurrentMap.LocateActor(Game.Player);
 		var dx = playerLocation.x - myLocation.x;
@@ -338,6 +345,8 @@ public class Actor
 		{
 			leftoverDamage = HP.Deplete(damage);
 		}
+
+		Awaken();
 
 		if (Stamina.Value <= 0)
 		{
@@ -505,6 +514,23 @@ public class Actor
 	/// Is this actor still alive?
 	/// </summary>
 	public bool IsAlive => HP.Value > 0;
+
+	/// <summary>
+	/// Is the actor hibernating? If so, they will not get any turns until awakened.
+	/// </summary>
+	public bool IsHibernating { get; set; }
+
+	/// <summary>
+	/// Awakens the actor.
+	/// </summary>
+	public void Awaken()
+	{
+		if (IsHibernating)
+		{
+			Game.Log.Add($"The {this} awakens from hibernation!");
+			IsHibernating = false;
+		}
+	}
 
 	public override string ToString()
 	{
