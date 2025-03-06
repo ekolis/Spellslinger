@@ -136,6 +136,8 @@ public class Actor
 
 	public IEnumerable<Element> Vulnerabilities => Type.Vulnerabilities; // TODO: temporary resistances
 
+	public Tile? Tile { get; set; }
+
 	/// <summary>
 	/// Sends keyboard input to this actor.
 	/// </summary>

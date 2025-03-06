@@ -18,10 +18,7 @@ public class Map
 		{
 			for (var y = 0; y < height; y++)
 			{
-				Tiles[x, y] = new Tile
-				{
-					Terrain = Terrain.Floor
-				};
+				Tiles[x, y] = new Tile(this, x, y, Terrain.Floor);
 			}
 		}
 	}
@@ -60,17 +57,14 @@ public class Map
 	/// <exception cref="InvalidOperationException"></exception>
 	public (int x, int y) LocateActor(Actor actor)
 	{
-		for (var x = 0; x < Width; x++)
+		if (actor.Tile is null || actor.Tile.Map != this)
 		{
-			for (var y = 0; y < Height; y++)
-			{
-				if (Tiles[x, y].Actor == actor)
-				{
-					return (x, y);
-				}
-			}
+			throw new InvalidOperationException($"Actor {actor} was not found on this map.");
 		}
-		throw new InvalidOperationException($"Actor {actor} was not found on this map.");
+		else
+		{
+			return (actor.Tile.X, actor.Tile.Y);
+		}
 	}
 
 	/// <summary>

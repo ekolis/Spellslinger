@@ -8,20 +8,57 @@ namespace Spellslinger.Models;
 /// </summary>
 public class Tile
 {
+	public Tile(Map map, int x, int y, Terrain terrain)
+	{
+		Map = map;
+		X = x;
+		Y = y;
+		Terrain = terrain;
+	}
+
+	public Map Map { get; }
+
+	public int X { get; }
+
+	public int Y { get; }
+
 	/// <summary>
 	/// The terrain of this tile.
 	/// </summary>
-	public required Terrain Terrain { get; set; }
+	public Terrain Terrain { get; set; }
 
 	/// <summary>
 	/// Any treasures on this tile.
 	/// </summary>
 	public IList<Treasure> Treasures { get; } = [];
 
+	private Actor? actor;
+
 	/// <summary>
 	/// The actor on this tile, if any.
 	/// </summary>
-	public Actor? Actor { get; set; }
+	public Actor? Actor
+	{
+		get
+		{
+			return actor;
+		}
+		set
+		{
+			if (value != actor)
+			{
+				if (actor is not null)
+				{
+					actor.Tile = null;
+				}
+				actor = value;
+				if (value is not null)
+				{
+					value.Tile = this;
+				}
+			}
+		}
+	}
 
 	/// <summary>
 	/// The effect on this tile, if any.
