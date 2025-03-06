@@ -120,8 +120,9 @@ code {
 }
 
 .map-cell {
-	width: 1.75vmin;
-	height: 1.75vmin;
+	width: 2.5vmin;
+	height: 2.5vmin;
+    font-size: 2.25vmin;
     text-align: center;
 }
 

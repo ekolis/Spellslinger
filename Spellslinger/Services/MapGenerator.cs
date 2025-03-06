@@ -15,8 +15,8 @@ public class MapGenerator
 	{
 		// calculate map stats based on depth
 		// TODO: make shallower levels smaller and deeper levels bigger, once that can be handled nicely in the UI
-		int width = 60;
-		int height = 30;
+		int width = 40;
+		int height = 20;
 		int rooms = 16 - depth;
 		int extraDoors = 30 - depth * 3;
 		int enemies = 8 + depth;
