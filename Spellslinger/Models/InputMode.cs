@@ -33,4 +33,8 @@ public enum InputMode
 	/// The player is selecting a direction to cast a spell.
 	/// </summary>
 	SpellDirection,
+	/// <summary>
+	/// The player has won the game!
+	/// </summary>
+	Victory,
 }

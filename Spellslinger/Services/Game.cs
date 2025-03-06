@@ -41,6 +41,8 @@ public class Game
 
 	public Music Music { get; } = new Music();
 
+	public bool IsArtifactCollected { get; set; } = false;
+
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (Player != null)

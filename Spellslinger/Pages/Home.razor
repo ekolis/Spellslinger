@@ -37,7 +37,29 @@
 		else if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 		{
 			<MapView Model="@Game.CurrentMap" />
-			Game.Music.Play("exploring-the-darkness.ogg", "audio/ogg");
+			if (Game.Player.IsAlive)
+			{
+				if (Game.IsArtifactCollected)
+				{
+					// TODO: endgame music
+					Game.Music.Play("exploring-the-darkness.ogg", "audio/ogg");
+				}
+				else
+				{
+					Game.Music.Play("exploring-the-darkness.ogg", "audio/ogg");
+				}
+			}
+			else
+			{
+				// TODO: defeat music
+				Game.Music.Play("exploring-the-darkness.ogg", "audio/ogg");	
+			}
+		}
+		else if (Game.InputMode == InputMode.Victory)
+		{
+			<VictoryView />
+			// TODO: victory music
+			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 
 		<div>

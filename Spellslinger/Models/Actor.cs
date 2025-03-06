@@ -437,6 +437,14 @@ public class Actor
 						Game.InputMode = InputMode.Town;
 						HP.Restore();
 						MP.Restore();
+						if (Game.IsArtifactCollected)
+						{
+							// you win by leaving the dungeon with the artifact!
+							Game.Log.Add("You have successfully retrieved the Orb of MacGuffin from the dungeon!");
+							Game.Log.Add("The orb's power seals away the evil within the dungeon.");
+							Game.Log.Add("CONGRATULATIONS! You win!");
+							Game.InputMode = InputMode.Victory;
+						}
 					}
 					else
 					{

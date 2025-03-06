@@ -1,11 +1,16 @@
-﻿using Spellslinger.Models;
+﻿using System;
+using Spellslinger.Models;
 using Spellslinger.Models.Spells;
+using Spellslinger.Models.Treasures;
 
 namespace Spellslinger.Services;
 
 public class MapGenerator
 	: IMapGenerator
 {
+	// TODO: set this back to 8 when done testing endgame scenario
+	public const int MaxDepth = 1;
+
 	public Map Generate(IGame game, int depth)
 	{
 		// calculate map stats based on depth
@@ -15,7 +20,7 @@ public class MapGenerator
 		int rooms = 16 - depth;
 		int extraDoors = 30 - depth * 3;
 		int enemies = 8 + depth;
-		bool includeDownStairs = depth < 8;
+		bool includeDownStairs = depth < MaxDepth;
 
 		var map = new Map(game, depth, width, height);
 
@@ -177,6 +182,29 @@ public class MapGenerator
 			var enemyCandidate = enemyCandidates[game.Rng.Next(enemyCandidates.Count)];
 			map.Tiles[enemyCandidate.x, enemyCandidate.y].Actor = enemy;
 		}
+
+		if (depth == MaxDepth && !game.IsArtifactCollected)
+		{
+			// place the artifact
+			var artifact = new Artifact(game);
+			List<(int x, int y)> artifactCandidates = [];
+			for (var x = 1; x < width - 1; x++)
+			{
+				for (var y = 1; y < height - 1; y++)
+				{
+					// place artifact on an unoccupied floor tile
+					if (map.Tiles[x, y].Terrain == Terrain.Floor && map.Tiles[x, y].Actor is null)
+					{
+						artifactCandidates.Add((x, y));
+					}
+				}
+			}
+			// TODO: deal with scenario where there's no place to put the artifact
+			var artifactCandidate = artifactCandidates.PickWeighted(q => 1, game.Rng);
+			map.Tiles[artifactCandidate.x, artifactCandidate.y].Treasures.Add(artifact);
+			artifact.OnSpawn(map, artifactCandidate.x, artifactCandidate.y);
+		}
+
 
 		return map;
 	}

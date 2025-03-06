@@ -13,6 +13,11 @@ public class Tile
 	public required Terrain Terrain { get; set; }
 
 	/// <summary>
+	/// Any treasures on this tile.
+	/// </summary>
+	public IList<Treasure> Treasures { get; } = [];
+
+	/// <summary>
 	/// The actor on this tile, if any.
 	/// </summary>
 	public Actor? Actor { get; set; }
@@ -20,10 +25,16 @@ public class Tile
 	/// <summary>
 	/// The character used to represent the tile.
 	/// </summary>
-	public char Character => Actor?.Character ?? Terrain.Character;
+	public char Character =>
+		Actor?.Character
+		?? Treasures.OrderBy(q => q.Priority).FirstOrDefault()?.Character
+		?? Terrain.Character;
 
 	/// <summary>
 	/// The foreground color used to represent the tile.
 	/// </summary>
-	public Color Color => Actor?.Color ?? Terrain.Color;
+	public Color Color =>
+		Actor?.Color
+		?? Treasures.OrderBy(q => q.Priority).FirstOrDefault()?.Color
+		?? Terrain.Color;
 }

@@ -60,6 +60,11 @@ public interface IGame
 	public Music Music { get; }
 
 	/// <summary>
+	/// Is the endgame artifact collected?
+	/// </summary>
+	public bool IsArtifactCollected { get; set; }
+
+	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>
 	/// <param name="e"></param>

@@ -122,6 +122,12 @@ public class Map
 		Tiles[x, y].Actor = null;
 		Tiles[newX, newY].Actor = actor;
 
+		// collect any treasures
+		foreach (var treasure in Tiles[x, y].Treasures.ToArray())
+		{
+			treasure.OnCollect(this, x, y, actor);
+		}
+
 		// schedule next turn
 		actor.ScheduleNextTurn();
 
