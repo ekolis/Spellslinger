@@ -72,7 +72,7 @@ public class Game
 		Updated?.Invoke(this, new EventArgs());
 
 		// give it time to do so
-		Thread.Yield();
+		Task.Yield();
 	}
 
 	public event EventHandler<InputMode> InputModeChanged;
