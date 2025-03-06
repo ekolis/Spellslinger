@@ -296,7 +296,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Element.Fire.Color,
 		new(5, 5, 5, 5, 5),
 		[Rune.Force, Rune.Fire, Rune.Air],
-		1,
+		8,
 		100,
 		0,
 		[Element.Fire, Element.Air],
@@ -308,7 +308,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Element.Ice.Color,
 		new(5, 5, 5, 5, 5),
 		[Rune.Force, Rune.Ice, Rune.Earth],
-		1,
+		8,
 		100,
 		0,
 		[Element.Ice, Element.Earth],
@@ -320,7 +320,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Element.Air.Color,
 		new(5, 5, 5, 5, 5),
 		[Rune.Force, Rune.Air, Rune.Ice],
-		1,
+		8,
 		100,
 		0,
 		[Element.Air, Element.Ice],
@@ -332,7 +332,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Element.Earth.Color,
 		new(5, 5, 5, 5, 5),
 		[Rune.Force, Rune.Earth, Rune.Fire],
-		1,
+		8,
 		100,
 		0,
 		[Element.Earth, Element.Fire],
@@ -344,7 +344,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Element.Force.Color,
 		new(5, 5, 5, 5, 5),
 		[Rune.Force, Rune.Force],
-		1,
+		8,
 		100,
 		0,
 		[Element.Force],
@@ -356,12 +356,12 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		Color.Gold,
 		new(5, 5, 5, 5, 5),
 		[Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
-		1,
+		8,
 		100,
 		0,
 		[Element.Fire, Element.Ice, Element.Air, Element.Earth],
 		[Element.Force]);
 
-	public static IEnumerable<ActorType> Bosses { get; } = 
+	public static IEnumerable<ActorType> Bosses { get; } =
 		[IncineratorOfSouls, FrigidPrince, LordOfTheGales, TerraCrusher, MasterOfTheFist, MageOfAllHues];
 }

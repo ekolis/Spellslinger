@@ -20,4 +20,6 @@ public record Terrain(string Name, char Character, Color Color, bool IsPassable)
 	public static Terrain StairsUp { get; } = new Terrain("stairs going up", '<', Color.Green, true);
 
 	public static Terrain StairsDown { get; } = new Terrain("stairs going down", '>', Color.Green, true);
+
+	public static Terrain Rubble { get; } = new Terrain("rubble", '%', Color.Gray, true);
 }

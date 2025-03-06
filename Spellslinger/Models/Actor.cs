@@ -419,7 +419,27 @@ public class Actor
 		else if (Game.InputMode == InputMode.Dungeon)
 		{
 			// move the actor
-			return Game.CurrentMap.MoveActor(this, dx, dy);
+			var result = Game.CurrentMap.MoveActor(this, dx, dy);
+
+			if (result
+				&& Game.IsArtifactCollected
+				&& (Game.Boss?.IsAlive ?? false)
+				&& Game.CurrentMap.FindActor(q => q == Game.Boss) is null) // don't spawn infinite bosses!
+			{
+				// if there is any rubble and the boss is alive but not on this level,
+				// there's a chance to respawn the boss there
+				foreach (var tile in Game.CurrentMap.Tiles)
+				{
+					var chance = (double)Game.Boss.Stats.Speed / ((Game.Player?.Stats.Speed ?? 1) + Game.Boss.Stats.Speed) / 10;
+					if (tile.Terrain == Terrain.Rubble && tile.Actor is null && Game.Rng.NextDouble() < chance)
+					{
+						Game.Log.Add($"The {Game.Boss} emerges from the rubble!");
+						tile.Actor = Game.Boss;
+					}
+				}
+			}
+
+			return result;
 		}
 		else
 		{
@@ -459,6 +479,19 @@ public class Actor
 					{
 						Game.Log.Add("You return to the previous level. It seems different somehow...");
 						Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1);
+
+						if (Game.IsArtifactCollected)
+						{
+							// destroy the stairs
+							Game.Log.Add("The stairs collapse behind you!");
+							foreach (var tile in Game.CurrentMap.Tiles)
+							{
+								if (tile.Terrain == Terrain.StairsDown)
+								{
+									tile.Terrain = Terrain.Rubble;
+								}
+							}
+						}
 					}
 					return true;
 				}
