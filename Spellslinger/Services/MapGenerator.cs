@@ -8,8 +8,7 @@ namespace Spellslinger.Services;
 public class MapGenerator
 	: IMapGenerator
 {
-	// TODO: set this back to 8 when done testing endgame scenario
-	public const int MaxDepth = 2;
+	public const int MaxDepth = 8;
 
 	public Map Generate(IGame game, int depth, bool ascending)
 	{
