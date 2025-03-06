@@ -159,4 +159,80 @@ public abstract record Spell()
 			}
 		}
 	}
+
+	protected void CastBolt(IGame game, Actor caster, int dx, int dy)
+	{
+		if (dx == 0 && dy == 0)
+		{
+			game.Log.Add($"But the {caster} wisely aborts the spell to avoid casting it at themselves.");
+		}
+		if (dx == 0)
+		{
+			// casting spell vertically
+			// cast one bolt
+			var xpos = caster.Tile.X;
+			int distance = 1;
+			bool hitSomething = false;
+			while (!hitSomething && distance <= Stats.Range(caster.Stats))
+			{
+				// TODO: display the ray in the UI
+				var ypos = caster.Tile.Y + distance * Math.Sign(dy);
+				if (xpos < 0 || xpos >= game.CurrentMap.Width || ypos < 0 || ypos >= game.CurrentMap.Height)
+				{
+					// the bolt is off the map
+					hitSomething = true;
+				}
+				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
+				{
+					// the bolt hit an actor
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					hitSomething = true;
+				}
+				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
+				{
+					// the bolt hit a wall
+					hitSomething = true;
+				}
+
+				// move the bolt
+				distance++;
+			}
+		}
+		else if (dy == 0)
+		{
+			// casting spell horizontally
+			// cast one bolt
+			var ypos = caster.Tile.Y;
+			int distance = 1;
+			bool hitSomething = false;
+			while (!hitSomething && distance <= Stats.Range(caster.Stats))
+			{
+				// TODO: display the ray in the UI
+				var xpos = caster.Tile.X + distance * Math.Sign(dx);
+				if (xpos < 0 || xpos >= game.CurrentMap.Width || ypos < 0 || ypos >= game.CurrentMap.Height)
+				{
+					// the bolt is off the map
+					hitSomething = true;
+				}
+				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
+				{
+					// the bolt hit an actor
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					hitSomething = true;
+				}
+				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
+				{
+					// the bolt hit a wall
+					hitSomething = true;
+				}
+
+				// move the bolt
+				distance++;
+			}
+		}
+		else
+		{
+			game.Log.Add($"But {Name} can't be cast diagonally.");
+		}
+	}
 }

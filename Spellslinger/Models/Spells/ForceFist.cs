@@ -22,18 +22,6 @@ public record ForceFist
 
 	protected override void CastImpl(IGame game, Actor caster, int dx, int dy)
 	{
-		var casterPos = game.CurrentMap.LocateActor(caster);
-		// TODO: deal with array index out of bounds if we try punching too far
-		// TODO: allow range to be extended by modifiers (see Air Vortex spell for bolt code)
-		var targetTile = game.CurrentMap.Tiles[casterPos.x + dx, casterPos.y + dy];
-		if (targetTile.Actor is null)
-		{
-			game.Log.Add($"The fist hits only the {targetTile.Terrain.Name}.");
-		}
-		else
-		{
-			var damage = Stats.Power(caster.Stats);
-			HitTile(game, caster, Stats.Tags, damage, Stats.Knockback(caster.Stats), targetTile.X, targetTile.Y, dx, dy);
-		}
+		CastBolt(game, caster, dx, dy);
 	}
 }
