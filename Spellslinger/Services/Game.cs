@@ -68,7 +68,11 @@ public class Game
 
 	public void Update()
 	{
+		// tell the UI to update
 		Updated?.Invoke(this, new EventArgs());
+
+		// give it time to do so
+		Thread.Yield();
 	}
 
 	public event EventHandler<InputMode> InputModeChanged;
