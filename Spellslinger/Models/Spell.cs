@@ -78,7 +78,6 @@ public abstract record Spell()
 			caster.ScheduleNextTurn();
 
 			// show effect
-			game.Update();
 			await Task.Delay(50);
 
 			// remove effect
@@ -86,6 +85,7 @@ public abstract record Spell()
 			{
 				tile.Effect = null;
 			}
+			game.Update();
 
 			return true;
 		}
@@ -117,6 +117,7 @@ public abstract record Spell()
 
 		// apply effect
 		targetTile.Effect = Effect;
+		game.Update(targetTile);
 
 		// apply damage
 		if (targetTile.Actor is not null)

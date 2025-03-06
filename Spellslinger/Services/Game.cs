@@ -69,7 +69,16 @@ public class Game
 	public void Update()
 	{
 		// tell the UI to update
-		Updated?.Invoke(this, new EventArgs());
+		Updated?.Invoke(this, new GameUpdatedEventArgs());
+
+		// give it time to do so
+		Task.Yield();
+	}
+
+	public void Update(Tile tile)
+	{
+		// tell the UI to update
+		Updated?.Invoke(this, new GameUpdatedEventArgs(tile));
 
 		// give it time to do so
 		Task.Yield();
@@ -77,5 +86,5 @@ public class Game
 
 	public event EventHandler<InputMode> InputModeChanged;
 
-	public event EventHandler Updated;
+	public event EventHandler<GameUpdatedEventArgs> Updated;
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Spellslinger.Models;
 using Spellslinger.Services;
 
 namespace Spellslinger.Components;
@@ -18,8 +19,11 @@ public class GameComponentBase
 		Game.Updated += GameUpdated;
 	}
 
-	private void GameUpdated(object sender, EventArgs e)
+	protected virtual void GameUpdated(object sender, GameUpdatedEventArgs e)
 	{
-		StateHasChanged();
+		if (e.IsGlobal)
+		{
+			StateHasChanged();
+		}
 	}
 }

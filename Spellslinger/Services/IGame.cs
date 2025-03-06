@@ -85,6 +85,11 @@ public interface IGame
 	public void Update();
 
 	/// <summary>
+	/// Notifies listeners of an update to a tile.
+	/// </summary>
+	public void Update(Tile tile);
+
+	/// <summary>
 	/// Event that is raised when the input mode is changed.
 	/// </summary>
 	public event EventHandler<InputMode> InputModeChanged;
@@ -92,5 +97,5 @@ public interface IGame
 	/// <summary>
 	/// Event that is raised when the game state is updated.
 	/// </summary>
-	public event EventHandler Updated;
+	public event EventHandler<GameUpdatedEventArgs> Updated;
 }
