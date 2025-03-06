@@ -257,9 +257,6 @@ public class Actor
 		}
 
 		ScheduleNextTurn();
-
-		// let the UI update
-		Game.Update();
 	}
 
 	/// <summary>

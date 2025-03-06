@@ -81,11 +81,12 @@ public abstract record Spell()
 			await Task.Delay(50);
 
 			// remove effect
-			foreach (var tile in game.CurrentMap.Tiles)
+			foreach (var tile in AffectedTiles)
 			{
 				tile.Effect = null;
+				game.Update(tile);
 			}
-			game.Update();
+			AffectedTiles.Clear();
 
 			return true;
 		}
@@ -110,6 +111,11 @@ public abstract record Spell()
 		return Name;
 	}
 
+	/// <summary>
+	/// List of tiles that were just affected by this spell.
+	/// </summary>
+	private IList<Tile> AffectedTiles { get; } = [];
+
 	protected void HitTile(IGame game, Actor caster, SpellTags tags, int damage, int knockback, int xpos, int ypos, int dx, int dy)
 	{
 		// find target tile
@@ -117,6 +123,7 @@ public abstract record Spell()
 
 		// apply effect
 		targetTile.Effect = Effect;
+		AffectedTiles.Add(targetTile);
 		game.Update(targetTile);
 
 		// apply damage

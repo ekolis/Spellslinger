@@ -116,6 +116,10 @@ public class Map
 		Tiles[x, y].Actor = null;
 		Tiles[newX, newY].Actor = actor;
 
+		// update the map
+		Game.Update(Tiles[x, y]);
+		Game.Update(Tiles[newX, newY]);
+
 		// collect any treasures
 		foreach (var treasure in Tiles[x, y].Treasures.ToArray())
 		{
