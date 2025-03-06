@@ -69,6 +69,10 @@ public interface IGame
 	/// </summary>
 	public Actor? Boss { get; set; }
 
+	public int TrainingCostFactor { get; }
+
+	public int RuneCostFactor { get; }
+
 	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>

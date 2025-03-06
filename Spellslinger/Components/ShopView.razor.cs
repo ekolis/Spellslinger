@@ -8,11 +8,11 @@ public partial class ShopView
 {
 	private void BuyRune(Rune rune)
 	{
-		if (Game.Player.Gold >= rune.Cost)
+		if (Game.Player.Gold >= rune.Cost * Game.RuneCostFactor)
 		{
 			Game.Player.Knowledge.Runes.Add(rune);
 			Game.Shop.Runes.Remove(rune);
-			Game.Player.Gold -= rune.Cost;
+			Game.Player.Gold -= rune.Cost * Game.RuneCostFactor;
 		}
 	}
 

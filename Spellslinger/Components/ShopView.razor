@@ -22,9 +22,9 @@
 				<td>@(rune.Spell?.Name ?? "(none)")</td>
 				<td>@(rune.Spell?.Description ?? "(none)")</td>
 				<td>@(rune.Modifier?.Description ?? "(none)")</td>
-				<td>@rune.Cost</td>
+				<td>@(rune.Cost * Game.RuneCostFactor)</td>
 				<td>
-					@if (Game.Player.Gold >= rune.Cost)
+					@if (Game.Player.Gold >= rune.Cost * Game.RuneCostFactor)
 					{
 						<button @onclick="() => BuyRune(rune)">Buy</button>
 					}

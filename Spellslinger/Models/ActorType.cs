@@ -14,8 +14,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Fire, Rune.Fire],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[Element.Fire],
 		[Element.Ice]);
 
@@ -26,8 +26,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Ice, Rune.Ice],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[Element.Ice],
 		[Element.Fire]);
 
@@ -38,8 +38,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Air, Rune.Air],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[Element.Air],
 		[Element.Earth]);
 
@@ -50,8 +50,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 3, 3, 3, 3),
 		[Rune.Force, Rune.Earth, Rune.Earth],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[Element.Earth],
 		[Element.Air]);
 
@@ -62,8 +62,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(5, 3, 3, 3, 3),
 		[Rune.Force],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[],
 		[]);
 
@@ -74,8 +74,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(1, 3, 4, 3, 3),
 		[Rune.Force, Rune.Fire, Rune.Ice, Rune.Air, Rune.Earth],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[],
 		[]);
 
@@ -86,8 +86,8 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		new(3, 4, 4, 2, 3),
 		[Rune.Vegan, Rune.Earth],
 		3,
-		10,
-		20,
+		0,
+		0,
 		[],
 		[]);
 

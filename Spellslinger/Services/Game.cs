@@ -47,6 +47,10 @@ public class Game
 
 	public Actor? Boss { get; set; }
 
+	public int TrainingCostFactor => 3;
+
+	public int RuneCostFactor => 10;
+
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (Player != null)
