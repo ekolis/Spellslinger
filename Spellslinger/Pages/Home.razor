@@ -37,7 +37,7 @@
 		else if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 		{
 			<MapView Model="@Game.CurrentMap" />
-			if (Game.Player.IsAlive)
+			if (Game.Player is not null && Game.Player.IsAlive)
 			{
 				if (Game.IsArtifactCollected)
 				{
@@ -64,7 +64,7 @@
 
 		<div style="width: 30vw">
 			<div>
-				@if (Game.Player is null)
+				@if (Game.Player is null || !Game.Player.IsAlive)
 				{
 					@if (Game.InputMode == InputMode.Dungeon || Game.InputMode == InputMode.SpellDirection)
 					{
