@@ -478,7 +478,7 @@ public class Actor
 					else
 					{
 						Game.Log.Add("You return to the previous level. It seems different somehow...");
-						Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1);
+						Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1, true);
 
 						if (Game.IsArtifactCollected)
 						{
@@ -517,7 +517,7 @@ public class Actor
 				{
 					// go to the next dungeon level
 					Game.Log.Add("You proceed to the next level.");
-					Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1);
+					Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1, false);
 					return true;
 				}
 				else

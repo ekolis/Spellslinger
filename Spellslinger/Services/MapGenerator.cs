@@ -11,7 +11,7 @@ public class MapGenerator
 	// TODO: set this back to 8 when done testing endgame scenario
 	public const int MaxDepth = 2;
 
-	public Map Generate(IGame game, int depth)
+	public Map Generate(IGame game, int depth, bool ascending)
 	{
 		// calculate map stats based on depth
 		// TODO: make shallower levels smaller and deeper levels bigger, once that can be handled nicely in the UI
@@ -114,9 +114,9 @@ public class MapGenerator
 		var upStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 		map.Tiles[upStairPos.x, upStairPos.y].Terrain = Terrain.StairsUp;
 		stairCandidates.Remove(upStairPos);
+		var downStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 		if (includeDownStairs)
 		{
-			var downStairPos = stairCandidates[game.Rng.Next(stairCandidates.Count)];
 			map.Tiles[downStairPos.x, downStairPos.y].Terrain = Terrain.StairsDown;
 		}
 
@@ -154,8 +154,15 @@ public class MapGenerator
 			}
 		}
 
-		// place the player on the up stairs
-		map.Tiles[upStairPos.x, upStairPos.y].Actor = game.Player;
+		// place the player on the stairs
+		if (ascending)
+		{
+			map.Tiles[downStairPos.x, downStairPos.y].Actor = game.Player;
+		}
+		else
+		{
+			map.Tiles[upStairPos.x, upStairPos.y].Actor = game.Player;
+		}
 
 		// place some random enemies
 		for (var i = 0; i < enemies; i++)

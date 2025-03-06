@@ -8,10 +8,11 @@ namespace Spellslinger.Services;
 public interface IMapGenerator
 {
 	/// <summary>
-	/// Genrerates a <see cref="Map"/>.
+	/// Generates a <see cref="Map"/>.
 	/// </summary>
 	/// <param name="game"></param>
 	/// <param name="depth"></param>
+	/// <param name="ascending">Did the player ascend or descend to enter this map?</param>
 	/// <returns></returns>
-	public Map Generate(IGame game, int depth);
+	public Map Generate(IGame game, int depth, bool ascending);
 }
