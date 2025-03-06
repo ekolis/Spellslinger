@@ -130,8 +130,12 @@ code {
     position: relative;
 }
 
+.log {
+    width: 100%;
+    overflow-y: scroll;
+}
+
 .log-entry {
-    height: 1.75vh;
     line-height: 1.75vh;
     margin: 0px;
 }

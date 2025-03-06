@@ -51,6 +51,19 @@
                 }
             }
         }
+
+        function scrollToBottom(div) {
+            if (div != null) {
+                div.scrollTop = div.scrollHeight;
+            }
+        }
+
+        // TODO: just scroll when adding a new item so player can scroll up manually
+        function rescrollLog() {
+			scrollToBottom(document.getElementById('log'));
+			setTimeout(rescrollLog, 100);
+        }
+        rescrollLog();
     </script>
 </body>
 

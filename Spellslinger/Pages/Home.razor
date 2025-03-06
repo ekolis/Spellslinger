@@ -62,7 +62,7 @@
 			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
 
-		<div>
+		<div style="width: 30vw">
 			<div>
 				@if (Game.Player is null)
 				{
@@ -76,7 +76,7 @@
 					<StatsView @ref="statsView" />
 				}
 			</div>
-			<div class="log">
+			<div id="log" class="log">
 				@for (var i = Game.Log.Count - 30; i < Game.Log.Count; i++)
 				{
 					if (i >= 0)
