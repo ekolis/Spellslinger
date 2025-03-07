@@ -81,7 +81,7 @@ public abstract record Spell()
 			game.Update(caster.Tile);
 
 			// show effect
-			await Task.Delay(50);
+			await Task.Delay(150);
 
 			// remove effect
 			foreach (var tile in AffectedTiles)
