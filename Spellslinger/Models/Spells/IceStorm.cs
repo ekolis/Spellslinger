@@ -16,7 +16,7 @@ public record IceStorm
 			Power: x => x.Willpower * 2,
 			Knockback: x => 0,
 			Teleport: x => 0,
-			Range: x => x.Toughness / 2);
+			Range: x => 1 + x.Toughness / 3);
 	}
 
 	public override bool IsDirectional => false;
