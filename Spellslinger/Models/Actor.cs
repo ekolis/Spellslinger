@@ -577,6 +577,12 @@ public class Actor
 				Game.Log.Add("CONGRATULATIONS! You win!");
 				Game.InputMode = InputMode.Victory;
 			}
+			else if (Game.Boss is not null && Game.Boss.IsAlive && !Game.Boss.IsHibernating)
+			{
+				// bad ending! lose by leaving the dungeon without the artifact after awakening the boss
+				Game.Log.Add($"Well, you think you're safe...");
+				Game.InputMode = InputMode.BadEnding;
+			}
 		}
 		else
 		{

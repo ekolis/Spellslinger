@@ -66,6 +66,12 @@
 			// TODO: victory music
 			Game.Music.Play("out-there.ogg", "audio/ogg");
 		}
+		else if (Game.InputMode == InputMode.BadEnding)
+		{
+			<BadEndingView />
+			// TODO: bad ending music
+			Game.Music.Play("exploring-the-darkness.ogg", "audio/ogg");
+		}
 
 		<div style="width: 30vw">
 			<div>

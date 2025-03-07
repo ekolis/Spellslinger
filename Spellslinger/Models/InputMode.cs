@@ -41,4 +41,8 @@ public enum InputMode
 	/// The player has won the game!
 	/// </summary>
 	Victory,
+	/// <summary>
+	/// The player triggered the secret bad ending by awakening the boss and leaving the dungeon without collecting the artifact!
+	/// </summary>
+	BadEnding,
 }
