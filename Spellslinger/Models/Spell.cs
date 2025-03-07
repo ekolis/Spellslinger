@@ -176,7 +176,7 @@ public abstract record Spell()
 		{
 			game.Log.Add($"But the {caster} wisely aborts the spell to avoid casting it at themselves.");
 		}
-		if (dx == 0)
+		else if (dx == 0)
 		{
 			// casting spell vertically
 			// cast one bolt
