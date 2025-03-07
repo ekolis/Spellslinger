@@ -63,5 +63,8 @@ public class Artifact
 			}
 			distance++;
 		}
+
+		// log a message for the player
+		Game.Log.Add($"You sense the {this}! Collect it and return to the surface safely to seal away the evil {Game.Boss} lurking here once and for all!");
 	}
 }
