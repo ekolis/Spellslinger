@@ -211,6 +211,8 @@ public class MapGenerator
 			artifact.OnSpawn(map, artifactCandidate.x, artifactCandidate.y);
 		}
 
+		// set a recall point
+		game.MaxDepthReached = Math.Max(game.MaxDepthReached, depth);
 
 		return map;
 	}

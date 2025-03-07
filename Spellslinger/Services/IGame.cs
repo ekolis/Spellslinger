@@ -73,6 +73,8 @@ public interface IGame
 
 	public int RuneCostFactor { get; }
 
+	public int MaxDepthReached { get; set; }
+
 	/// <summary>
 	/// Sends keyboard input to the game.
 	/// </summary>

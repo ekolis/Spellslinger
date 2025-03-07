@@ -9,5 +9,18 @@
 	<button @onclick="() => Train()">Training</button>
 	<button @onclick="() => Shop()">Shop</button>
 	<button @onclick="() => CraftSpells()">Craft Spells</button>
+
+	<h3>Dungeon</h3>
 	<button @onclick="() => EnterDungeon()">Enter Dungeon</button>
+	@for (var i = 2; i <= Game.MaxDepthReached; i++)
+	{
+		var depth = i; // HACK: recall is using the last value of i not the current value
+		var cost = GetRecallCost(depth);
+		@if (Game.Player.Gold >= cost)
+		{
+			<p>
+				<button @onclick="() => RecallToDungeon(depth)">Recall to Dungeon Level @i</button> (costs @cost gold)
+			</p>
+		}
+	}
 </div>

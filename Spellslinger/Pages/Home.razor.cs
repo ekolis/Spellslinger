@@ -20,10 +20,9 @@ public partial class Home
 			// player has left the dungeon, delete it so a new one can be created next time they enter
 			Game.CurrentMap = null;
 		}
-		else if (mode == InputMode.Dungeon && Game.CurrentMap is null)
+		else if (mode == InputMode.Dungeon)
 		{
-			// player has entered the dungeon, create a new map
-			Game.CurrentMap = Game.MapGenerator.Generate(Game, 1, false);
+			// player has entered the dungeon
 			Game.CurrentMap.ProcessNpcTurns();
 		}
 

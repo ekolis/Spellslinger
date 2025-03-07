@@ -51,6 +51,8 @@ public class Game
 
 	public int RuneCostFactor => 10;
 
+	public int MaxDepthReached { get; set; } = 0;
+
 	public void AcceptKeyboardInput(KeyboardEventArgs e)
 	{
 		if (Player != null)
