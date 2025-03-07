@@ -292,14 +292,14 @@ public class Actor
 	/// <param name="target"></param>
 	public async void Attack(Actor target)
 	{
-		// save off the target's current tile
-		var tile = target.Tile;
-
-		if (tile is null || !target.IsAlive)
+		if (target.Tile is null || !target.IsAlive)
 		{
 			// can't attack someone who's dead!
 			return;
 		}
+
+		// save off the target's current tile
+		var originalTargetTile = target.Tile;
 
 		// melee attack
 		var damage = Stats.Strength;
@@ -315,17 +315,15 @@ public class Actor
 		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
 
 		// refresh HP/MP bars
-		Game.Update(tile);
+		Game.Update(originalTargetTile);
 
 		// cast melee spells
-		var myPos = Tile;
-		var targetPos = target.Tile;
 		foreach (var spell in Knowledge.MeleeSpells)
 		{
 			// can't cast a melee spell if the target is dead or moved
-			if (target.IsAlive && target.Tile == tile)
+			if (target.IsAlive && target.Tile == originalTargetTile)
 			{
-				await spell.Cast(Game, this, targetPos.X - myPos.X, targetPos.Y - myPos.Y);
+				await spell.Cast(Game, this, target.Tile.X - Tile.X, target.Tile.Y - Tile.Y);
 			}
 		}
 	}
