@@ -616,6 +616,7 @@ public class Actor
 				Game.Log.Add($"Well, you think you're safe...");
 				Game.InputMode = InputMode.BadEnding;
 			}
+			Game.Update();
 		}
 		else
 		{
@@ -637,6 +638,7 @@ public class Actor
 					}
 				}
 			}
+			Game.Update();
 		}
 	}
 

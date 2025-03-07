@@ -23,9 +23,7 @@ public partial class TrainingView
 			Game.Player.Experience -= StrengthCost;
 			Game.Player.Stats = Game.Player.Stats with { Strength = Game.Player.Stats.Strength + 1 };
 		}
-		Game.Player.SetupStats();
-		Game.Player.HP.Restore();
-		Game.Player.MP.Restore();
+		HealPlayer();
 	}
 
 	public void TrainWillpower()
@@ -35,9 +33,7 @@ public partial class TrainingView
 			Game.Player.Experience -= WillpowerCost;
 			Game.Player.Stats = Game.Player.Stats with { Willpower = Game.Player.Stats.Willpower + 1 };
 		}
-		Game.Player.SetupStats();
-		Game.Player.HP.Restore();
-		Game.Player.MP.Restore();
+		HealPlayer();
 	}
 
 	public void TrainMemory()
@@ -47,9 +43,7 @@ public partial class TrainingView
 			Game.Player.Experience -= MemoryCost;
 			Game.Player.Stats = Game.Player.Stats with { Memory = Game.Player.Stats.Memory + 1 };
 		}
-		Game.Player.SetupStats();
-		Game.Player.HP.Restore();
-		Game.Player.MP.Restore();
+		HealPlayer();
 	}
 
 	public void TrainToughness()
@@ -59,9 +53,7 @@ public partial class TrainingView
 			Game.Player.Experience -= ToughnessCost;
 			Game.Player.Stats = Game.Player.Stats with { Toughness = Game.Player.Stats.Toughness + 1 };
 		}
-		Game.Player.SetupStats();
-		Game.Player.HP.Restore();
-		Game.Player.MP.Restore();
+		HealPlayer();
 	}
 
 	public void TrainSpeed()
@@ -71,13 +63,19 @@ public partial class TrainingView
 			Game.Player.Experience -= SpeedCost;
 			Game.Player.Stats = Game.Player.Stats with { Speed = Game.Player.Stats.Speed + 1 };
 		}
-		Game.Player.SetupStats();
-		Game.Player.HP.Restore();
-		Game.Player.MP.Restore();
+		HealPlayer();
 	}
 
 	private void ReturnToTown()
 	{
 		Game.InputMode = InputMode.Town;
+	}
+
+	private void HealPlayer()
+	{
+		Game.Player.SetupStats();
+		Game.Player.HP.Restore();
+		Game.Player.MP.Restore();
+		Game.Update();
 	}
 }

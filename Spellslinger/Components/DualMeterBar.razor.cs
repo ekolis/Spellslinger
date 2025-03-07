@@ -41,7 +41,7 @@ public partial class DualMeterBar
 	protected override void GameUpdated(object sender, GameUpdatedEventArgs e)
 	{
 		base.GameUpdated(sender, e);
-		if (e.Tile is not null && e.Tile?.Actor?.HP == Meter || e.Tile?.Actor?.MP == Meter)
+		if (e.IsGlobal || e.Tile is not null && (e.Tile?.Actor?.HP == Meter || e.Tile?.Actor?.MP == Meter))
 		{
 			Refresh();
 		}
