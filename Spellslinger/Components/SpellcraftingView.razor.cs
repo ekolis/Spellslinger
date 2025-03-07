@@ -17,8 +17,15 @@ public partial class SpellcraftingView
 	[Parameter]
 	public Spell? CraftingSpell { get; set; }
 
+	/// <summary>
+	/// The spell that is currently being examined, if any.
+	/// </summary>
+	[Parameter]
+	public Spell? ExaminedSpell { get; set; }
+
 	private void AddRune(Rune rune)
 	{
+		ExaminedSpell = null;
 		CraftingRunes.Add(rune);
 		if (CraftingSpell is null)
 		{
@@ -71,6 +78,13 @@ public partial class SpellcraftingView
 			CraftingSpell = null;
 			CraftingRunes.Clear();
 		}
+	}
+
+	private void ExamineSpell(Spell spell)
+	{
+		CraftingRunes.Clear();
+		CraftingSpell = null;
+		ExaminedSpell = spell;
 	}
 
 	private void ReturnToTown()
