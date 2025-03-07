@@ -404,7 +404,7 @@ public class Actor
 			}
 			else
 			{
-				return await GeneralSpells[0].Cast(Game, this, 0, 0);
+				return await GeneralSpells[index].Cast(Game, this, 0, 0);
 			}
 		}
 		else
