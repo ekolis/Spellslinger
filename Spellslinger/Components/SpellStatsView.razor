@@ -53,4 +53,11 @@
 			<td>@Model.Stats.Teleport(Game.Player.Stats)</td>
 		</tr>
 	}
+	@if (Model.Stats.Tags != SpellTags.None)
+	{
+		<tr>
+			<th>Tags</th>
+			<td>@Model.Stats.Tags</td>
+		</tr>
+	}
 </table>
