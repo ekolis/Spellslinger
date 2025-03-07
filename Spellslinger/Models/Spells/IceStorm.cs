@@ -15,6 +15,7 @@ public record IceStorm
 			Element: Element.Ice,
 			Power: x => x.Willpower * 2,
 			Knockback: x => 0,
+			Teleport: x => 0,
 			Range: x => x.Toughness / 2);
 	}
 
@@ -33,7 +34,7 @@ public record IceStorm
 				var distance = Math.Abs(x - casterPos.x) + Math.Abs(y - casterPos.y);
 				if (distance > 0 && distance <= range)
 				{
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), x, y, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), x, y, dx, dy);
 				}
 			}
 		}

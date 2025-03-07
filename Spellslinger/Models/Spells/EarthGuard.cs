@@ -15,6 +15,7 @@ public record EarthGuard
 			Element: Element.Earth,
 			Power: x => x.Toughness,
 			Knockback: x => x.Toughness / 2,
+			Teleport: x => 0,
 			Range: x => 1);
 	}
 
@@ -39,7 +40,7 @@ public record EarthGuard
 				var distance = Math.Abs(x - casterPos.x) + Math.Abs(y - casterPos.y);
 				if (distance > 0 && distance <= range)
 				{
-					HitTile(game, caster, Stats.Tags, power, Stats.Knockback(caster.Stats), x, y, dx, dy);
+					HitTile(game, caster, Stats.Tags, power, Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), x, y, dx, dy);
 				}
 			}
 		}

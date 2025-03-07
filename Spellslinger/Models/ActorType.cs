@@ -83,7 +83,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		"vegan mage",
 		'@',
 		Color.Green,
-		new(3, 4, 4, 2, 3),
+		new(3, 4, 3, 2, 3),
 		[Rune.Vegan, Rune.Earth],
 		3,
 		0,
@@ -91,8 +91,20 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[],
 		[]);
 
+	public static ActorType Warp { get; } = new(
+		"warp mage",
+		'@',
+		Color.Purple,
+		new(3, 3, 3, 3, 3),
+		[Rune.Force, Rune.Warp],
+		3,
+		0,
+		0,
+		[],
+		[]);
+
 	public static IEnumerable<ActorType> PlayerCharacters { get; } =
-		[Pyro, Cryo, Aero, Vis, Magus, Vegan];
+		[Pyro, Cryo, Aero, Vis, Magus, Vegan, Warp];
 
 	public static ActorType Blob { get; } = new(
 		"blob",
@@ -362,6 +374,18 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		[Element.Fire, Element.Ice, Element.Air, Element.Earth],
 		[Element.Force]);
 
+	public static ActorType Spaceweaver { get; } = new(
+		"Spaceweaver",
+		'Ω',
+		Color.Purple,
+		new(6, 15, 15, 12, 6),
+		[Rune.Force, Rune.Warp, Rune.Air],
+		8,
+		100,
+		0,
+		[Element.Force, Element.Air],
+		[]);
+
 	public static IEnumerable<ActorType> Bosses { get; } =
-		[IncineratorOfSouls, FrigidPrince, LordOfTheGales, TerraCrusher, MasterOfTheFist, MageOfAllHues];
+		[IncineratorOfSouls, FrigidPrince, LordOfTheGales, TerraCrusher, MasterOfTheFist, MageOfAllHues, Spaceweaver];
 }

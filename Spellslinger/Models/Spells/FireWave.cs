@@ -15,6 +15,7 @@ public record FireWave
 			Element: Element.Fire,
 			Power: x => x.Willpower * 2,
 			Knockback: x => 0,
+			Teleport: x => 0,
 			Range: x => x.Memory);
 	}
 
@@ -45,7 +46,7 @@ public record FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), rayXPosition, rayYPosition, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), rayXPosition, rayYPosition, dx, dy);
 
 					// TODO: display the ray in the UI
 
@@ -76,7 +77,7 @@ public record FireWave
 					}
 
 					// let the ray inflict damage
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), rayXPosition, rayYPosition, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), rayXPosition, rayYPosition, dx, dy);
 
 					// TODO: display the ray in the UI
 

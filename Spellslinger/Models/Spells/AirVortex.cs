@@ -17,6 +17,7 @@ public record AirVortex
 			Element: Element.Air,
 			Power: x => x.Willpower,
 			Knockback:  x => x.Willpower / 2,
+			Teleport: x => 0,
 			Range: x => x.Memory);
 	}
 

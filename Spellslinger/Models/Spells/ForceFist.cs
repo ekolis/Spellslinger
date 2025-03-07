@@ -15,6 +15,7 @@ public record ForceFist
 			Element: Element.Force,
 			Power: x => x.Strength + x.Willpower,
 			Knockback: x => 0,
+			Teleport: x => 0,
 			Range: x => 1);
 	}
 

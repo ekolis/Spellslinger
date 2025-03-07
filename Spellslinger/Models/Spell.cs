@@ -119,10 +119,11 @@ public abstract record Spell()
 	/// </summary>
 	private IList<Tile> AffectedTiles { get; } = [];
 
-	protected void HitTile(IGame game, Actor caster, SpellTags tags, int damage, int knockback, int xpos, int ypos, int dx, int dy)
+	protected void HitTile(IGame game, Actor caster, SpellTags tags, int damage, int knockback, int teleport, int xpos, int ypos, int dx, int dy)
 	{
-		// find target tile
+		// find target tile and actor
 		var targetTile = game.CurrentMap.Tiles[xpos, ypos];
+		var target = targetTile.Actor;
 
 		// apply effect
 		targetTile.Effect = Effect;
@@ -130,24 +131,24 @@ public abstract record Spell()
 		game.Update(targetTile);
 
 		// apply damage
-		if (targetTile.Actor is not null)
+		if (target is not null)
 		{
 			// TODO: refactor calculating resists twice
 			var modifiedDamage = damage;
-			if (targetTile.Actor.Resistances.Contains(Stats.Element) && !targetTile.Actor.Vulnerabilities.Contains(Stats.Element))
+			if (target.Resistances.Contains(Stats.Element) && !target.Vulnerabilities.Contains(Stats.Element))
 			{
 				modifiedDamage /= 2;
 			}
-			if (targetTile.Actor.Vulnerabilities.Contains(Stats.Element) && !targetTile.Actor.Resistances.Contains(Stats.Element))
+			if (target.Vulnerabilities.Contains(Stats.Element) && !target.Resistances.Contains(Stats.Element))
 			{
 				modifiedDamage *= 3;
 				modifiedDamage /= 2;
 			}
-			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {targetTile.Actor} ({modifiedDamage} damage).");
-			targetTile.Actor.TakeDamage(damage, caster, tags, Stats.Element);
+			game.Log.Add($"The {Stats.Element.Description} {Stats.Element.Verb} the {target} ({modifiedDamage} damage).");
+			target.TakeDamage(damage, caster, tags, Stats.Element);
 		}
 
-		if (targetTile.Actor is not null && game.Rng.NextDouble() < (double)knockback / (knockback + targetTile.Actor.Stats.Toughness))
+		if (target is not null && game.Rng.NextDouble() < (double)knockback / (knockback + target.Stats.Toughness))
 		{
 			// apply knockback
 			// TODO: keep track of which tiles are also being hit so actors can play musical chairs
@@ -160,6 +161,12 @@ public abstract record Spell()
 				game.CurrentMap.Tiles[knockbackXpos, knockbackYpos].Actor = game.CurrentMap.Tiles[xpos, ypos].Actor;
 				game.CurrentMap.Tiles[xpos, ypos].Actor = null;
 			}
+		}
+
+		if (target is not null && game.Rng.NextDouble() < (double)teleport / (teleport + target.Stats.Memory))
+		{
+			// apply teleport
+			TeleportActor(game, target, teleport);
 		}
 	}
 
@@ -188,7 +195,7 @@ public abstract record Spell()
 				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
 				{
 					// the bolt hit an actor
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
 				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
@@ -220,7 +227,7 @@ public abstract record Spell()
 				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
 				{
 					// the bolt hit an actor
-					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), xpos, ypos, dx, dy);
+					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
 				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
@@ -236,6 +243,37 @@ public abstract record Spell()
 		else
 		{
 			game.Log.Add($"But {Name} can't be cast diagonally.");
+		}
+	}
+
+	protected void TeleportActor(IGame game, Actor actor, int maxDistance)
+	{
+		// find nearby tiles starting at max distance and working inward
+		for (var distance = maxDistance; distance > 0; distance--)
+		{
+			IList<Tile> candidates = [];
+			for (var x = Math.Max(0, actor.Tile.X - distance); x <= Math.Min(game.CurrentMap.Width - 1, actor.Tile.X + distance); x++)
+			{
+				for (var y = Math.Max(0, actor.Tile.Y - distance); y <= Math.Min(game.CurrentMap.Height - 1, actor.Tile.Y + distance); y++)
+				{
+					var targetDistance = Math.Abs(x - actor.Tile.X) + Math.Abs(y - actor.Tile.Y);
+					var tile = game.CurrentMap.Tiles[x, y];
+
+					// only consider tiles at the correct distance with passable terrain and no actor present
+					if (targetDistance == distance && tile.Terrain.IsPassable && tile.Actor is null)
+					{
+						candidates.Add(tile);
+					}
+				}
+			}
+			if (candidates.Any())
+			{
+				var candidate = candidates.PickWeighted(q => 1, game.Rng);
+				game.Log.Add($"The {actor} teleports!");
+				actor.Tile.Actor = null;
+				candidate.Actor = actor;
+				break;
+			}
 		}
 	}
 }

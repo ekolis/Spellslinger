@@ -19,6 +19,7 @@ public record Rune(string Name, Spell? Spell, SpellModifier Modifier, int Cost)
 	public static Rune Vegan { get; } = new("Vegan", null, SpellModifier.Kale, 1);
 	public static Rune Extend { get; } = new("Extend", null, SpellModifier.Extend, 1);
 	public static Rune Focus { get; } = new("Focus", null, SpellModifier.Focus, 1);
+	public static Rune Warp { get; } = new("Warp", new Teleport(), SpellModifier.Warp, 2);
 
 	public static IEnumerable<Rune> All { get; } = [Force, Fire, Ice, Air, Earth, Vegan, Extend, Focus];
 
