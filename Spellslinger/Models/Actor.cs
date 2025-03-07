@@ -70,12 +70,12 @@ public class Actor
 	/// <summary>
 	/// The actor's HP meters.
 	/// </summary>
-	public DualMeter HP { get; }
+	public DualMeter HP { get; private set; }
 
 	/// <summary>
 	/// The actor's MP meters.
 	/// </summary>
-	public DualMeter MP { get; }
+	public DualMeter MP { get; private set; }
 
 	/// <summary>
 	/// Regenerating pool of HP.
@@ -630,6 +630,23 @@ public class Actor
 
 		Stamina.Restore();
 		Mana.Restore();
+	}
+
+	/// <summary>
+	/// Call this when stats are changed.
+	/// </summary>
+	public void SetupStats()
+	{
+		var curHealth = Health.Value;
+		var curStamina = Stamina.Value;
+		var curReserves = Reserves.Value;
+		var curMana = Mana.Value;
+		HP = new DualMeter(Stats.Toughness * 5, Stats.Toughness + Stats.Willpower);
+		MP = new DualMeter(Stats.Memory * 5, Stats.Memory + Stats.Willpower);
+		Health.Value = Math.Min(curHealth, Health.Maximum);
+		Stamina.Value = Math.Min(curStamina, Stamina.Maximum);
+		Reserves.Value = Math.Min(curReserves, Reserves.Maximum);
+		Mana.Value = Math.Min(curMana, Mana.Maximum);
 	}
 
 	public override string ToString()
