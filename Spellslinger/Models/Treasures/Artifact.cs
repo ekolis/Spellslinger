@@ -49,7 +49,7 @@ public class Artifact
 			{
 				for (var cy = 0; cy < map.Height; cy++)
 				{
-					if (Math.Abs(cx - x) + Math.Abs(cy - y) == distance && map.Tiles[x, y].Actor is null)
+					if (Math.Abs(cx - x) + Math.Abs(cy - y) == distance && map.Tiles[x, y].Terrain.IsPassable && map.Tiles[x, y].Actor is null)
 					{
 						candidates.Add((cx, cy));
 					}
