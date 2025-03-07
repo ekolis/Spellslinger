@@ -355,7 +355,10 @@ public class Actor
 
 		if (Stamina.Value <= 0)
 		{
-			Game.Log.Add($"The {this} is exhausted.");
+			if (Health.Value > 0)
+			{
+				Game.Log.Add($"The {this} is exhausted.");
+			}
 			if (tags.HasFlag(SpellTags.StaminaOnly))
 			{
 				Game.Log.Add($"{leftoverDamage} damage was not applied to the {this}'s health because this spell affects only stamina.");
