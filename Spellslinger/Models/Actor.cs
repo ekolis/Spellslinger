@@ -254,13 +254,21 @@ public class Actor
 		var dy = playerLocation.Y - myLocation.Y;
 
 		// randomly cast spells when player is nearby with a chance depending on Willpower and Memory
-		// TODO: check range of particular spell
 		// TODO: fog of war
-		var spells = Knowledge.GeneralSpells.Where(q => q.MPCost <= MP.Value);
-		if ((dx == 0 || dy == 0) && dx <= 3 && dy <= 3 && spells.Any() && Game.Rng.Next(0, 100) < Stats.Willpower + Stats.Memory)
+		var spells = Knowledge.GeneralSpells.Where(q =>
+			q.MPCost <= MP.Value
+			&& dx <= q.Stats.Range(Stats)
+			&& dy <= q.Stats.Range(Stats));
+		Spell? spell = null;
+		if (spells.Any())
 		{
-			// try to cast a random available spell
-			var spell = spells.PickWeighted(q => 1, Game.Rng);
+			spell = spells.PickWeighted(q => 1, Game.Rng);
+		}
+		if (spell is not null
+			&& (dx == 0 || dy == 0)
+			&& Game.Rng.Next(0, 100) < Stats.Willpower + Stats.Memory)
+		{
+			// try to cast the spell
 			await spell.Cast(Game, this, Math.Sign(dx), Math.Sign(dy));
 		}
 		else if (dx == 1 && dy == 0
