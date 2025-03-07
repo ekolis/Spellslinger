@@ -61,6 +61,7 @@ public class Artifact
 				map.Tiles[candidate.x, candidate.y].Actor = Game.Boss;
 				found = true;
 			}
+			distance++;
 		}
 	}
 }
