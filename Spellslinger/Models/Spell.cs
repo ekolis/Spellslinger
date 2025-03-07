@@ -187,21 +187,30 @@ public abstract record Spell()
 			{
 				// TODO: display the ray in the UI
 				var ypos = caster.Tile.Y + distance * Math.Sign(dy);
+				var targetTile = game.CurrentMap.Tiles[xpos, ypos];
 				if (xpos < 0 || xpos >= game.CurrentMap.Width || ypos < 0 || ypos >= game.CurrentMap.Height)
 				{
 					// the bolt is off the map
 					hitSomething = true;
 				}
-				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
+				else if (targetTile.Actor is not null)
 				{
 					// the bolt hit an actor
 					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
-				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
+				else if (!targetTile.Terrain.IsPassable)
 				{
 					// the bolt hit a wall
 					hitSomething = true;
+				}
+				else
+				{
+					// the bolt traveled through the air
+					// apply effect
+					targetTile.Effect = Effect;
+					AffectedTiles.Add(targetTile);
+					game.Update(targetTile);
 				}
 
 				// move the bolt
@@ -219,21 +228,30 @@ public abstract record Spell()
 			{
 				// TODO: display the ray in the UI
 				var xpos = caster.Tile.X + distance * Math.Sign(dx);
+				var targetTile = game.CurrentMap.Tiles[xpos, ypos];
 				if (xpos < 0 || xpos >= game.CurrentMap.Width || ypos < 0 || ypos >= game.CurrentMap.Height)
 				{
 					// the bolt is off the map
 					hitSomething = true;
 				}
-				else if (game.CurrentMap.Tiles[xpos, ypos].Actor is not null)
+				else if (targetTile.Actor is not null)
 				{
 					// the bolt hit an actor
 					HitTile(game, caster, Stats.Tags, Stats.Power(caster.Stats), Stats.Knockback(caster.Stats), Stats.Teleport(caster.Stats), xpos, ypos, dx, dy);
 					hitSomething = true;
 				}
-				else if (!game.CurrentMap.Tiles[xpos, ypos].Terrain.IsPassable)
+				else if (!targetTile.Terrain.IsPassable)
 				{
 					// the bolt hit a wall
 					hitSomething = true;
+				}
+				else
+				{
+					// the bolt traveled through the air
+					// apply effect
+					targetTile.Effect = Effect;
+					AffectedTiles.Add(targetTile);
+					game.Update(targetTile);
 				}
 
 				// move the bolt
