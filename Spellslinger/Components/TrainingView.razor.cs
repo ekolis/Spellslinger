@@ -6,15 +6,15 @@ namespace Spellslinger.Components;
 
 public partial class TrainingView
 {
-	public int StrengthCost => (int)Math.Pow(Game.Player.Stats.Strength + 1, 2) * Game.TrainingCostFactor;
+	public int StrengthCost => (Game.Player.Stats.Strength + 1) * Game.TrainingCostFactor;
 
-	public int WillpowerCost => (int)Math.Pow(Game.Player.Stats.Willpower + 1, 2) * Game.TrainingCostFactor;
+	public int WillpowerCost => (Game.Player.Stats.Willpower + 1) * Game.TrainingCostFactor;
 
-	public int MemoryCost => (int)Math.Pow(Game.Player.Stats.Memory + 1, 2) * Game.TrainingCostFactor;
+	public int MemoryCost => (Game.Player.Stats.Memory + 1) * Game.TrainingCostFactor;
 
-	public int ToughnessCost => (int)Math.Pow(Game.Player.Stats.Toughness + 1, 2) * Game.TrainingCostFactor;
+	public int ToughnessCost => (Game.Player.Stats.Toughness + 1) * Game.TrainingCostFactor;
 
-	public int SpeedCost => (int)Math.Pow(Game.Player.Stats.Speed + 1, 2) * Game.TrainingCostFactor;
+	public int SpeedCost => (Game.Player.Stats.Speed + 1) * Game.TrainingCostFactor;
 
 	public void TrainStrength()
 	{

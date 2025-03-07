@@ -47,7 +47,7 @@ public class Game
 
 	public Actor? Boss { get; set; }
 
-	public int TrainingCostFactor => 3;
+	public int TrainingCostFactor => 5;
 
 	public int RuneCostFactor => 10;
 
