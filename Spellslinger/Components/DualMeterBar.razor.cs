@@ -7,6 +7,9 @@ namespace Spellslinger.Components;
 public partial class DualMeterBar
 {
 	[Parameter]
+	public DualMeter Meter { get; set; }
+
+	[Parameter]
 	public int InnerValue { get; set; }
 
 	[Parameter]
@@ -31,7 +34,27 @@ public partial class DualMeterBar
 
 	protected override void OnInitialized()
 	{
+		base.OnInitialized();
+		Refresh();
+	}
+
+	protected override void GameUpdated(object sender, GameUpdatedEventArgs e)
+	{
+		base.GameUpdated(sender, e);
+		if (e.Tile is not null && e.Tile?.Actor?.HP == Meter || e.Tile?.Actor?.MP == Meter)
+		{
+			Refresh();
+		}
+	}
+
+	private void Refresh()
+	{
+		InnerValue = Meter.Inner.Value;
+		InnerMax = Meter.Inner.Maximum == 0 ? 1 : Meter.Inner.Maximum;
+		OuterValue = Meter.Outer.Value;
+		OuterMax = Meter.Outer.Maximum == 0 ? 1 : Meter.Outer.Maximum;
 		InnerWidth = 100 * InnerValue / Max;
 		OuterWidth = 100 * OuterValue / Max;
+		StateHasChanged();
 	}
 }

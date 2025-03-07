@@ -77,6 +77,9 @@ public abstract record Spell()
 			CastImpl(game, caster, dx, dy);
 			caster.ScheduleNextTurn();
 
+			// update MP bar
+			game.Update(caster.Tile);
+
 			// show effect
 			await Task.Delay(50);
 

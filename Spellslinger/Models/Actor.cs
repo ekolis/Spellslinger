@@ -302,6 +302,9 @@ public class Actor
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
 		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
 
+		// refresh HP/MP bars
+		Game.Update(target.Tile);
+
 		// cast spells if the target isn't dead
 		if (target.IsAlive)
 		{

@@ -10,8 +10,8 @@
 		if (Model.Actor.IsPlayerControlled)
 		{
 			<div style="position: absolute; width: 100%; bottom: 0px">
-				<DualMeterBar InnerValue="@Model.Actor.Reserves.Value" OuterValue="@Model.Actor.Mana.Value" InnerMax="@Model.Actor.Reserves.Maximum" OuterMax="@Model.Actor.Mana.Maximum" Color="@Color.Cyan" />
-				<DualMeterBar InnerValue="@Model.Actor.Health.Value" OuterValue="@Model.Actor.Stamina.Value" InnerMax="@Model.Actor.Health.Maximum" OuterMax="@Model.Actor.Stamina.Maximum" Color="@Color.Lime" />
+				<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				<DualMeterBar Meter="@Model.Actor.HP" Color="@Color.Lime" />
 			</div>
 		}
 		else
@@ -29,8 +29,8 @@
 				<span class="actor-level">@Model.Actor.Type.Depth</span>
 			}
 			<div style="position: absolute; width: 100%; bottom: 0px">
-				<DualMeterBar InnerValue="@Model.Actor.Reserves.Value" OuterValue="@Model.Actor.Mana.Value" InnerMax="@Model.Actor.Reserves.Maximum" OuterMax="@Model.Actor.Mana.Maximum" Color="@Color.Cyan" />
-				<DualMeterBar InnerValue="@Model.Actor.Health.Value" OuterValue="@Model.Actor.Stamina.Value" InnerMax="@Model.Actor.Health.Maximum" OuterMax="@Model.Actor.Stamina.Maximum" Color="@Color.Red" />
+				<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				<DualMeterBar Meter="@Model.Actor.HP" Color="@Color.Red" />
 			</div>
 		}
 	}
