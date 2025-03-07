@@ -131,7 +131,7 @@ public class Actor
 	/// <summary>
 	/// The maximum number of general spells that this actor can have prepared at a time.
 	/// </summary>
-	public int MaxGeneralSpells => 1 + Stats.Memory / 5;
+	public int MaxGeneralSpells => 1 + Stats.Memory / 3;
 
 	/// <summary>
 	/// The maximum number of runes that this actor can use in a single spell.
