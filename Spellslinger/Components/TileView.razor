@@ -10,7 +10,10 @@
 		if (Model.Actor.IsPlayerControlled)
 		{
 			<div style="position: absolute; width: 100%; bottom: 0px">
-				<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				@if (Model.Actor.Knowledge.Spells.Any())
+				{
+					<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				}
 				<DualMeterBar Meter="@Model.Actor.HP" Color="@Color.Lime" />
 			</div>
 		}
@@ -29,7 +32,10 @@
 				<span class="actor-level">@Model.Actor.Type.Depth</span>
 			}
 			<div style="position: absolute; width: 100%; bottom: 0px">
-				<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				@if (Model.Actor.Knowledge.Spells.Any())
+				{
+					<DualMeterBar Meter="@Model.Actor.MP" Color="@Color.Cyan" />
+				}
 				<DualMeterBar Meter="@Model.Actor.HP" Color="@Color.Red" />
 			</div>
 		}
