@@ -74,7 +74,7 @@ public class Map
 	/// <param name="dx"></param>
 	/// <param name="dy"></param>
 	/// <returns>true if a turn was taken, false if not</returns>
-	public bool MoveActor(Actor actor, int dx, int dy)
+	public async Task<bool> MoveActor(Actor actor, int dx, int dy)
 	{
 		if (dx == 0 && dy == 0)
 		{
@@ -96,7 +96,7 @@ public class Map
 			// see if who's there is an enemy
 			if (actor.IsPlayerControlled != Tiles[newX, newY].Actor.IsPlayerControlled)
 			{
-				actor.Attack(Tiles[newX, newY].Actor);
+				await actor.Attack(Tiles[newX, newY].Actor);
 				actor.ScheduleNextTurn();
 				return true;
 			}

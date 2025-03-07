@@ -251,11 +251,11 @@ public class Actor
 			var goVertical = Game.Rng.NextDouble() < verticalChance;
 			if (goVertical)
 			{
-				Game.CurrentMap.MoveActor(this, 0, Math.Sign(dy));
+				await Game.CurrentMap.MoveActor(this, 0, Math.Sign(dy));
 			}
 			else
 			{
-				Game.CurrentMap.MoveActor(this, Math.Sign(dx), 0);
+				await Game.CurrentMap.MoveActor(this, Math.Sign(dx), 0);
 			}
 		}
 
@@ -290,7 +290,7 @@ public class Actor
 	/// This function doesn't check that the target is in melee attack range. You should do that before calling it.
 	/// </remarks>
 	/// <param name="target"></param>
-	public async void Attack(Actor target)
+	public async Task Attack(Actor target)
 	{
 		if (target.Tile is null || !target.IsAlive)
 		{
@@ -438,7 +438,7 @@ public class Actor
 		else if (Game.InputMode == InputMode.Dungeon)
 		{
 			// move the actor
-			var result = Game.CurrentMap.MoveActor(this, dx, dy);
+			var result = await Game.CurrentMap.MoveActor(this, dx, dy);
 
 			if (result
 				&& Game.IsArtifactCollected
