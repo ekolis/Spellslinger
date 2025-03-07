@@ -54,7 +54,7 @@
 				<td>@spell.MPCost</td>
 				<td>@spell.Description</td>
 				<td>
-					@if (!Game.Player.Knowledge.MeleeSpells.Contains(spell) && Game.Player.MaxMeleeSpells > Game.Player.Knowledge.MeleeSpells.Count)
+					@if (Game.Player.MaxMeleeSpells > Game.Player.Knowledge.MeleeSpells.Count)
 					{
 						<button @onclick="() => Game.Player.Knowledge.MeleeSpells.Add(spell)">Melee</button>
 					}

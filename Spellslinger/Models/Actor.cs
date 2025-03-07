@@ -24,10 +24,13 @@ public class Actor
 		}
 		if (Knowledge.Runes.Contains(Rune.Force))
 		{
-			// slot the force spell as a default
-			var spell = Rune.Force.Spell;
-			Knowledge.Spells.Add(spell);
-			Knowledge.MeleeSpells.Add(spell);
+			for (var i = 0; i < MaxMeleeSpells; i++)
+			{
+				// slot the force spell as a default
+				var spell = Rune.Force.Spell;
+				Knowledge.Spells.Add(spell);
+				Knowledge.MeleeSpells.Add(spell);
+			}
 		}
 		var remainingRunes = Knowledge.Runes.Except(new[] { Rune.Force }).ToList();
 		for (var i = 0; i < MaxGeneralSpells; i++)
@@ -289,15 +292,24 @@ public class Actor
 	/// <param name="target"></param>
 	public async void Attack(Actor target)
 	{
+		// save off the target's current tile
+		var tile = target.Tile;
+
+		if (tile is null || !target.IsAlive)
+		{
+			// can't attack someone who's dead!
+			return;
+		}
+
 		// melee attack
 		var damage = Stats.Strength;
 		var critChance = Stats.Willpower;
-		var	 isCrit = Game.Rng.Next(0, 100) < critChance;
+		var isCrit = Game.Rng.Next(0, 100) < critChance;
 		var verb = "hits";
 		if (isCrit)
 		{
 			damage *= 2;
-			verb = "critcally hits";
+			verb = "critically hits";
 		}
 		Game.Log.Add($"The {this} {verb} the {target} ({damage} damage).");
 		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
@@ -305,12 +317,13 @@ public class Actor
 		// refresh HP/MP bars
 		Game.Update(target.Tile);
 
-		// cast spells if the target isn't dead
-		if (target.IsAlive)
+		// cast melee spells
+		var myPos = Game.CurrentMap.LocateActor(this);
+		var targetPos = Game.CurrentMap.LocateActor(target);
+		foreach (var spell in MeleeSpells)
 		{
-			var myPos = Game.CurrentMap.LocateActor(this);
-			var targetPos = Game.CurrentMap.LocateActor(target);
-			foreach (var spell in MeleeSpells)
+			// can't cast a melee spell if the target is dead or moved
+			if (target.IsAlive && target.Tile == tile)
 			{
 				await spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
 			}
