@@ -64,6 +64,15 @@
 			setTimeout(rescrollLog, 100);
         }
         rescrollLog();
+
+        function focusKeyboard() {
+            var keyInputRoot = document.getElementById('keyInputRoot');
+            if (keyInputRoot != null) {
+                keyInputRoot.focus();
+            }
+            setTimeout(focusKeyboard, 100);
+        }
+        focusKeyboard();
     </script>
 </body>
 
