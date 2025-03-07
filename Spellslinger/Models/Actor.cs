@@ -33,16 +33,19 @@ public class Actor
 			}
 		}
 		var remainingRunes = Knowledge.Runes.Except(new[] { Rune.Force }).ToList();
-		for (var i = 0; i < MaxGeneralSpells; i++)
+		foreach (var rune in remainingRunes.ToArray())
 		{
-			// slot a general spell
-			if (remainingRunes.Any(q => q.Spell != null))
+			// create a general spell
+			if (rune.Spell is not null)
 			{
-				var rune = remainingRunes.First(q => q.Spell != null);
-				var spell = rune.Spell;
-				Knowledge.Spells.Add(spell);
-				Knowledge.GeneralSpells.Add(spell);
+				Knowledge.Spells.Add(rune.Spell);
 				remainingRunes.Remove(rune);
+
+				// slot it if possible
+				if (Knowledge.GeneralSpells.Count < MaxGeneralSpells)
+				{
+					Knowledge.GeneralSpells.Add(rune.Spell);
+				}
 			}
 		}
 		Experience = type.Experience;
