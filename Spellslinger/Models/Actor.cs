@@ -213,17 +213,17 @@ public class Actor
 	/// </summary>
 	public async Task ActAsEnemy()
 	{
-		// can't act while hibernating
-		if (IsHibernating)
+		// can't act while hibernating or not on the map
+		if (IsHibernating || Tile is null)
 		{
 			ScheduleNextTurn();
 			return;
 		}
 
-		var myLocation = Game.CurrentMap.LocateActor(this);
-		var playerLocation = Game.CurrentMap.LocateActor(Game.Player);
-		var dx = playerLocation.x - myLocation.x;
-		var dy = playerLocation.y - myLocation.y;
+		var myLocation = Tile;
+		var playerLocation = Game.Player.Tile;
+		var dx = playerLocation.X - myLocation.Y;
+		var dy = playerLocation.X - myLocation.Y;
 
 		// randomly cast spells when player is nearby with a chance depending on Willpower and Memory
 		// TODO: check range of particular spell
@@ -315,17 +315,17 @@ public class Actor
 		target.TakeDamage(damage, this, SpellTags.None, null); // TODO: spell tags for melee attacks?
 
 		// refresh HP/MP bars
-		Game.Update(target.Tile);
+		Game.Update(tile);
 
 		// cast melee spells
-		var myPos = Game.CurrentMap.LocateActor(this);
-		var targetPos = Game.CurrentMap.LocateActor(target);
-		foreach (var spell in MeleeSpells)
+		var myPos = Tile;
+		var targetPos = target.Tile;
+		foreach (var spell in Knowledge.MeleeSpells)
 		{
 			// can't cast a melee spell if the target is dead or moved
 			if (target.IsAlive && target.Tile == tile)
 			{
-				await spell.Cast(Game, this, targetPos.x - myPos.x, targetPos.y - myPos.y);
+				await spell.Cast(Game, this, targetPos.X - myPos.X, targetPos.Y - myPos.Y);
 			}
 		}
 	}
