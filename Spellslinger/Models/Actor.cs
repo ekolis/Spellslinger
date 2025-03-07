@@ -589,6 +589,9 @@ public class Actor
 			Game.Log.Add("You return to the previous level. It seems different somehow...");
 			Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1, true);
 
+			Stamina.Restore();
+			Mana.Restore();
+
 			if (Game.IsArtifactCollected)
 			{
 				// destroy the stairs
@@ -624,6 +627,9 @@ public class Actor
 		// go to the next dungeon level
 		Game.Log.Add("You proceed to the next level.");
 		Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1, false);
+
+		Stamina.Restore();
+		Mana.Restore();
 	}
 
 	public override string ToString()
