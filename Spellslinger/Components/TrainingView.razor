@@ -51,7 +51,7 @@
 			<td>@ToughnessCost</td>
 			<td>Determines health, stamina, and knockback resistance.</td>
 			<td>
-				@if(Game.Player.Gold >= ToughnessCost)
+				@if(Game.Player.Experience >= ToughnessCost)
 				{
 					<button @onclick="TrainToughness">Train</button>
 				}
@@ -62,7 +62,7 @@
 			<td>@SpeedCost</td>
 			<td>Determines how often you get a turn.</td>
 			<td>
-				@if(Game.Player.Gold >= SpeedCost)
+				@if (Game.Player.Experience >= SpeedCost)
 				{
 					<button @onclick="TrainSpeed">Train</button>
 				}
