@@ -57,6 +57,10 @@
 					{
 						<li>@spell.Name (@spell.MPCost MP)</li>
 					}
+					@for (var i = Game.Player.Knowledge.MeleeSpells.Count; i < Game.Player.MaxMeleeSpells; i++)
+					{
+						<li>(empty slot)</li>
+					}
 				</ul>
 			</td>
 			<td colspan="2">
@@ -64,6 +68,10 @@
 					@foreach (var (i, spell) in Game.Player.Knowledge.GeneralSpells.Index())
 					{
 						<li>@Game.SpellKeys[i]: @spell.Name (@spell.MPCost MP)</li>
+					}
+					@for (var i = Game.Player.Knowledge.GeneralSpells.Count; i < Game.Player.MaxGeneralSpells; i++)
+					{
+						<li>@Game.SpellKeys[i]: (empty slot)</li>
 					}
 				</ul>
 			</td>
