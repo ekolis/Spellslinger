@@ -36,8 +36,8 @@
 	<div>
 		@if (Game.Player.Gold >= Game.Shop.SearchCost)
 		{
-			<button @onclick="() => Game.Shop.Search()">Search for More Items</button>
-			<span>(costs @Game.Shop.SearchCost gold)</span>
+			<button @onclick="() => Game.Shop.Search()">Search for 5 More Items</button>
+			<span>(costs @Game.Shop.SearchCost gold, oldest items will be lost if there are more than 10)</span>
 		}
 		<button @onclick="() => ReturnToTown()">Return to Town</button>
 	</div>

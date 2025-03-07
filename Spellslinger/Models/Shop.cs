@@ -7,10 +7,7 @@ public class Shop
 	public Shop(IGame game)
 	{
 		Game = game;
-		for (var i = 0; i < 3; i++)
-		{
-			AddRune();
-		}
+		Restock();
 	}
 
 	private IGame Game;
@@ -23,7 +20,7 @@ public class Shop
 	/// <summary>
 	/// The gold cost to search for more items.
 	/// </summary>
-	public int SearchCost => 10;
+	public int SearchCost => 20;
 
 	/// <summary>
 	/// Searches for more items for purchase.
@@ -32,14 +29,21 @@ public class Shop
 	{
 		if (Game.Player.Gold >= SearchCost)
 		{
-			AddRune();
+			Restock();
 			Game.Player.Gold -= SearchCost;
 		}
 	}
 
-	private void AddRune()
+	private void Restock()
 	{
-		var rune = Rune.All.PickWeighted(q => 1, Game.Rng);
-		Runes.Add(rune);
+		for (var i = 0; i < 5; i++)
+		{
+			var rune = Rune.All.PickWeighted(q => 1, Game.Rng);
+			Runes.Add(rune);
+		}
+		while (Runes.Count > 10)
+		{
+			Runes.RemoveAt(0);
+		}
 	}
 }
