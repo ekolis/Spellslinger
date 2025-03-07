@@ -10,11 +10,13 @@
 		<tr>
 			<th>Stat</th>
 			<th>XP Cost</th>
+			<th>Description</th>
 			<th>Actions</th>
 		</tr>
 		<tr>
 			<td>Strength</td>
 			<td>@StrengthCost</td>
+			<td>Determines melee damage and number of melee spell slots.</td>
 			<td>
 				@if(Game.Player.Experience >= StrengthCost)
 				{
@@ -25,6 +27,7 @@
 		<tr>
 			<td>Willpower</td>
 			<td>@WillpowerCost</td>
+			<td>Determines stamina, mana, and max runes per spell.</td>
 			<td>
 				@if(Game.Player.Experience >= WillpowerCost)
 				{
@@ -35,6 +38,7 @@
 		<tr>
 			<td>Memory</td>
 			<td>@MemoryCost</td>
+			<td>Determines number of prepared spell slots, reserves, mana, and chance to learn runes from defeated enemies.</td>
 			<td>
 				@if(Game.Player.Experience >= MemoryCost)
 				{
@@ -45,6 +49,7 @@
 		<tr>
 			<td>Toughness</td>
 			<td>@ToughnessCost</td>
+			<td>Determines health, stamina, and knockback resistance.</td>
 			<td>
 				@if(Game.Player.Gold >= ToughnessCost)
 				{
@@ -55,6 +60,7 @@
 		<tr>
 			<td>Speed</td>
 			<td>@SpeedCost</td>
+			<td>Determines how often you get a turn.</td>
 			<td>
 				@if(Game.Player.Gold >= SpeedCost)
 				{
