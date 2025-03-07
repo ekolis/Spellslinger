@@ -108,21 +108,8 @@
 
 	@if (CraftingSpell is not null)
 	{
-		<h4>Crafting Spell: @CraftingSpell.Name</h4>
-		<table>
-			<tr>
-				<th>Description</th>
-				<td>@CraftingSpell.Description</td>
-			</tr>
-			<tr>
-				<th>Details</th>
-				<td>@CraftingSpell.Details</td>
-			</tr>
-			<tr>
-				<th>MP Cost</th>
-				<td>@CraftingSpell.MPCost</td>
-			</tr>
-		</table>
+		<h4>Crafting Spell</h4>
+		<SpellStatsView Model="CraftingSpell" />
 		<table>
 			<tr>
 				<th>Rune</th>

@@ -1,0 +1,56 @@
+﻿@using Spellslinger.Models
+@inherits ModelComponentBase<Spell>
+<table>
+	<tr>
+		<th>Name</th>
+		<td><strong>@Model.Name</strong></td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td>@Model.Description</td>
+	</tr>
+	<tr>
+		<th>Details</th>
+		<td>@Model.Details</td>
+	</tr>
+	<tr>
+		<th>MP Cost</th>
+		<td>@Model.MPCost</td>
+	</tr>
+	<tr>
+		<th>Element</th>
+		<td>@Model.Stats.Element</td>
+	</tr>
+	<tr>
+		<th>Directional Input</th>
+		<td>@(Model.IsDirectional ? "Yes" : "No")</td>
+	</tr>
+	@if (Model.Stats.Power(Game.Player.Stats) > 0)
+	{
+		<tr>
+			<th>Power</th>
+			<td>@Model.Stats.Power(Game.Player.Stats)</td>
+		</tr>
+	}
+	@if (Model.Stats.Range(Game.Player.Stats) > 0)
+	{
+		<tr>
+			<th>Range</th>
+			<td>@Model.Stats.Range(Game.Player.Stats)</td>
+		</tr>
+	}
+	@if (Model.Stats.Knockback(Game.Player.Stats) > 0)
+	{
+		<tr>
+			<th>Knockback</th>
+			<td>@Model.Stats.Knockback(Game.Player.Stats)</td>
+		</tr>
+	}
+	@if (Model.Stats.Teleport(Game.Player.Stats) > 0)
+	{
+		<tr>
+			<th>Teleport</th>
+			<td>@Model.Stats.Teleport(Game.Player.Stats)</td>
+		</tr>
+	}
+</table>
