@@ -252,17 +252,20 @@ public abstract record Spell()
 		for (var distance = maxDistance; distance > 0; distance--)
 		{
 			IList<Tile> candidates = [];
-			for (var x = Math.Max(0, actor.Tile.X - distance); x <= Math.Min(game.CurrentMap.Width - 1, actor.Tile.X + distance); x++)
+			if (actor?.Tile is not null)
 			{
-				for (var y = Math.Max(0, actor.Tile.Y - distance); y <= Math.Min(game.CurrentMap.Height - 1, actor.Tile.Y + distance); y++)
+				for (var x = Math.Max(0, actor.Tile.X - distance); x <= Math.Min(game.CurrentMap.Width - 1, actor.Tile.X + distance); x++)
 				{
-					var targetDistance = Math.Abs(x - actor.Tile.X) + Math.Abs(y - actor.Tile.Y);
-					var tile = game.CurrentMap.Tiles[x, y];
-
-					// only consider tiles at the correct distance with passable terrain and no actor present
-					if (targetDistance == distance && tile.Terrain.IsPassable && tile.Actor is null)
+					for (var y = Math.Max(0, actor.Tile.Y - distance); y <= Math.Min(game.CurrentMap.Height - 1, actor.Tile.Y + distance); y++)
 					{
-						candidates.Add(tile);
+						var targetDistance = Math.Abs(x - actor.Tile.X) + Math.Abs(y - actor.Tile.Y);
+						var tile = game.CurrentMap.Tiles[x, y];
+
+						// only consider tiles at the correct distance with passable terrain and no actor present
+						if (targetDistance == distance && tile.Terrain.IsPassable && tile.Actor is null)
+						{
+							candidates.Add(tile);
+						}
 					}
 				}
 			}
@@ -270,8 +273,12 @@ public abstract record Spell()
 			{
 				var candidate = candidates.PickWeighted(q => 1, game.Rng);
 				game.Log.Add($"The {actor} teleports!");
+				AffectedTiles.Add(actor.Tile);
+				game.Update(actor.Tile);
 				actor.Tile.Actor = null;
 				candidate.Actor = actor;
+				AffectedTiles.Add(actor.Tile);
+				game.Update(actor.Tile);
 				break;
 			}
 		}
