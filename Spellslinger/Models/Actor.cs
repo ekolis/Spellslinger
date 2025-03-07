@@ -222,8 +222,8 @@ public class Actor
 
 		var myLocation = Tile;
 		var playerLocation = Game.Player.Tile;
-		var dx = playerLocation.X - myLocation.Y;
-		var dy = playerLocation.X - myLocation.Y;
+		var dx = playerLocation.X - myLocation.X;
+		var dy = playerLocation.Y - myLocation.Y;
 
 		// randomly cast spells when player is nearby with a chance depending on Willpower and Memory
 		// TODO: check range of particular spell
