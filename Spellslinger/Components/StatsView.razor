@@ -1,5 +1,6 @@
 @using Spellslinger.Components
 @using Spellslinger.Services
+@using System.Drawing
 @inherits GameComponentBase
 
 <table>
@@ -22,10 +23,20 @@
 		<td>@Game.Player.Stamina.Value / @Game.Player.Stamina.Maximum</td>
 	</tr>
 	<tr>
+		<td colspan="4" style="background-color: black">
+			<DualMeterBar Meter="Game.Player.HP" Color="Color.Lime" />
+		</td>
+	</tr>
+	<tr>
 		<td>Reserves</td>
 		<td>@Game.Player.Reserves.Value / @Game.Player.Reserves.Maximum</td>
 		<td>Mana</td>
 		<td>@Game.Player.Mana.Value / @Game.Player.Mana.Maximum</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="background-color: black">
+			<DualMeterBar Meter="Game.Player.MP" Color="Color.Cyan" />
+		</td>
 	</tr>
 	<tr>
 		<td>Experience</td>
