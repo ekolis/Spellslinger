@@ -48,6 +48,31 @@ public class Actor
 				}
 			}
 		}
+		var modifierRunes = new[] { Rune.Force, Rune.Vegan, Rune.Extend, Rune.Focus };
+		foreach (var modifierRune in modifierRunes)
+		{
+			if (Knowledge.Runes.Contains(modifierRune))
+			{
+				// create some powered up spells
+				var remainingRunes2 = Knowledge.Runes.Except(modifierRunes).ToList();
+				foreach (var rune in remainingRunes2.ToArray())
+				{
+					// create a general spell
+					if (rune.Spell is not null)
+					{
+						var spell = rune.Spell.ApplyModifier(modifierRune.Modifier);
+						Knowledge.Spells.Add(spell);
+						remainingRunes2.Remove(rune);
+
+						// slot it if possible
+						if (Knowledge.GeneralSpells.Count < MaxGeneralSpells)
+						{
+							Knowledge.GeneralSpells.Add(spell);
+						}
+					}
+				}
+			}
+		}
 		Experience = type.Experience;
 		Gold = type.Gold;
 	}
