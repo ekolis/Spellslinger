@@ -29,8 +29,8 @@ public record SpellModifier(Func<string, string> SpellName, string Description, 
 			Element = Element ?? stats.Element,
 			MPCost = stats.MPCost + MPCost,
 			Power = (actorStats) => stats.Power(actorStats) + Power(actorStats),
-			Knockback = stats.Knockback + Knockback,
-			Range = stats.Range + Range,
+			Knockback = (actorStats) => stats.Knockback(actorStats) + Knockback(actorStats),
+			Range = (actorStats) => stats.Range(actorStats) + Range(actorStats),
 			Teleport = (actorStats) => stats.Teleport(actorStats) + Teleport(actorStats),
 			Tags = stats.Tags | Tags
 		};
