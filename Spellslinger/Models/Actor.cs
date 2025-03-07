@@ -477,41 +477,7 @@ public class Actor
 			{
 				if (IsPlayerControlled)
 				{
-					// go to the previous dungeon level (or town if on level 1)
-					if (Game.CurrentMap.Depth == 1)
-					{
-						Game.Log.Add("You return to the safety of the town.");
-						Game.CurrentMap = null;
-						Game.InputMode = InputMode.Town;
-						HP.Restore();
-						MP.Restore();
-						if (Game.IsArtifactCollected)
-						{
-							// you win by leaving the dungeon with the artifact!
-							Game.Log.Add("You have successfully retrieved the Orb of MacGuffin from the dungeon!");
-							Game.Log.Add("The orb's power seals away the evil within the dungeon.");
-							Game.Log.Add("CONGRATULATIONS! You win!");
-							Game.InputMode = InputMode.Victory;
-						}
-					}
-					else
-					{
-						Game.Log.Add("You return to the previous level. It seems different somehow...");
-						Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1, true);
-
-						if (Game.IsArtifactCollected)
-						{
-							// destroy the stairs
-							Game.Log.Add("The stairs collapse behind you!");
-							foreach (var tile in Game.CurrentMap.Tiles)
-							{
-								if (tile.Terrain == Terrain.StairsDown)
-								{
-									tile.Terrain = Terrain.Rubble;
-								}
-							}
-						}
-					}
+					PlayerAscend();
 					return true;
 				}
 				else
@@ -534,9 +500,7 @@ public class Actor
 			{
 				if (IsPlayerControlled)
 				{
-					// go to the next dungeon level
-					Game.Log.Add("You proceed to the next level.");
-					Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1, false);
+					PlayerDescend();
 					return true;
 				}
 				else
@@ -582,6 +546,75 @@ public class Actor
 			Game.Log.Add($"The {this} awakens from hibernation!");
 			IsHibernating = false;
 		}
+	}
+
+	/// <summary>
+	/// Moves to the previous level, or the town if at level 1. Should only be called on the player.
+	/// </summary>
+	public void PlayerAscend()
+	{
+		if (!IsPlayerControlled)
+		{
+			return;
+		}
+
+		// go to the previous dungeon level (or town if on level 1)
+		if (Game.CurrentMap.Depth == 1)
+		{
+			Game.Log.Add("You return to the safety of the town.");
+			Game.CurrentMap = null;
+			Game.InputMode = InputMode.Town;
+			HP.Restore();
+			MP.Restore();
+			if (Game.IsArtifactCollected)
+			{
+				// you win by leaving the dungeon with the artifact!
+				Game.Log.Add("You have successfully retrieved the Orb of MacGuffin from the dungeon!");
+				Game.Log.Add("The orb's power seals away the evil within the dungeon.");
+				Game.Log.Add("CONGRATULATIONS! You win!");
+				Game.InputMode = InputMode.Victory;
+			}
+		}
+		else
+		{
+			Game.Log.Add("You return to the previous level. It seems different somehow...");
+			Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth - 1, true);
+
+			if (Game.IsArtifactCollected)
+			{
+				// destroy the stairs
+				Game.Log.Add("The stairs collapse behind you!");
+				foreach (var tile in Game.CurrentMap.Tiles)
+				{
+					if (tile.Terrain == Terrain.StairsDown)
+					{
+						tile.Terrain = Terrain.Rubble;
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Moves to the previous level, or the town if at level 1. Should only be called on the player.
+	/// </summary>
+	public void PlayerDescend()
+	{
+		if (!IsPlayerControlled)
+		{
+			return;
+		}
+
+		// TODO: remove hardcoded constant max depth
+		if (Game.CurrentMap.Depth == 8)
+		{
+			Game.Log.Add("But it seems that you're already at the bottom of the dungeon.");
+			return;
+		}
+
+		// go to the next dungeon level
+		Game.Log.Add("You proceed to the next level.");
+		Game.CurrentMap = Game.MapGenerator.Generate(Game, Game.CurrentMap.Depth + 1, false);
 	}
 
 	public override string ToString()

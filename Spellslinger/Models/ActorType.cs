@@ -96,7 +96,7 @@ public record ActorType(string Name, char Character, Color Color, ActorStats Sta
 		'@',
 		Color.Purple,
 		new(3, 3, 3, 3, 3),
-		[Rune.Force, Rune.Warp],
+		[Rune.Force, Rune.Warp, Rune.Ascend, Rune.Descend],
 		3,
 		0,
 		0,
