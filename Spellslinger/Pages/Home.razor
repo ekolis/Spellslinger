@@ -9,7 +9,12 @@
 	<PageTitle>Home</PageTitle>
 
 	<div style="display: flex; flex-direction: row">
-		@if (Game.InputMode == InputMode.CharacterSelection)
+		@if (Game.InputMode == InputMode.Title)
+		{
+			<TitleView />
+			Game.Music.Play("out-there.ogg", "audio/ogg");
+		}
+		else if (Game.InputMode == InputMode.CharacterSelection)
 		{
 			<CharacterSelectionView />
 			Game.Music.Play("out-there.ogg", "audio/ogg");

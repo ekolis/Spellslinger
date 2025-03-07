@@ -25,7 +25,7 @@ public class Game
 
 	public string SpellKeys => "ZXCVBNM";
 
-	private InputMode inputMode = InputMode.CharacterSelection;
+	private InputMode inputMode = InputMode.Title;
 
 	public InputMode InputMode
 	{

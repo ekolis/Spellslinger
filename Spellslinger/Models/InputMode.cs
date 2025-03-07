@@ -6,6 +6,10 @@
 public enum InputMode
 {
 	/// <summary>
+	/// The player is viewing the title screen.
+	/// </summary>
+	Title,
+	/// <summary>
 	/// The player is selecting a character.
 	/// </summary>
 	CharacterSelection,
